@@ -1,0 +1,194 @@
+import express from 'express';
+import orderRoutes from './modules/orders/orders.route';
+import categoryRoutes from './modules/categories/cat.route';
+import productRoutes from './modules/products/product.route';
+import brandRoutes from './modules/brands/brand.route';
+import wishlistRoutes from './modules/wishlist/wishlist.route';
+import cartRoutes from './modules/cart/cart.route';
+import stripeWebhookRoutes from './modules/webhooks/stripe.route';
+import analyticsRoutes from './modules/analytics/analytics.route';
+import cookieParser from 'cookie-parser';
+import { auth } from './auth';
+import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
+import { doubleCsrf } from "csrf-csrf";
+import session from "express-session";
+import { isMobileRequest } from "./lib/mobile-helper";
+import rateLimit from 'express-rate-limit'
+// import bodyParser from 'body-parser';
+import cors from 'cors';
+import helmet from "helmet";
+import userRoute from './modules/users/user.route';
+import logsRoute from './modules/audit-logs/logs.route';
+import disputeRoute from './modules/dispute/dispute.route';
+import refundsRoute from './modules/refunds/refunds.route';
+import carrierRoute from './modules/carrier/carrier.route';
+// import morgan from 'morgan';
+
+
+const app = express();
+
+// app.set('trust proxy', 1); // trust first proxy
+
+// const allowedOrigins = ['http://localhost:3000'];
+app.use(
+  cors({
+    origin: true,// Replace with your frontend's origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  })
+);
+
+// CSRF & Session middleware
+app.use(cookieParser());
+
+// Session middleware
+app.use(
+  session({
+    secret: process.env.CSRF_SECRET!, // Validated in index.ts
+    resave: false,
+    saveUninitialized: true, // Must be true for CSRF to work (creates session for token generation)
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
+
+// Initialize double CSRF protection
+const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
+  getSecret: () => process.env.CSRF_SECRET!, // Validated in index.ts
+  cookieName: process.env.NODE_ENV === "production" ? "__Host-psifi.x-csrf-token" : "psifi.x-csrf-token",
+  cookieOptions: {
+    sameSite: "lax",
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+  },
+  size: 64,
+  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+  getCsrfTokenFromRequest: (req: express.Request) => req.headers["x-csrf-token"] as string,
+  // getSessionIdentifier: () => "constant-session-id",
+  getSessionIdentifier: (req: express.Request) => { // Use session ID from express-session
+    const sessionId = req.session.id || req.sessionID;
+    return sessionId;
+  }
+}) as any;
+
+// Apply CSRF protection middleware
+app.get("/api/csrf-token", (req, res) => {
+  const csrfToken = generateCsrfToken(req, res);
+  return res.json({ csrfToken });
+});
+
+
+// Auth routes After cors middleware
+app.all("/api/auth/*splat", toNodeHandler(auth));
+
+// Webhook routes
+app.use('/api/webhooks', stripeWebhookRoutes);
+
+// app.use(express.json()); // to support JSON-encoded bodies not secure against DOS
+app.use(express.json({ limit: '10kb' })); // to support JSON-encoded bodies secure against DOS
+
+// Apply CSRF only for web
+app.use((req, res, next) => {
+  if (isMobileRequest(req) || req.path === '/api/track') {
+    return next(); // skip CSRF for mobile and track endpoint
+  }
+  return doubleCsrfProtection(req, res, next); // apply CSRF for web
+});
+app.use(helmet());
+
+
+// rate limit
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500 // limit each IP to 500 requests per windowMs (increased for admin dashboard)
+})
+app.use(limiter)
+
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 20, // limit each IP to 20 requests per windowMs
+//   message: "Too many authentication attempts from this IP, please try again after 15 minutes"
+// })
+// app.use("/api/auth", authLimiter);
+
+// auth routes
+app.get('/api/me', async (req, res) => {
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+    
+  });
+  return res.json(session)
+});
+
+
+// Order routes
+app.use('/api/orders', orderRoutes);
+
+// Refund routes
+app.use("/api/refunds", refundsRoute);
+
+// Carrier routes
+app.use("/api/carriers", carrierRoute);
+
+// Category routes
+app.use('/api/categories', categoryRoutes);
+
+// Product routes
+app.use('/api/products', productRoutes);
+
+// users routes
+app.use("/api/users", userRoute);
+
+// dispute routes
+app.use("/api/disputes", disputeRoute);
+
+// Brand routes
+app.use('/api/brands', brandRoutes);
+
+// audit logs routes
+app.use("/api/audit-logs", logsRoute);
+
+// Wishlist routes
+app.use('/api/wishlist', wishlistRoutes);
+
+// Cart routes
+app.use('/api/cart', cartRoutes);
+
+// Analytics routes
+app.use('/api/analytics', analyticsRoutes);
+
+
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the Node Market API');
+});
+
+
+
+// Global Error Handler
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Not Found" });
+});
+
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error("Global Error Handler:", err);
+  if (err.code === 'EBADCSRFTOKEN') {
+    return res.status(403).json({ error: 'Invalid CSRF token' });
+  }
+  // res.status(500).json({
+  //   error: err.message || "Internal Server Error",
+  //   // stack: process.env.NODE_ENV === "development" ? err.stack : undefined
+  // });
+
+  res.status(500).json({
+  error: process.env.NODE_ENV === "production" 
+    ? "Internal Server Error" 
+    : err.message || "Internal Server Error",
+  });
+});
+
+
+export default app;

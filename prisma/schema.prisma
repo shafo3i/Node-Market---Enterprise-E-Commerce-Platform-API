@@ -1,0 +1,431 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          UserRole  @default(CUSTOMER)
+  phoneNumber          String?
+  idNumber             String?
+  idType               UserIdType?
+  idExpiryDate         String?
+  country              String?
+  city                 String?
+  address              String?
+  postalCode           String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  carts         Cart?
+  orders        Order[]
+  wishlistItems WishlistItem[]
+  status        UserStatus @default(ACTIVE)
+  deletedAt     DateTime?
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  sku         String?  @unique // Stock Keeping Unit: Format: {BRAND-CODE}-{CATEGORY-CODE}-{PRODUCT-ID} (e.g., "APL-PHN-12345")
+  description String?
+  price       Decimal
+  stock       Int      @default(0) // Available inventory quantity
+  lowStockThreshold Int @default(10) // Alert when stock falls below this number
+  isActive    Boolean  @default(true)
+  image       String?
+  //timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  /// Relations
+  variants   ProductVariant[]
+  reviews    Review[]
+  orderItems OrderItem[]
+  cartItems  CartItem[]
+  wishlistItems WishlistItem[]
+  brandId    String
+  brand      Brand            @relation(fields: [brandId], references: [id])
+  categoryId String
+  category   Category         @relation(fields: [categoryId], references: [id])
+
+  @@index([id, name])
+  @@index([sku])
+  @@map("products")
+}
+
+
+
+model ProductVariant {
+  id        String     @id @default(cuid())
+  name      String // e.g. "Red / XL"
+  sku       String     @unique
+  price     Decimal?
+  stock     Int
+  productId String
+  product   Product    @relation(fields: [productId], references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([productId, sku])
+  @@map("product_variants")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId, rating])
+  @@map("reviews")
+}
+
+model Brand {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  code        String?  @unique // 3-letter code for SKU generation (e.g., "APL" for Apple, "NIK" for Nike)
+  description String?
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  products Product[]
+
+  @@index([name, createdAt])
+  @@index([slug])
+  @@map("brands")
+}
+
+model Category {
+  id              String  @id @default(cuid())
+  name            String
+  slug            String  @unique
+  code            String? @unique // 3-letter code for SKU generation (e.g., "PHN" for Phones, "SHO" for Shoes)
+  description     String?
+  image           String?
+  metaTitle       String?
+  metaDescription String?
+  keywords        String?
+
+  //timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  products Product[]
+
+  @@index([name])
+  @@map("categories")
+}
+
+model Order {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  orderReference String? @unique
+  status OrderStatus @default(PENDING)
+  total  Decimal
+  disputes          Dispute[]
+
+// Shipping details
+  trackingNumber String?
+  shippingCarrier String?
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+
+  //refunds
+  refundAt          DateTime?
+
+  items OrderItem[]
+  payments  Payment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  variantId String?
+  quantity  Int
+  price     Decimal
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  quantity  Int
+  cartId    String
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+  @@map("cart_items")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@map("wishlist_items")
+}
+
+model Payment {
+  id          String          @id @default(cuid())
+  orderId     String
+  order       Order           @relation(fields: [orderId], references: [id])
+
+  provider    PaymentProvider
+  providerRef String          // Stripe payment_intent ID
+  amount      Decimal
+  currency    String          @default("USD")
+  status      PaymentStatus   @default(PENDING)
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  paidAt      DateTime?
+
+  @@unique([provider, providerRef])
+  @@map("payments")
+}
+
+model PaymentWebhook {
+  id        String          @id @default(cuid())
+  provider  PaymentProvider
+  eventId   String
+  eventType String
+  payload   Json
+  createdAt DateTime        @default(now())
+
+  @@unique([provider, eventId])
+  @@map("payment_webhooks")
+}
+
+model StripeEvent {
+  id              String   @id @default(cuid())
+  stripeEventId   String   @unique
+  type            String
+  paymentIntentId String?
+  payload         Json
+  createdAt       DateTime @default(now())
+
+  @@index([paymentIntentId])
+  @@map("stripe_event")
+}
+
+model Dispute {
+  id            String      @id @default(cuid())
+
+
+  reason String
+  status DisputeStatus @default(OPEN)
+
+  openedBy   String // userId
+  resolvedBy String? // adminId
+  resolution String?
+  orderId    String
+  order      Order     @relation(fields: [orderId], references: [id])
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+
+  @@index([status])
+  @@map("dispute")
+}
+
+model auditLog {
+  id        String   @id @default(cuid())
+  action    String 
+  entityType    EntityType
+  entityId  String
+  performedBy String
+  actorType ActorType
+  before    Json
+  after     Json
+  createdAt DateTime @default(now())
+}
+
+model Carrier {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  code            String           @unique
+  description     String?
+  trackingUrl     String?          // URL template with {trackingNumber} placeholder
+  contactEmail    String?
+  contactPhone    String?
+  isActive        Boolean          @default(true)
+  estimatedDays   Int?             // Estimated delivery days
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([code])
+  @@index([isActive])
+  @@map("carriers")
+}
+
+// -------------------Enums------------------------// 
+
+enum EntityType {
+  USER
+  PRODUCT
+  ORDER
+  PAYMENT
+  CART
+  REVIEW
+  BRAND
+  CATEGORY
+  CARRIER
+}
+
+enum ActorType {
+  USER
+  MERCHANT
+  ADMIN
+  SYSTEM
+}
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  MERCHANT
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUND_PENDING
+  REFUNDED
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  SQUARE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+enum UserStatus {
+  DISABLED // default on signup
+  ACTIVE // allowed to transact
+  SUSPENDED // temporary block (compliance / fraud)
+  BANNED // permanent block
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum UserIdType {
+  ID_CARD
+  PASSPORT
+  DRIVER_LICENSE
+  OTHER
+}
