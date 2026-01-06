@@ -1,15 +1,16 @@
 import { Router } from "express";
 import { UserController } from "./user.controller";
+import { isAdmin, isAuthenticated } from "../../middleware/auth-middleware";
 
 const router = Router();
 
-router.get("/profile", UserController.getProfile);
-router.put("/profile", UserController.updateUser);
+router.get("/profile", isAuthenticated, UserController.getProfile);
+router.put("/profile", isAuthenticated, UserController.updateUser);
 
 //for admins
-router.get("/all", UserController.getAllUsers);
-router.get("/:id", UserController.getUserByIdAdmin);
-router.put("/update/:id", UserController.updateUserByAdmin);
-router.delete("/delete/:id", UserController.deleteUserByAdmin);
+router.get("/all", isAdmin, UserController.getAllUsers);
+router.get("/:id", isAdmin, UserController.getUserByIdAdmin);
+router.put("/update/:id", isAdmin, UserController.updateUserByAdmin);
+router.delete("/delete/:id", isAdmin, UserController.deleteUserByAdmin);
 
 export default router;

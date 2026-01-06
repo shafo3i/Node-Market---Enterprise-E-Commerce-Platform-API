@@ -1,20 +1,13 @@
 import { Request, Response } from 'express';
 import { CartService } from './cart.service';
-import { auth } from '../../auth';
-import { fromNodeHeaders } from 'better-auth/node';
+
 
 export const CartController = {
   // GET /api/cart
   getCart: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
 
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+     const session = res.locals.session;
       const cart = await CartService.getCart(session.user.id);
       res.status(200).json({ success: true, cart });
     } catch (error) {
@@ -25,16 +18,8 @@ export const CartController = {
   // POST /api/cart/items
   addItem: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const { productId, quantity } = req.body;
-
       if (!productId) {
         return res.status(400).json({ success: false, error: 'Product ID is required' });
       }
@@ -55,16 +40,8 @@ export const CartController = {
   // PUT /api/cart/items
   updateItemQuantity: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const { productId, quantity } = req.body;
-
       if (!productId) {
         return res.status(400).json({ success: false, error: 'Product ID is required' });
       }
@@ -85,14 +62,7 @@ export const CartController = {
   // DELETE /api/cart/items/:productId
   removeItem: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+         const session = res.locals.session;
       const { productId } = req.params;
 
       if (!productId) {
@@ -111,13 +81,7 @@ export const CartController = {
   // DELETE /api/cart
   clearCart: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
+      const session = res.locals.session;
 
       const cart = await CartService.clearCart(session.user.id);
       res.status(200).json({ success: true, cart, message: 'Cart cleared' });

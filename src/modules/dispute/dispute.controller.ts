@@ -1,24 +1,13 @@
 import { DisputeService } from "./dispute.service";
 import { Request, Response } from "express";
-import { auth } from '../../auth'
-import { fromNodeHeaders } from "better-auth/node";
-import { z } from "zod";
 
 
 
 
 export const DisputeController = {
 
-    // Get all disputes
+    // Get all disputes (Admin only - protected by isAdmin middleware)
     getAllDisputes: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-        if (authUser.user.role !== "ADMIN") {
-            return res.status(403).json({ error: "Forbidden" });
-        }
-
         try {
             const disputes = await DisputeService.getAllDisputes();
             res.json(disputes);
@@ -27,23 +16,20 @@ export const DisputeController = {
             res.status(500).json({ error: "Internal server error" });
         }
     },
-    // Get dispute by id
+    // Get dispute by id (User can view their own, Admin can view all)
     getDisputeById: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-
         try {
+            const session = res.locals.session;
+            
             if (!req.params.id) {
                 return res.status(400).json({ error: "Missing dispute id" });
             }
+            
             const dispute = await DisputeService.getDisputeById(req.params.id);
-
             if (!dispute) return res.status(404).json({ error: "Dispute not found" });
 
             // IDOR Protection: Only Admin or Owner can view
-            if (authUser.user.role !== "ADMIN" && dispute.openedBy !== authUser.user.id) {
+            if (session.user.role !== "ADMIN" && dispute.openedBy !== session.user.id) {
                 return res.status(403).json({ error: "Forbidden" });
             }
 
@@ -55,19 +41,14 @@ export const DisputeController = {
     },
     // Create dispute
     createDispute: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-
-
 
         try {
+            const session = res.locals.session;
             // Force openedBy to be the current user if not admin
             const disputeData = { ...req.body };
-            if (authUser.user.role !== "ADMIN") {
-                disputeData.openedBy = authUser.user.id;
-            }
+  
+                disputeData.openedBy = session.user.name || session.user.id;
+            
 
             const dispute = await DisputeService.createDispute(disputeData);
             res.json(dispute);
@@ -80,13 +61,8 @@ export const DisputeController = {
             res.status(500).json({ error: error.message || "Internal server error" });
         }
     },
-    // Update dispute
+    // Update dispute (Admin only - protected by isAdmin middleware)
     updateDispute: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user || authUser?.user.role !== "ADMIN") {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-
         try {
             if (!req.params.id) {
                 return res.status(400).json({ error: "Missing dispute id" });
@@ -98,13 +74,8 @@ export const DisputeController = {
             res.status(500).json({ error: "Internal server error" });
         }
     },
-    // Delete dispute
+    // Delete dispute (Admin only - protected by isAdmin middleware)
     deleteDispute: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user || authUser?.user.role !== "ADMIN") {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-
         try {
             if (!req.params.id) {
                 return res.status(400).json({ error: "Missing dispute id" });
@@ -116,26 +87,23 @@ export const DisputeController = {
             res.status(500).json({ error: "Internal server error" });
         }
     },
-    // Get disputes by user id
+    // Get disputes by user id (User can view their own, Admin can view any)
     getDisputesByUserId: async (req: Request, res: Response) => {
-        const authUser = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!authUser?.user) {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-
         try {
-            const userId = req.params.id;
-            if (!userId) {
+            const session = res.locals.session;
+            const requestedUserId = req.params.id;
+            
+            if (!requestedUserId) {
                 return res.status(400).json({ error: "Missing user id" });
             }
 
-            // IDOR Protection: Only Admin or Owner can view
-            if (authUser.user.role !== "ADMIN" && userId !== authUser.user.id) {
+            // IDOR Protection: Users can only see their own disputes, admins can see any user's
+            if (session.user.role !== "ADMIN" && requestedUserId !== session.user.id) {
                 return res.status(403).json({ error: "Forbidden" });
             }
 
-            const dispute = await DisputeService.getDisputesByUserId(userId);
-            res.json(dispute);
+            const disputes = await DisputeService.getDisputesByUserId(requestedUserId);
+            res.json(disputes);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Internal server error" });

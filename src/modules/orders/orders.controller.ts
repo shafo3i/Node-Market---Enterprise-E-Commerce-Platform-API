@@ -1,21 +1,13 @@
 import { Request, Response } from "express";
 import { OrdersService } from "./orders.service";
-import { auth } from "../../auth";
-import { fromNodeHeaders } from "better-auth/node";
 import { OrderStatus } from "../../generated/prisma/enums";
+
 
 export const OrdersController = {
   
   checkout: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-      
-      if (!session) {
-        return res.status(401).json({ success: false, message: "User not authenticated" });
-      }
-
+      const session = res.locals.session;
       const userId = session.user.id;
 
       // Create order from cart
@@ -52,15 +44,9 @@ export const OrdersController = {
   // Get all orders (admin only)
   getAllOrders: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
 
-      if (!session || session.user.role !== "ADMIN") {
-        return res.status(403).json({ success: false, message: "Admin access required" });
-      }
-
-      const orders = await OrdersService.getAllOrders();
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined;
+      const orders = await OrdersService.getAllOrders(limit);
       res.status(200).json({ success: true, orders });
     } catch (error) {
       res.status(400).json({ success: false, error: (error as Error).message });
@@ -70,14 +56,7 @@ export const OrdersController = {
   // Get user's own orders
   getUserOrders: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: "Authentication required" });
-      }
-
+      const session = res.locals.session;
       const orders = await OrdersService.getUserOrders(session.user.id);
       res.status(200).json({ success: true, orders });
     } catch (error) {
@@ -88,14 +67,7 @@ export const OrdersController = {
   // Get order by ID
   getOrderById: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: "Authentication required" });
-      }
-
+      const session = res.locals.session;
       const { id } = req.params;
       
       if (!id) {
@@ -118,14 +90,7 @@ export const OrdersController = {
   // Update order status (admin only)
   updateOrderStatus: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session || session.user.role !== "ADMIN") {
-        return res.status(403).json({ success: false, message: "Admin access required" });
-      }
-
+     
       const { id } = req.params;
       const { status } = req.body;
 
@@ -147,16 +112,8 @@ export const OrdersController = {
   // Cancel order (user can cancel their own pending orders)
   cancelOrder: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: "Authentication required" });
-      }
-
+      const session = res.locals.session;
       const { id } = req.params;
-
       if (!id) {
         return res.status(400).json({ success: false, message: "Order ID is required" });
       }
@@ -170,12 +127,7 @@ export const OrdersController = {
   // Update shipping information (admin only)
   updateShippingInfo: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-      if (!session || session.user.role !== "ADMIN") {
-        return res.status(403).json({ success: false, message: "Admin access required" });
-      }
+     
       const { id } = req.params;
       const { trackingNumber, shippingCarrier, status } = req.body;
       if (!id) {

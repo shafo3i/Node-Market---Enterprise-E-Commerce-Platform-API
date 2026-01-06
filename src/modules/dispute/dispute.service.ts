@@ -30,7 +30,11 @@ export const DisputeService = {
         const dispute = await prisma.dispute.findUnique({ where: { id } })
         if (!dispute) throw new Error("Dispute not found");
         return await prisma.$transaction([
-            prisma.dispute.update({ where: { id }, data: data }),
+            prisma.dispute.update({ 
+                where: { id }, 
+                data: data ,
+                
+            }),
             prisma.auditLog.create({
                 data: {
                     action: "STATUS_UPDATE",
@@ -39,7 +43,9 @@ export const DisputeService = {
                     before: dispute.status,
                     after: data.status,
                     actorType: "ADMIN",
-                    performedBy: `admin:${dispute.openedBy}`,
+                    performedBy: `${dispute.openedBy}`,
+                    
+                    
 
                 }
             })
@@ -74,6 +80,7 @@ export const DisputeService = {
 
     // for users 
     getDisputesByUserId: async (userId: string) => {
-        return await prisma.dispute.findMany({ where: { openedBy: userId } })
+        return await prisma.dispute.findMany({ where: { openedBy: userId },
+        })
     }
 }

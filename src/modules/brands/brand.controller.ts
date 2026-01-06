@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import { BrandService } from './brand.service';
-import { auth } from '../../auth'
-import { fromNodeHeaders } from 'better-auth/node';
 
 export const BrandController = {
   
@@ -30,20 +28,24 @@ export const BrandController = {
     }
   },
 
+  getBySlug: async (req: Request, res: Response) => {
+    try {
+      const { slug } = req.params;
+      
+      if (!slug) {
+        return res.status(400).json({ success: false, error: 'Brand slug is required' });
+      }
+
+      const brand = await BrandService.getBySlug(slug);
+      res.status(200).json({ success: true, brand });
+    } catch (error) {
+      const status = (error as Error).message === 'Brand not found' ? 404 : 400;
+      res.status(status).json({ success: false, error: (error as Error).message });
+    }
+  },
+
   create: async (req: Request, res: Response) => {
     try {
-        const session =  await auth.api.getSession({
-            headers: fromNodeHeaders(req.headers),
-        })
-        // Check if no session
-        if(!session) {
-            return  res.status(401).json( { success: false, message: "User not authenticated" } );
-        }
-
-        // Check if user is admin
-        if(session.user.role !== 'ADMIN') {
-            return  res.status(403).json( { success: false, message: "User not authorized" } );
-        }
       // req.body already validated and sanitized by middleware
       const brand = await BrandService.create(req.body);
       res.status(201).json({ success: true, brand });
@@ -55,17 +57,6 @@ export const BrandController = {
 
   update: async (req: Request, res: Response) => {
     try {
-        const session =  await auth.api.getSession({
-            headers: fromNodeHeaders(req.headers),
-        })
-        // Check if no session
-        if(!session) {
-            return  res.status(401).json( { success: false, message: "User not authenticated" } );
-        }
-        // Check if user is admin
-        if(session.user.role !== 'ADMIN') {
-            return  res.status(403).json( { success: false, message: "User not authorized" } );
-        }
       const { id } = req.params;
       
       if (!id) {
@@ -86,17 +77,6 @@ export const BrandController = {
 
   delete: async (req: Request, res: Response) => {
     try {
-        const session =  await auth.api.getSession({
-            headers: fromNodeHeaders(req.headers),
-        })
-        // Check if no session
-        if(!session) {
-            return  res.status(401).json( { success: false, message: "User not authenticated" } );
-        }
-        // Check if user is admin
-        if(session.user.role !== 'ADMIN') {
-            return  res.status(403).json( { success: false, message: "User not authorized" } );
-        }
       const { id } = req.params;
       
       if (!id) {

@@ -31,6 +31,24 @@ export const BrandService = {
     return brand;
   },
 
+  getBySlug: async (slug: string) => {
+    const brand = await prisma.brand.findUnique({
+      where: { slug },
+      include: {
+        _count: {
+          select: { products: true },
+        },
+      },
+    });
+    
+    if (!brand) {
+      throw new Error('Brand not found');
+    }
+    
+    return brand;
+  },
+  
+
   create: async (data: { name: string; slug?: string; description?: string | null; logo?: string | null }) => {
     // Check if brand with same name already exists
     const existingByName = await prisma.brand.findUnique({

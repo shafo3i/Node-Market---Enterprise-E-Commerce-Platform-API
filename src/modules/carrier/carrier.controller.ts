@@ -1,27 +1,15 @@
 import { Request, Response } from "express";
 import { CarrierService } from "./carrier.service";
-import { auth } from "../../auth";
-import { fromNodeHeaders } from "better-auth/node";
+
 import { 
   createCarrierSchema, 
   updateCarrierSchema, 
   carrierIdSchema,
-  CreateCarrierInput,
-  UpdateCarrierInput 
 } from "./carrier.validation";
-import { z } from "zod";
 
 export const CarrierController = {
-  // Get all carriers (Admin only)
+  // Get all carriers (Admin only - protected by isAdmin middleware)
   async getAllCarriers(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
       const carriers = await CarrierService.getAllCarriers();
       return res.json(carriers);
@@ -42,16 +30,8 @@ export const CarrierController = {
     }
   },
 
-  // Get carrier by ID (Admin only)
+  // Get carrier by ID (Admin only - protected by isAdmin middleware)
   async getCarrierById(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
       // Validate ID
       const validated = carrierIdSchema.safeParse(req.params);
@@ -76,17 +56,10 @@ export const CarrierController = {
     }
   },
 
-  // Create new carrier (Admin only)
+  // Create new carrier (Admin only - protected by isAdmin middleware)
   async createCarrier(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
+      const session = res.locals.session;
       // Validate input with Zod
       const validated = createCarrierSchema.safeParse(req.body);
       if (!validated.success) {
@@ -114,17 +87,10 @@ export const CarrierController = {
     }
   },
 
-  // Update carrier (Admin only)
+  // Update carrier (Admin only - protected by isAdmin middleware)
   async updateCarrier(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
+      const session = res.locals.session;
       // Validate ID
       const validatedId = carrierIdSchema.safeParse(req.params);
       if (!validatedId.success) {
@@ -165,17 +131,10 @@ export const CarrierController = {
     }
   },
 
-  // Delete carrier (Admin only)
+  // Delete carrier (Admin only - protected by isAdmin middleware)
   async deleteCarrier(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
+      const session = res.locals.session;
       // Validate ID
       const validated = carrierIdSchema.safeParse(req.params);
       if (!validated.success) {
@@ -200,17 +159,10 @@ export const CarrierController = {
     }
   },
 
-  // Toggle carrier status (Admin only)
+  // Toggle carrier status (Admin only - protected by isAdmin middleware)
   async toggleCarrierStatus(req: Request, res: Response) {
-    const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-    if (!session?.user) {
-      return res.status(401).json({ error: "Unauthenticated" });
-    }
-    if (session.user.role !== "ADMIN") {
-      return res.status(403).json({ error: "Forbidden: Admin access required" });
-    }
-
     try {
+      const session = res.locals.session;
       // Validate ID
       const validated = carrierIdSchema.safeParse(req.params);
       if (!validated.success) {

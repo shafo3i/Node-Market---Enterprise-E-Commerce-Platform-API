@@ -1,20 +1,11 @@
 import { Request, Response } from 'express';
 import { WishlistService } from './wishlist.service';
-import { auth } from '../../auth';
-import { fromNodeHeaders } from 'better-auth/node';
 
 export const WishlistController = {
   
   getWishlist: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const wishlistItems = await WishlistService.getWishlist(session.user.id);
       res.status(200).json({ success: true, wishlistItems });
     } catch (error) {
@@ -24,14 +15,7 @@ export const WishlistController = {
 
   addToWishlist: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const { productId } = req.body;
 
       if (!productId) {
@@ -50,14 +34,7 @@ export const WishlistController = {
 
   removeFromWishlist: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const { productId } = req.params;
 
       if (!productId) {
@@ -74,14 +51,7 @@ export const WishlistController = {
 
   clearWishlist: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const result = await WishlistService.clearWishlist(session.user.id);
       res.status(200).json(result);
     } catch (error) {
@@ -91,14 +61,7 @@ export const WishlistController = {
 
   isInWishlist: async (req: Request, res: Response) => {
     try {
-      const session = await auth.api.getSession({
-        headers: fromNodeHeaders(req.headers),
-      });
-
-      if (!session) {
-        return res.status(401).json({ success: false, message: 'User not authenticated' });
-      }
-
+      const session = res.locals.session;
       const { productId } = req.params;
 
       if (!productId) {

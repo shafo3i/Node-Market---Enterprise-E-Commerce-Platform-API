@@ -2,13 +2,15 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./config/prisma";
 import { sendEmail } from "./modules/email/email.service";
-import { bearer } from "better-auth/plugins";
+import { bearer, captcha, lastLoginMethod, twoFactor  } from "better-auth/plugins";
+
 
 // If your Prisma file is located elsewhere, you can change the path
 
 
 
 export const auth = betterAuth({
+    basePath: "/api/auth",
     database: prismaAdapter(prisma, {
         provider: "postgresql", // or "mysql", "postgresql", ...etc
     }),
@@ -42,6 +44,10 @@ export const auth = betterAuth({
         
         
     },
+    // rateLimit: {
+    //     windowMs: 15 * 60 * 1000, // 15 minutes
+    //     max: 20, // limit each IP to 20 requests per windowMs
+    // },
 
      emailVerification: {
         sendOnSignUp: true,
@@ -75,8 +81,36 @@ export const auth = betterAuth({
         }
     },
 
+    appName: "Node Market", // Used as issuer for 2FA
+    
     plugins: [
-        bearer()
+        bearer(),
+        // captcha({
+        //     provider: "cloudflare-turnstile",
+        //     secretKey: process.env.CF_TURNSTILE_SECRET_KEY!,
+        // }),
+        lastLoginMethod(),
+        twoFactor({
+            issuer: "Node Market",
+            otpOptions: {
+                async sendOTP({ user, otp }, ctx) {
+                    await sendEmail(
+                        user.email,
+                        "Your 2FA Code",
+                        `<p>Your verification code is: <strong>${otp}</strong></p><p>This code will expire in 5 minutes.</p>`
+                    );
+                },
+                period: 300, // 5 minutes
+            },
+            totpOptions: {
+                period: 30,
+                digits: 6,
+            },
+            backupCodeOptions: {
+                amount: 10,
+                length: 10,
+            },
+        }),
     ],
 
      trustedOrigins: [

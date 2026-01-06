@@ -117,3 +117,8 @@ export type auditLog = Prisma.auditLogModel
  * 
  */
 export type Carrier = Prisma.CarrierModel
+/**
+ * Model TwoFactor
+ * 
+ */
+export type TwoFactor = Prisma.TwoFactorModel

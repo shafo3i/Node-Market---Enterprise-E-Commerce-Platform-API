@@ -2,6 +2,7 @@ import { prisma } from '../../config/prisma';
 
 export const CategoryService = {
   
+  // Get all categories Service
   getAll: async () => {
     const categories = await prisma.category.findMany({
       orderBy: { createdAt: 'desc' },
@@ -14,6 +15,7 @@ export const CategoryService = {
     return categories;
   },
 
+  // Get category by ID Service
   getById: async (id: string) => {
     const category = await prisma.category.findUnique({
       where: { id },
@@ -31,6 +33,7 @@ export const CategoryService = {
     return category;
   },
 
+  // Get category by slug Service
   getBySlug: async (slug: string) => {
     const category = await prisma.category.findUnique({
       where: { slug },
@@ -48,6 +51,7 @@ export const CategoryService = {
     return category;
   },
 
+  // Create new category Service
   create: async (data: {
     name: string;
     slug: string;
@@ -73,6 +77,7 @@ export const CategoryService = {
     return category;
   },
 
+  // Update category Service
   update: async (id: string, data: {
     name?: string;
     slug?: string;
@@ -110,6 +115,7 @@ export const CategoryService = {
     return category;
   },
 
+  // Delete category Service
   delete: async (id: string) => {
     // Check if category exists
     const existing = await prisma.category.findUnique({

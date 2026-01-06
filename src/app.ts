@@ -107,12 +107,7 @@ const limiter = rateLimit({
 })
 app.use(limiter)
 
-// const authLimiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 minutes
-//   max: 20, // limit each IP to 20 requests per windowMs
-//   message: "Too many authentication attempts from this IP, please try again after 15 minutes"
-// })
-// app.use("/api/auth", authLimiter);
+
 
 // auth routes
 app.get('/api/me', async (req, res) => {

@@ -223,7 +223,7 @@ export const OrdersService = {
   },
 
   // Get all orders (admin)
-  getAllOrders: async () => {
+  getAllOrders: async (limit?: number) => {
     const orders = await prisma.order.findMany({
       include: {
         user: {
@@ -249,6 +249,7 @@ export const OrdersService = {
       orderBy: {
         createdAt: 'desc',
       },
+      ...(limit && { take: limit }),
     });
 
     return orders;

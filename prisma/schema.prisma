@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -8,29 +9,32 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean        @default(false)
   image         String?
-  role          UserRole  @default(CUSTOMER)
-  phoneNumber          String?
-  idNumber             String?
-  idType               UserIdType?
-  idExpiryDate         String?
-  country              String?
-  city                 String?
-  address              String?
-  postalCode           String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  role          UserRole       @default(CUSTOMER)
+  phoneNumber   String?
+  idNumber      String?
+  idType        UserIdType?
+  idExpiryDate  String?
+  country       String?
+  city          String?
+  address       String?
+  postalCode    String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   sessions      Session[]
   accounts      Account[]
   carts         Cart?
   orders        Order[]
   wishlistItems WishlistItem[]
-  status        UserStatus @default(ACTIVE)
+  status        UserStatus     @default(ACTIVE)
   deletedAt     DateTime?
+
+  twoFactorEnabled Boolean?    @default(false)
+  twofactors       TwoFactor[]
 
   @@unique([email])
   @@map("user")
@@ -84,50 +88,47 @@ model Verification {
   @@map("verification")
 }
 
-
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  sku         String?  @unique // Stock Keeping Unit: Format: {BRAND-CODE}-{CATEGORY-CODE}-{PRODUCT-ID} (e.g., "APL-PHN-12345")
-  description String?
-  price       Decimal
-  stock       Int      @default(0) // Available inventory quantity
-  lowStockThreshold Int @default(10) // Alert when stock falls below this number
-  isActive    Boolean  @default(true)
-  image       String?
+  id                String   @id @default(cuid())
+  name              String
+  slug              String   @unique
+  sku               String?  @unique // Stock Keeping Unit: Format: {BRAND-CODE}-{CATEGORY-CODE}-{PRODUCT-ID} (e.g., "APL-PHN-12345")
+  description       String?
+  price             Decimal
+  stock             Int      @default(0) // Available inventory quantity
+  lowStockThreshold Int      @default(10) // Alert when stock falls below this number
+  isActive          Boolean  @default(true)
+  image             String?
   //timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   /// Relations
-  variants   ProductVariant[]
-  reviews    Review[]
-  orderItems OrderItem[]
-  cartItems  CartItem[]
+  variants      ProductVariant[]
+  reviews       Review[]
+  orderItems    OrderItem[]
+  cartItems     CartItem[]
   wishlistItems WishlistItem[]
-  brandId    String
-  brand      Brand            @relation(fields: [brandId], references: [id])
-  categoryId String
-  category   Category         @relation(fields: [categoryId], references: [id])
+  brandId       String
+  brand         Brand            @relation(fields: [brandId], references: [id])
+  categoryId    String
+  category      Category         @relation(fields: [categoryId], references: [id])
 
   @@index([id, name])
   @@index([sku])
   @@map("products")
 }
 
-
-
 model ProductVariant {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String // e.g. "Red / XL"
-  sku       String     @unique
+  sku       String   @unique
   price     Decimal?
   stock     Int
   productId String
-  product   Product    @relation(fields: [productId], references: [id])
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([productId, sku])
   @@map("product_variants")
@@ -146,17 +147,16 @@ model Review {
 }
 
 model Brand {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
-  code        String?  @unique // 3-letter code for SKU generation (e.g., "APL" for Apple, "NIK" for Nike)
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  code        String?   @unique // 3-letter code for SKU generation (e.g., "APL" for Apple, "NIK" for Nike)
   description String?
   logo        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   // Relations
-  products Product[]
+  products    Product[]
 
   @@index([name, createdAt])
   @@index([slug])
@@ -186,27 +186,27 @@ model Category {
 }
 
 model Order {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-  orderReference String? @unique
-  status OrderStatus @default(PENDING)
-  total  Decimal
-  disputes          Dispute[]
+  id             String      @id @default(cuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  orderReference String?     @unique
+  status         OrderStatus @default(PENDING)
+  total          Decimal
+  disputes       Dispute[]
 
-// Shipping details
-  trackingNumber String?
+  // Shipping details
+  trackingNumber  String?
   shippingCarrier String?
-  shippedAt      DateTime?
-  deliveredAt    DateTime?
+  shippedAt       DateTime?
+  deliveredAt     DateTime?
 
   //refunds
-  refundAt          DateTime?
+  refundAt DateTime?
 
-  items OrderItem[]
+  items     OrderItem[]
   payments  Payment[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   @@index([userId, createdAt])
   @@map("orders")
@@ -239,7 +239,7 @@ model Cart {
 }
 
 model CartItem {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   quantity  Int
   cartId    String
   productId String
@@ -269,19 +269,19 @@ model WishlistItem {
 }
 
 model Payment {
-  id          String          @id @default(cuid())
-  orderId     String
-  order       Order           @relation(fields: [orderId], references: [id])
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
 
   provider    PaymentProvider
-  providerRef String          // Stripe payment_intent ID
+  providerRef String // Stripe payment_intent ID
   amount      Decimal
   currency    String          @default("USD")
   status      PaymentStatus   @default(PENDING)
 
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  paidAt      DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  paidAt    DateTime?
 
   @@unique([provider, providerRef])
   @@map("payments")
@@ -312,8 +312,7 @@ model StripeEvent {
 }
 
 model Dispute {
-  id            String      @id @default(cuid())
-
+  id String @id @default(cuid())
 
   reason String
   status DisputeStatus @default(OPEN)
@@ -331,29 +330,29 @@ model Dispute {
 }
 
 model auditLog {
-  id        String   @id @default(cuid())
-  action    String 
-  entityType    EntityType
-  entityId  String
+  id          String     @id @default(cuid())
+  action      String
+  entityType  EntityType
+  entityId    String
   performedBy String
-  actorType ActorType
-  before    Json
-  after     Json
-  createdAt DateTime @default(now())
+  actorType   ActorType
+  before      Json
+  after       Json
+  createdAt   DateTime   @default(now())
 }
 
 model Carrier {
-  id              String           @id @default(cuid())
-  name            String           @unique
-  code            String           @unique
-  description     String?
-  trackingUrl     String?          // URL template with {trackingNumber} placeholder
-  contactEmail    String?
-  contactPhone    String?
-  isActive        Boolean          @default(true)
-  estimatedDays   Int?             // Estimated delivery days
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  id            String   @id @default(cuid())
+  name          String   @unique
+  code          String   @unique
+  description   String?
+  trackingUrl   String? // URL template with {trackingNumber} placeholder
+  contactEmail  String?
+  contactPhone  String?
+  isActive      Boolean  @default(true)
+  estimatedDays Int? // Estimated delivery days
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([code])
   @@index([isActive])
@@ -380,6 +379,7 @@ enum ActorType {
   ADMIN
   SYSTEM
 }
+
 enum UserRole {
   ADMIN
   CUSTOMER
@@ -428,4 +428,16 @@ enum UserIdType {
   PASSPORT
   DRIVER_LICENSE
   OTHER
+}
+
+model TwoFactor {
+  id          String @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
 }

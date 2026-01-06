@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import { WishlistController } from './wishlist.controller';
+import { isAuthenticated } from '../../middleware/auth-middleware';
 
 const router = Router();
 
-router.get('/', WishlistController.getWishlist);
-router.post('/', WishlistController.addToWishlist);
-router.delete('/:productId', WishlistController.removeFromWishlist);
-router.delete('/', WishlistController.clearWishlist);
-router.get('/check/:productId', WishlistController.isInWishlist);
+// All wishlist routes require authentication
+router.get('/', isAuthenticated, WishlistController.getWishlist);
+router.post('/', isAuthenticated, WishlistController.addToWishlist);
+router.delete('/:productId', isAuthenticated, WishlistController.removeFromWishlist);
+router.delete('/', isAuthenticated, WishlistController.clearWishlist);
+router.get('/check/:productId', isAuthenticated, WishlistController.isInWishlist);
 
 export default router;
