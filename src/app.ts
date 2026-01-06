@@ -7,6 +7,7 @@ import wishlistRoutes from './modules/wishlist/wishlist.route';
 import cartRoutes from './modules/cart/cart.route';
 import stripeWebhookRoutes from './modules/webhooks/stripe.route';
 import analyticsRoutes from './modules/analytics/analytics.route';
+import reviewRoutes from './modules/reviews/review.route';
 import cookieParser from 'cookie-parser';
 import { auth } from './auth';
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
@@ -67,15 +68,25 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   size: 64,
   ignoredMethods: ["GET", "HEAD", "OPTIONS"],
   getCsrfTokenFromRequest: (req: express.Request) => req.headers["x-csrf-token"] as string,
-  // getSessionIdentifier: () => "constant-session-id",
   getSessionIdentifier: (req: express.Request) => { // Use session ID from express-session
-    const sessionId = req.session.id || req.sessionID;
-    return sessionId;
+    // Ensure session exists before accessing it
+    if (!req.session || !req.sessionID) {
+      // Force session creation if it doesn't exist
+      req.session.regenerate((err) => {
+        if (err) console.error("Session regeneration error:", err);
+      });
+    }
+    return req.sessionID || req.session?.id || "fallback-session-id";
   }
 }) as any;
 
-// Apply CSRF protection middleware
+// CSRF token endpoint - Ensure session exists first
 app.get("/api/csrf-token", (req, res) => {
+  // Ensure session is initialized
+  if (!req.session) {
+    return res.status(500).json({ error: "Session not initialized" });
+  }
+  
   const csrfToken = generateCsrfToken(req, res);
   return res.json({ csrfToken });
 });
@@ -154,6 +165,9 @@ app.use('/api/cart', cartRoutes);
 
 // Analytics routes
 app.use('/api/analytics', analyticsRoutes);
+
+// Review routes
+app.use('/api/reviews', reviewRoutes);
 
 
 

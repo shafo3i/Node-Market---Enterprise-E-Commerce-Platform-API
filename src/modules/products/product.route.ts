@@ -18,4 +18,10 @@ router.post('/:id/variants', isAdmin, ProductController.addVariant);
 router.put('/variants/:variantId', isAdmin, ProductController.updateVariant);
 router.delete('/variants/:variantId', isAdmin, ProductController.removeVariant);
 
+// Inventory management routes
+router.get('/inventory/low-stock', isAdmin, ProductController.getLowStockProducts);
+router.get('/inventory/statistics', isAdmin, ProductController.getStockStatistics);
+router.get('/:id/stock-history', isAdmin, ProductController.getStockHistory);
+router.post('/inventory/bulk-update', isAdmin, ProductController.bulkUpdateStock);
+
 export default router;

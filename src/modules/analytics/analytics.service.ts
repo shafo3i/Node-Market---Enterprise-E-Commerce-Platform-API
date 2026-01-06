@@ -15,6 +15,8 @@ export const AnalyticsService = {
       totalCustomers,
       lastMonthCustomers,
       totalProducts,
+      totalCategories,
+      totalBrands,
     ] = await Promise.all([
       // Total revenue (all completed orders)
       prisma.order.aggregate({
@@ -41,6 +43,10 @@ export const AnalyticsService = {
       }),
       // Total products
       prisma.product.count({ where: { isActive: true } }),
+      // Total categories
+      prisma.category.count(),
+      // Total brands
+      prisma.brand.count(),
     ]);
 
     // Calculate percentage changes
@@ -63,6 +69,8 @@ export const AnalyticsService = {
       customersChange: `+${customersChange}%`,
       totalProducts,
       productsChange: "0%",
+      totalCategories,
+      totalBrands,
     };
   },
 

@@ -291,7 +291,7 @@ export const OrdersService = {
   },
 
   // Update order status
-  updateOrderStatus: async (orderId: string, status: OrderStatus) => {
+  updateOrderStatus: async (orderId: string, status: OrderStatus, performedBy: string) => {
     const checkOrderExists = await prisma.order.findUnique({ where: { id: orderId } });
     if (!checkOrderExists) {
       throw new Error("Order not found");
@@ -309,26 +309,13 @@ export const OrdersService = {
           entityType: "ORDER",
           entityId: orderId,
           actorType: "ADMIN",
-          performedBy: `admin: ${checkOrderExists.userId}`, // Replace with actual admin identifier
-          before:  checkOrderExists.status,
-          after: checkOrderExists.status !== status ? status : checkOrderExists.status,
+          performedBy: performedBy,
+          before: { status: checkOrderExists.status },
+          after: { status: status },
         }
       })
     ])
-    // const order = await prisma.order.update({
-    //   where: { id: orderId },
-    //   data: { status: status },
-    //   include: {
-    //     user: true,
-    //     items: {
-    //       include: {
-    //         product: true,
-    //       },
-    //     },
-    //   },
-    // });
-
-    // return order;
+    
   },
 
   // Cancel order (user can cancel PENDING orders)

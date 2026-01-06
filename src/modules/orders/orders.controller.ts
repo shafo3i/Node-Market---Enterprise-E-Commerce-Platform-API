@@ -90,6 +90,7 @@ export const OrdersController = {
   // Update order status (admin only)
   updateOrderStatus: async (req: Request, res: Response) => {
     try {
+      const session = res.locals.session;
      
       const { id } = req.params;
       const { status } = req.body;
@@ -102,7 +103,7 @@ export const OrdersController = {
         return res.status(400).json({ success: false, message: "Status is required" });
       }
 
-      const order = await OrdersService.updateOrderStatus(id, status);
+      const order = await OrdersService.updateOrderStatus(id, status, session.user.id);
       res.status(200).json({ success: true, order, message: "Order status updated" });
     } catch (error) {
       res.status(400).json({ success: false, error: (error as Error).message });

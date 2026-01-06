@@ -66,8 +66,24 @@ export const UserService = {
                     action: "ADMIN_UPDATE",
                     actorType: "ADMIN",
                     performedBy: `admin:${adminId}`,
-                    before: JSON.stringify(before),
-                    after: JSON.stringify(data),
+                    // Only log fields that are being changed, exclude sensitive data
+                    before: JSON.stringify({
+                        ...Object.keys(data).reduce((acc, key) => {
+                            if (key !== 'password' && before[key as keyof typeof before] !== undefined) {
+                                acc[key] = before[key as keyof typeof before];
+                            }
+                            return acc;
+                        }, {} as Record<string, any>)
+                    }),
+                    // Log what was sent for update (excluding password)
+                    after: JSON.stringify({
+                        ...Object.keys(data).reduce((acc, key) => {
+                            if (key !== 'password') {
+                                acc[key] = data[key as keyof typeof data];
+                            }
+                            return acc;
+                        }, {} as Record<string, any>)
+                    }),
                 },
             }),
         ]);
@@ -85,12 +101,14 @@ export const UserService = {
         const user = await prisma.user.findUnique({ where: { id } });
         if (!user) throw new Error("User not found");
 
+        const now = new Date();
+        
         await prisma.$transaction([
             prisma.user.update({
                 where: { id },
                 data: {
                     status: "DISABLED",
-                    deletedAt: new Date(),
+                    deletedAt: now,
                 },
             }),
             prisma.auditLog.create({
@@ -100,8 +118,14 @@ export const UserService = {
                     action: "SOFT_DELETE",
                     actorType: "ADMIN",
                     performedBy: `admin:${adminId}`,
-                    before: { status: user.status },
-                    after: { status: "DISABLED" },
+                    before: { 
+                        status: user.status,
+                        deletedAt: user.deletedAt 
+                    },
+                    after: { 
+                        status: "DISABLED",
+                        deletedAt: now.toISOString()
+                    },
                 },
             }),
         ]);

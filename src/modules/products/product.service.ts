@@ -351,4 +351,155 @@ export const ProductService = {
     await prisma.productVariant.delete({ where: { id: variantId } });
     return { success: true };
   },
+
+  // Inventory Management Functions
+  
+  // Get products that need restocking
+  getLowStockProducts: async () => {
+    // Fetch all active products and filter where stock <= lowStockThreshold
+    const allProducts = await prisma.product.findMany({
+      where: {
+        isActive: true,
+      },
+      include: {
+        brand: true,
+        category: true,
+      },
+    });
+
+    // Filter products where stock is at or below threshold
+    const lowStockProducts = allProducts.filter(
+      product => product.stock <= product.lowStockThreshold
+    );
+
+    // Sort by stock level (lowest first)
+    lowStockProducts.sort((a, b) => a.stock - b.stock);
+
+    return lowStockProducts.map(product => ({
+      ...product,
+      stockStatus: product.stock === 0 ? 'OUT_OF_STOCK' : 'LOW_STOCK',
+      stockDeficit: Math.max(0, product.lowStockThreshold - product.stock),
+    }));
+  },
+
+  // Bulk update stock for multiple products
+  bulkUpdateStock: async (updates: Array<{ productId: string; quantity: number; operation: 'SET' | 'INCREMENT' | 'DECREMENT' }>, performedBy: string) => {
+    const results = await prisma.$transaction(async (tx) => {
+      const updateResults = [];
+
+      for (const update of updates) {
+        const product = await tx.product.findUnique({
+          where: { id: update.productId },
+        });
+
+        if (!product) {
+          updateResults.push({
+            productId: update.productId,
+            success: false,
+            error: 'Product not found',
+          });
+          continue;
+        }
+
+        let newStock: number;
+        switch (update.operation) {
+          case 'SET':
+            newStock = update.quantity;
+            break;
+          case 'INCREMENT':
+            newStock = product.stock + update.quantity;
+            break;
+          case 'DECREMENT':
+            newStock = Math.max(0, product.stock - update.quantity);
+            break;
+        }
+
+        const updatedProduct = await tx.product.update({
+          where: { id: update.productId },
+          data: { stock: newStock },
+        });
+
+        // Log the stock change
+        await tx.auditLog.create({
+          data: {
+            action: 'STOCK_UPDATE',
+            entityType: 'PRODUCT',
+            entityId: update.productId,
+            performedBy: performedBy,
+            actorType: 'ADMIN',
+            before: { stock: product.stock },
+            after: { stock: newStock, operation: update.operation, quantity: update.quantity },
+          },
+        });
+
+        updateResults.push({
+          productId: update.productId,
+          success: true,
+          previousStock: product.stock,
+          newStock: newStock,
+          product: updatedProduct,
+        });
+      }
+
+      return updateResults;
+    });
+
+    return results;
+  },
+
+  // Get stock change history for a product
+  getStockHistory: async (productId: string, limit: number = 50) => {
+    const history = await prisma.auditLog.findMany({
+      where: {
+        entityType: 'PRODUCT',
+        entityId: productId,
+        action: 'STOCK_UPDATE',
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: limit,
+    });
+
+    return history.map(log => ({
+      id: log.id,
+      performedBy: log.performedBy,
+      actorType: log.actorType,
+      previousStock: (log.before as any).stock,
+      newStock: (log.after as any).stock,
+      operation: (log.after as any).operation,
+      quantity: (log.after as any).quantity,
+      timestamp: log.createdAt,
+    }));
+  },
+
+  // Get overall stock statistics
+  getStockStatistics: async () => {
+    const allProducts = await prisma.product.findMany({
+      where: { isActive: true },
+      select: {
+        stock: true,
+        lowStockThreshold: true,
+      },
+    });
+
+    const totalProducts = allProducts.length;
+    const outOfStock = allProducts.filter(p => p.stock === 0).length;
+    const lowStock = allProducts.filter(p => p.stock > 0 && p.stock <= p.lowStockThreshold).length;
+    const healthyStock = allProducts.filter(p => p.stock > p.lowStockThreshold).length;
+    const totalStockUnits = allProducts.reduce((sum, p) => sum + p.stock, 0);
+
+    return {
+      totalProducts,
+      outOfStock,
+      lowStock,
+      healthyStock,
+      totalStockUnits,
+      stockDistribution: {
+        outOfStockPercentage: totalProducts > 0 ? ((outOfStock / totalProducts) * 100).toFixed(1) : '0.0',
+        lowStockPercentage: totalProducts > 0 ? ((lowStock / totalProducts) * 100).toFixed(1) : '0.0',
+        healthyStockPercentage: totalProducts > 0 ? ((healthyStock / totalProducts) * 100).toFixed(1) : '0.0',
+      },
+    };
+  },
 };

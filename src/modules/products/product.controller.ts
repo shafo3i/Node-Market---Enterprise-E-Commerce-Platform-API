@@ -259,4 +259,103 @@ export const ProductController = {
       res.status(400).json({ success: false, error: (error as Error).message });
     }
   },
+
+  // Inventory Management Endpoints
+
+  getLowStockProducts: async (req: Request, res: Response) => {
+    try {
+      const products = await ProductService.getLowStockProducts();
+      res.status(200).json({ 
+        success: true, 
+        count: products.length,
+        products 
+      });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  },
+
+  bulkUpdateStock: async (req: Request, res: Response) => {
+    try {
+      const session = res.locals.session;
+      const { updates } = req.body;
+
+      if (!Array.isArray(updates) || updates.length === 0) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Updates array is required and must not be empty' 
+        });
+      }
+
+      // Validate each update
+      for (const update of updates) {
+        if (!update.productId || !update.operation || update.quantity === undefined) {
+          return res.status(400).json({
+            success: false,
+            error: 'Each update must include productId, operation, and quantity'
+          });
+        }
+
+        if (!['SET', 'INCREMENT', 'DECREMENT'].includes(update.operation)) {
+          return res.status(400).json({
+            success: false,
+            error: 'Operation must be SET, INCREMENT, or DECREMENT'
+          });
+        }
+
+        if (update.quantity < 0) {
+          return res.status(400).json({
+            success: false,
+            error: 'Quantity cannot be negative'
+          });
+        }
+      }
+
+      const results = await ProductService.bulkUpdateStock(
+        updates,
+        `admin:${session.user.id}`
+      );
+
+      const successCount = results.filter(r => r.success).length;
+      const failureCount = results.filter(r => !r.success).length;
+
+      res.status(200).json({
+        success: true,
+        message: `Updated ${successCount} products, ${failureCount} failed`,
+        results
+      });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  },
+
+  getStockHistory: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 50;
+
+      if (!id) {
+        return res.status(400).json({ success: false, error: 'Product ID is required' });
+      }
+
+      const history = await ProductService.getStockHistory(id, limit);
+      res.status(200).json({ 
+        success: true, 
+        productId: id,
+        count: history.length,
+        history 
+      });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  },
+
+  getStockStatistics: async (req: Request, res: Response) => {
+    try {
+      const statistics = await ProductService.getStockStatistics();
+      res.status(200).json({ success: true, statistics });
+    } catch (error) {
+      res.status(400).json({ success: false, error: (error as Error).message });
+    }
+  },
 };

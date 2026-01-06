@@ -1,16 +1,13 @@
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
-import { fromNodeHeaders } from "better-auth/node";
-import { auth } from '../../auth'
 import { updateUserSchema } from "./user.validation";
 
 
 export const UserController = {
     async getProfile(req: Request, res: Response) {
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
+        // Session already verified by isAuthenticated middleware and stored in res.locals
+        const session = res.locals.session;
+        
         const user = await UserService.getUserById(session.user.id);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -25,11 +22,8 @@ export const UserController = {
     // Update user
     async updateUser(req: Request, res: Response) {
         console.log("updateUser HIT. Body:", JSON.stringify(req.body, null, 2));
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-
+        // Session already verified by isAuthenticated middleware and stored in res.locals
+        const session = res.locals.session;
 
         const validate = updateUserSchema.safeParse(req.body);
         if (!validate.success) {
@@ -57,28 +51,14 @@ export const UserController = {
     //for admins get all users
     async getAllUsers(req: Request, res: Response) {
         console.log("getAllUsers HIT");
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-        if (session.user.role !== "ADMIN") {
-            return res.status(403).json({ error: "Forbidden" });
-        }
-
+        // Session and admin role already verified by isAdmin middleware
         const users = await UserService.getAllUsers();
         return res.status(200).json(users);
     },
 
     //for admins get user by id
     async getUserByIdAdmin(req: Request, res: Response) {
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-        if (session.user.role !== "ADMIN") {
-            return res.status(403).json({ error: "Forbidden" });
-        }
-
+        // Session and admin role already verified by isAdmin middleware
         const { id } = req.params;
         if (!id) return res.status(400).json({ error: "User ID is required" });
 
@@ -91,13 +71,8 @@ export const UserController = {
     //for admins update user
     async updateUserByAdmin(req: Request, res: Response) {
         console.log("updateUserByAdmin HIT. Body:", JSON.stringify(req.body, null, 2));
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-        if (session.user.role !== "ADMIN") {
-            return res.status(403).json({ error: "Forbidden" });
-        }
+        // Session and admin role already verified by isAdmin middleware
+        const session = res.locals.session;
 
         const { id } = req.params; // Get User ID from URL
         if (!id) return res.status(400).json({ error: "User ID is required" });
@@ -126,13 +101,8 @@ export const UserController = {
     //for admins delete user
     async deleteUserByAdmin(req: Request, res: Response) {
         console.log("deleteUserByAdmin HIT. Body:", JSON.stringify(req.body, null, 2));
-        const session = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-        if (!session?.user) {
-            return res.status(401).json({ error: "Unauthenticated" });
-        }
-        if (session.user.role !== "ADMIN") {
-            return res.status(403).json({ error: "Forbidden" });
-        }
+        // Session and admin role already verified by isAdmin middleware
+        const session = res.locals.session;
 
         const { id } = req.params;
         if (!id) return res.status(400).json({ error: "User ID is required" });

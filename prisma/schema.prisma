@@ -29,6 +29,7 @@ model User {
   accounts      Account[]
   carts         Cart?
   orders        Order[]
+  reviews       Review[]
   wishlistItems WishlistItem[]
   status        UserStatus     @default(ACTIVE)
   deletedAt     DateTime?
@@ -136,12 +137,16 @@ model ProductVariant {
 
 model Review {
   id        String   @id @default(cuid())
-  rating    Int
-  comment   String?
+  rating    Int      @db.SmallInt // 1-5 stars
+  comment   String?  @db.Text
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   productId String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([productId, userId]) // One review per user per product
   @@index([productId, rating])
   @@map("reviews")
 }

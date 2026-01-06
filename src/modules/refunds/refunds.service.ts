@@ -21,7 +21,7 @@ export const RefundsService = {
     },
 
     //update refund status
-    updateRefundStatus: async (id: string, status: OrderStatus) => {
+    updateRefundStatus: async (id: string, status: OrderStatus, performedBy: string) => {
         const checkOrderExists = await prisma.order.findUnique({ where: { id } })
         if (!checkOrderExists) {
             throw new Error('Order not found');
@@ -33,8 +33,7 @@ export const RefundsService = {
             }),
             prisma.auditLog.create({
                 data: {
-                    performedBy: "SYSTEM",
-                    createdAt: new Date(),
+                    performedBy: performedBy,
                     action: "STATUS_UPDATE",
                     entityType: "ORDER",
                     entityId: id,
@@ -52,7 +51,7 @@ export const RefundsService = {
     },
 
     //update refund amount
-    updateRefundAmount: async (id: string, amount: number) => {
+    updateRefundAmount: async (id: string, amount: number, performedBy: string) => {
         const checkOrderExists = await prisma.order.findUnique({ where: { id } })
         if (!checkOrderExists) {
             throw new Error('Order not found');
@@ -64,8 +63,7 @@ export const RefundsService = {
             }),
             prisma.auditLog.create({
                 data: {
-                    performedBy: "SYSTEM",
-                    createdAt: new Date(),
+                    performedBy: performedBy,
                     action: "AMOUNT_UPDATE",
                     entityType: "ORDER",
                     entityId: id,
@@ -79,7 +77,7 @@ export const RefundsService = {
     
 
     //update refund reference code
-    updateRefundReferenceCode: async (id: string, OrderReference: string) => {
+    updateRefundReferenceCode: async (id: string, OrderReference: string, performedBy: string) => {
         const checkOrderExists = await prisma.order.findUnique({ where: { id } })
         if (!checkOrderExists) {
             throw new Error('Order not found');
@@ -91,8 +89,7 @@ export const RefundsService = {
             }),
             prisma.auditLog.create({
                 data: {
-                    performedBy: "SYSTEM",
-                    createdAt: new Date(),
+                    performedBy: performedBy,
                     action: "REFERENCE_CODE_UPDATE",
                     entityType: "ORDER",
                     entityId: id,
