@@ -464,6 +464,20 @@ model Carrier {
   @@map("carriers")
 }
 
+model StoreSettings {
+  id                String   @id @default(cuid())
+  storeName         String
+  storeDescription  String?
+  storeEmail        String?
+  storePhone        String?
+  storeAddress      String?
+  currency          String   @default("GBP")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("store_settings")
+}
+
 // -------------------Enums------------------------// 
 
 enum EntityType {
@@ -562,4 +576,14 @@ model TwoFactor {
   @@index([secret])
   @@index([userId])
   @@map("twoFactor")
+}
+
+model Settings {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g., "store_currency", "payment_methods"
+  value     Json // Flexible JSON storage for different setting types
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
 }

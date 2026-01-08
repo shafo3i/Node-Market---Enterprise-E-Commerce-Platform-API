@@ -120,10 +120,8 @@ export const OrdersService = {
       return newOrder;
     });
 
-    // Send order confirmation email (async, don't block the response)
-    NotificationService.sendOrderConfirmation(order.id).catch(err =>
-      console.error('Order confirmation email error:', err)
-    );
+    // ⚠️ DO NOT send email here - order is still PENDING (unpaid)
+    // Email will be sent after successful payment in markPaymentPaid()
 
     return order;
   },
@@ -211,6 +209,11 @@ export const OrdersService = {
             after: { status: "SUCCEEDED" },
         },      }),
     ]);
+
+    // ✅ NOW send order confirmation email (payment succeeded)
+    NotificationService.sendOrderConfirmation(payment.orderId).catch(err =>
+      console.error('Order confirmation email error:', err)
+    );
 
     // SECURITY: Auto-generate invoice after successful payment (async, don't block)
     generateInvoice(payment.orderId).catch(err =>

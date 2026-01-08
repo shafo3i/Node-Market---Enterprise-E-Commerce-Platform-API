@@ -25,6 +25,7 @@ import refundsRoute from './modules/refunds/refunds.route';
 import carrierRoute from './modules/carrier/carrier.route';
 import addressRoutes from './modules/addresses/address.route';
 import invoiceRoutes from './modules/invoices/invoice.route';
+import settingsRoutes from './modules/settings/settings.route';
 // import morgan from 'morgan';
 
 
@@ -155,6 +156,9 @@ app.use("/api/addresses", addressRoutes);
 
 // Invoice routes
 app.use("/api/invoices", invoiceRoutes);
+
+// Settings routes (Admin only)
+app.use("/api/settings", settingsRoutes);
 
 // dispute routes
 app.use("/api/disputes", disputeRoute);

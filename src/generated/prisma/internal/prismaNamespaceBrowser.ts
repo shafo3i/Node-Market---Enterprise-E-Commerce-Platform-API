@@ -74,7 +74,9 @@ export const ModelName = {
   Dispute: 'Dispute',
   auditLog: 'auditLog',
   Carrier: 'Carrier',
-  TwoFactor: 'TwoFactor'
+  StoreSettings: 'StoreSettings',
+  TwoFactor: 'TwoFactor',
+  Settings: 'Settings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -456,6 +458,21 @@ export const CarrierScalarFieldEnum = {
 export type CarrierScalarFieldEnum = (typeof CarrierScalarFieldEnum)[keyof typeof CarrierScalarFieldEnum]
 
 
+export const StoreSettingsScalarFieldEnum = {
+  id: 'id',
+  storeName: 'storeName',
+  storeDescription: 'storeDescription',
+  storeEmail: 'storeEmail',
+  storePhone: 'storePhone',
+  storeAddress: 'storeAddress',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreSettingsScalarFieldEnum = (typeof StoreSettingsScalarFieldEnum)[keyof typeof StoreSettingsScalarFieldEnum]
+
+
 export const TwoFactorScalarFieldEnum = {
   id: 'id',
   secret: 'secret',
@@ -464,6 +481,17 @@ export const TwoFactorScalarFieldEnum = {
 } as const
 
 export type TwoFactorScalarFieldEnum = (typeof TwoFactorScalarFieldEnum)[keyof typeof TwoFactorScalarFieldEnum]
+
+
+export const SettingsScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
 
 
 export const SortOrder = {

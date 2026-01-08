@@ -407,7 +407,9 @@ export const ModelName = {
   Dispute: 'Dispute',
   auditLog: 'auditLog',
   Carrier: 'Carrier',
-  TwoFactor: 'TwoFactor'
+  StoreSettings: 'StoreSettings',
+  TwoFactor: 'TwoFactor',
+  Settings: 'Settings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "twoFactor"
+    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "storeSettings" | "twoFactor" | "settings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2129,6 +2131,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StoreSettings: {
+      payload: Prisma.$StoreSettingsPayload<ExtArgs>
+      fields: Prisma.StoreSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StoreSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StoreSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.StoreSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StoreSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.StoreSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.StoreSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.StoreSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StoreSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.StoreSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        update: {
+          args: Prisma.StoreSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.StoreSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StoreSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StoreSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.StoreSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoreSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.StoreSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStoreSettings>
+        }
+        groupBy: {
+          args: Prisma.StoreSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StoreSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StoreSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
     TwoFactor: {
       payload: Prisma.$TwoFactorPayload<ExtArgs>
       fields: Prisma.TwoFactorFieldRefs
@@ -2200,6 +2276,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TwoFactorCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TwoFactorCountAggregateOutputType> | number
+        }
+      }
+    }
+    Settings: {
+      payload: Prisma.$SettingsPayload<ExtArgs>
+      fields: Prisma.SettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.SettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        findMany: {
+          args: Prisma.SettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        create: {
+          args: Prisma.SettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        createMany: {
+          args: Prisma.SettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.SettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        update: {
+          args: Prisma.SettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.SettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.SettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.SettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSettings>
+        }
+        groupBy: {
+          args: Prisma.SettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingsCountAggregateOutputType> | number
         }
       }
     }
@@ -2605,6 +2755,21 @@ export const CarrierScalarFieldEnum = {
 export type CarrierScalarFieldEnum = (typeof CarrierScalarFieldEnum)[keyof typeof CarrierScalarFieldEnum]
 
 
+export const StoreSettingsScalarFieldEnum = {
+  id: 'id',
+  storeName: 'storeName',
+  storeDescription: 'storeDescription',
+  storeEmail: 'storeEmail',
+  storePhone: 'storePhone',
+  storeAddress: 'storeAddress',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StoreSettingsScalarFieldEnum = (typeof StoreSettingsScalarFieldEnum)[keyof typeof StoreSettingsScalarFieldEnum]
+
+
 export const TwoFactorScalarFieldEnum = {
   id: 'id',
   secret: 'secret',
@@ -2613,6 +2778,17 @@ export const TwoFactorScalarFieldEnum = {
 } as const
 
 export type TwoFactorScalarFieldEnum = (typeof TwoFactorScalarFieldEnum)[keyof typeof TwoFactorScalarFieldEnum]
+
+
+export const SettingsScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3031,7 +3207,9 @@ export type GlobalOmitConfig = {
   dispute?: Prisma.DisputeOmit
   auditLog?: Prisma.auditLogOmit
   carrier?: Prisma.CarrierOmit
+  storeSettings?: Prisma.StoreSettingsOmit
   twoFactor?: Prisma.TwoFactorOmit
+  settings?: Prisma.SettingsOmit
 }
 
 /* Types for Logging */
