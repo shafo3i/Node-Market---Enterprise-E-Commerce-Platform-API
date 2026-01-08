@@ -19,14 +19,11 @@ model User {
   idNumber      String?
   idType        UserIdType?
   idExpiryDate  String?
-  country       String?
-  city          String?
-  address       String?
-  postalCode    String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   sessions      Session[]
   accounts      Account[]
+  addresses     Address[]
   carts         Cart?
   orders        Order[]
   reviews       Review[]
@@ -37,8 +34,42 @@ model User {
   twoFactorEnabled Boolean?    @default(false)
   twofactors       TwoFactor[]
 
+  // Notification Preferences
+  emailOrderUpdates Boolean @default(true)
+  emailPromotions   Boolean @default(true)
+  emailNewsletter   Boolean @default(true)
+  pushOrderUpdates  Boolean @default(true)
+  pushFlashSales    Boolean @default(true)
+
   @@unique([email])
   @@map("user")
+}
+
+
+model Address {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label       String? // e.g., "Home", "Work", "Office"
+  type        AddressType @default(BOTH)
+  street      String
+  street2     String? // Apartment, suite, unit, etc.
+  city        String
+  state       String
+  postalCode  String
+  country     String
+  phoneNumber String? // Contact number for this address
+  isDefault   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations - Orders using this address
+  shippingOrders Order[] @relation("ShippingAddress")
+  billingOrders  Order[] @relation("BillingAddress")
+
+  @@index([userId])
+  @@index([userId, isDefault])
+  @@map("address")
 }
 
 model Session {
@@ -96,6 +127,7 @@ model Product {
   sku               String?  @unique // Stock Keeping Unit: Format: {BRAND-CODE}-{CATEGORY-CODE}-{PRODUCT-ID} (e.g., "APL-PHN-12345")
   description       String?
   price             Decimal
+  salePrice         Decimal? // Optional sale price - if set, displays as discounted price
   stock             Int      @default(0) // Available inventory quantity
   lowStockThreshold Int      @default(10) // Alert when stock falls below this number
   isActive          Boolean  @default(true)
@@ -114,6 +146,7 @@ model Product {
   brand         Brand            @relation(fields: [brandId], references: [id])
   categoryId    String
   category      Category         @relation(fields: [categoryId], references: [id])
+
 
   @@index([id, name])
   @@index([sku])
@@ -190,6 +223,22 @@ model Category {
   @@map("categories")
 }
 
+model Promotion {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  description String?
+  discount    Decimal  // e.g., 0.15 for 15% off
+  active      Boolean  @default(true)
+  startDate   DateTime
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([code])
+  @@map("promotions")
+}
+
+
 model Order {
   id             String      @id @default(cuid())
   userId         String
@@ -198,6 +247,14 @@ model Order {
   status         OrderStatus @default(PENDING)
   total          Decimal
   disputes       Dispute[]
+
+  // Shipping address
+  shippingAddressId String?
+  shippingAddress   Address? @relation("ShippingAddress", fields: [shippingAddressId], references: [id])
+  
+  // Billing address (optional, can default to shipping)
+  billingAddressId String?
+  billingAddress   Address? @relation("BillingAddress", fields: [billingAddressId], references: [id])
 
   // Shipping details
   trackingNumber  String?
@@ -210,10 +267,13 @@ model Order {
 
   items     OrderItem[]
   payments  Payment[]
+  invoices  Invoice[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
   @@index([userId, createdAt])
+  @@index([shippingAddressId])
+  @@index([billingAddressId])
   @@map("orders")
 }
 
@@ -290,6 +350,46 @@ model Payment {
 
   @@unique([provider, providerRef])
   @@map("payments")
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  invoiceNumber  String        @unique // Format: INV-20260108-00001
+  orderId        String        @unique // One invoice per order
+  order          Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  // Invoice details (snapshot at generation time)
+  subtotal       Decimal
+  taxRate        Decimal       @default(0) // e.g., 0.20 for 20% VAT
+  taxAmount      Decimal       @default(0)
+  total          Decimal
+  currency       String        @default("USD")
+  
+  // Customer details (snapshot)
+  customerName   String
+  customerEmail  String
+  billingAddress Json? // Store full address as JSON snapshot
+  
+  // File storage
+  pdfPath        String?       // Local file path or cloud storage URL
+  
+  // Status tracking
+  status         InvoiceStatus @default(DRAFT)
+  generatedAt    DateTime      @default(now())
+  sentAt         DateTime?
+  viewedAt       DateTime?
+  paidAt         DateTime?
+  
+  // Metadata
+  notes          String?       // Payment terms, notes to customer
+  dueDate        DateTime?     // For payment terms
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([invoiceNumber])
+  @@index([orderId])
+  @@index([status])
+  @@map("invoices")
 }
 
 model PaymentWebhook {
@@ -376,6 +476,7 @@ enum EntityType {
   BRAND
   CATEGORY
   CARRIER
+  INVOICE
 }
 
 enum ActorType {
@@ -414,6 +515,16 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum InvoiceStatus {
+  DRAFT      // Generated but not sent
+  SENT       // Sent to customer
+  VIEWED     // Customer opened invoice
+  PAID       // Payment received
+  OVERDUE    // Payment overdue
+  CANCELLED  // Invoice cancelled
+  REFUNDED   // Invoice refunded
+}
+
 enum UserStatus {
   DISABLED // default on signup
   ACTIVE // allowed to transact
@@ -433,6 +544,12 @@ enum UserIdType {
   PASSPORT
   DRIVER_LICENSE
   OTHER
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+  BOTH
 }
 
 model TwoFactor {

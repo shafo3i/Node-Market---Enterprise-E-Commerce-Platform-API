@@ -14,6 +14,10 @@ const profilerLimiter = rateLimit({
 router.get("/profile", profilerLimiter, isAuthenticated, UserController.getProfile);
 router.put("/profile", profilerLimiter, isAuthenticated, UserController.updateUser);
 
+// Notification preferences routes
+router.get("/notifications/preferences", isAuthenticated, UserController.getNotificationPreferences);
+router.put("/notifications/preferences", isAuthenticated, UserController.updateNotificationPreferences);
+
 // Admin routes - IMPORTANT: specific routes BEFORE parameterized routes
 router.get("/all", isAdmin,  UserController.getAllUsers); // Must come before /:id
 router.get("/:id", isAdmin,  UserController.getUserByIdAdmin);

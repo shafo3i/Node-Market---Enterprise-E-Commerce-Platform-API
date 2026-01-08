@@ -8,6 +8,7 @@ export const ProductService = {
     isActive?: boolean;
     minPrice?: number;
     maxPrice?: number;
+    salePrice?: number;
     search?: string;
   }) => {
     const where: any = {};
@@ -28,6 +29,10 @@ export const ProductService = {
         { description: { contains: filters.search, mode: 'insensitive' } },
       ];
     }
+
+    // if (filters?.salePrice !== undefined) {
+    //   where.salePrice = { not: null };
+    // }
 
     const products = await prisma.product.findMany({
       where,
@@ -99,6 +104,7 @@ export const ProductService = {
     sku?: string | null;
     description?: string | null;
     price: number;
+    salePrice?: number | null;
     stock?: number;
     lowStockThreshold?: number;
     isActive?: boolean;
@@ -165,6 +171,7 @@ export const ProductService = {
         sku: data.sku ?? null,
         description: data.description ?? null,
         price: data.price,
+        salePrice: data.salePrice ?? null,
         stock: data.stock ?? 0,
         lowStockThreshold: data.lowStockThreshold ?? 10,
         isActive: data.isActive ?? true,
@@ -193,6 +200,7 @@ export const ProductService = {
     sku?: string | null;
     description?: string | null;
     price?: number;
+    salePrice?: number | null;
     stock?: number;
     lowStockThreshold?: number;
     isActive?: boolean;

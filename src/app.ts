@@ -23,6 +23,8 @@ import logsRoute from './modules/audit-logs/logs.route';
 import disputeRoute from './modules/dispute/dispute.route';
 import refundsRoute from './modules/refunds/refunds.route';
 import carrierRoute from './modules/carrier/carrier.route';
+import addressRoutes from './modules/addresses/address.route';
+import invoiceRoutes from './modules/invoices/invoice.route';
 // import morgan from 'morgan';
 
 
@@ -34,7 +36,7 @@ const app = express();
 app.use(
   cors({
     origin: true,// Replace with your frontend's origin
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
@@ -147,6 +149,12 @@ app.use('/api/products', productRoutes);
 
 // users routes
 app.use("/api/users", userRoute);
+
+// Address routes
+app.use("/api/addresses", addressRoutes);
+
+// Invoice routes
+app.use("/api/invoices", invoiceRoutes);
 
 // dispute routes
 app.use("/api/disputes", disputeRoute);

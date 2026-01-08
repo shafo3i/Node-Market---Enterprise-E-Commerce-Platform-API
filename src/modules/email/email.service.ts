@@ -27,6 +27,29 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
     }
 };
 
+export const sendEmailWithAttachment = async (
+    to: string, 
+    subject: string, 
+    html: string, 
+    attachments: Array<{ filename: string; path: string }>
+) => {
+    try {
+        const info = await transporter.sendMail({
+            from: process.env.SMTP_FROM || '"Afrisys Support" <support@afrisys.com>',
+            to,
+            subject,
+            html,
+            attachments,
+        });
+
+        console.log("Message sent with attachment: %s", info.messageId);
+        return info;
+    } catch (error) {
+        console.error("Error sending email with attachment: ", error);
+        throw error;
+    }
+};
+
 export const verifySmtpConnection = async () => {
     try {
         await transporter.verify();

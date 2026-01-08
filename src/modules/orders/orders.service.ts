@@ -1,11 +1,27 @@
 import { prisma } from '../../config/prisma'
 import { stripe } from '../../lib/stripe/stripe.client'
 import { OrderStatus } from '../../generated/prisma/enums';
+import { NotificationService } from '../email/notification.service';
+import { generateInvoice } from '../invoices/invoice.service';
 
 
 export const OrdersService = {
 
-  createOrder: async (userId: string) => {
+  createOrder: async (userId: string, shippingAddressId?: string) => {
+    // Validate shipping address if provided
+    if (shippingAddressId) {
+      const address = await prisma.address.findFirst({
+        where: {
+          id: shippingAddressId,
+          userId: userId,
+        },
+      });
+
+      if (!address) {
+        throw new Error("Invalid shipping address or address does not belong to user");
+      }
+    }
+
     // Fetch user's cart with items
     const cart = await prisma.cart.findUnique({
       where: { userId },
@@ -36,7 +52,8 @@ export const OrdersService = {
 
     // Calculate total
     const total = cart.items.reduce((sum: number, item) => {
-      return sum + Number(item.product.price) * item.quantity;
+      const effectivePrice = item.product.salePrice || item.product.price;
+      return sum + Number(effectivePrice) * item.quantity;
     }, 0);
 
     // Generate unique order reference
@@ -58,23 +75,27 @@ export const OrdersService = {
           orderReference: generateOrderReference(),
           total,
           status: "PENDING",
+          shippingAddressId: shippingAddressId || null,
+          billingAddressId: shippingAddressId || null, // Default billing to shipping
           items: {
             create: cart.items.map(item => ({
               productId: item.productId,
               variantId: null,
               quantity: item.quantity,
-              price: item.product.price,
+              price: item.product.salePrice || item.product.price, // Use sale price if available
             })),
           },
         },
         include: {
           items: true,
+          shippingAddress: true,
+          billingAddress: true,
         },
       });
 
       // Reduce stock for each product
       for (const item of cart.items) {
-        await tx.product.update({
+        const updatedProduct = await tx.product.update({
           where: { id: item.productId },
           data: {
             stock: {
@@ -82,6 +103,13 @@ export const OrdersService = {
             },
           },
         });
+
+        // Check if stock is low after update (async, don't await)
+        if (updatedProduct.stock <= updatedProduct.lowStockThreshold) {
+          NotificationService.sendLowStockAlert(item.productId).catch(err => 
+            console.error('Low stock alert error:', err)
+          );
+        }
       }
 
       // Clear cart
@@ -91,6 +119,11 @@ export const OrdersService = {
 
       return newOrder;
     });
+
+    // Send order confirmation email (async, don't block the response)
+    NotificationService.sendOrderConfirmation(order.id).catch(err =>
+      console.error('Order confirmation email error:', err)
+    );
 
     return order;
   },
@@ -179,6 +212,11 @@ export const OrdersService = {
         },      }),
     ]);
 
+    // SECURITY: Auto-generate invoice after successful payment (async, don't block)
+    generateInvoice(payment.orderId).catch(err =>
+      console.error('Invoice generation error:', err)
+    );
+
    return { success: true };
     
 
@@ -194,12 +232,11 @@ export const OrdersService = {
             id: true,
             name: true,
             email: true,
-            address: true,
-            city: true,
-            country: true,
-            postalCode: true,
+            phoneNumber: true,
           },
         },
+        shippingAddress: true,
+        billingAddress: true,
         items: {
           include: {
             product: {
@@ -233,6 +270,8 @@ export const OrdersService = {
             email: true,
           },
         },
+        shippingAddress: true,
+        billingAddress: true,
         items: {
           include: {
             product: {
@@ -279,6 +318,8 @@ export const OrdersService = {
             },
           },
         },
+        shippingAddress: true,
+        billingAddress: true,
         payments: true,
       },
     });
@@ -297,7 +338,9 @@ export const OrdersService = {
       throw new Error("Order not found");
     }
 
-    return await prisma.$transaction([
+    const oldStatus = checkOrderExists.status;
+
+    const result = await prisma.$transaction([
       // Update order status
       prisma.order.update({
         where: { id: orderId },
@@ -310,12 +353,18 @@ export const OrdersService = {
           entityId: orderId,
           actorType: "ADMIN",
           performedBy: performedBy,
-          before: { status: checkOrderExists.status },
+          before: { status: oldStatus },
           after: { status: status },
         }
       })
-    ])
-    
+    ]);
+
+    // Send status update notification (async, don't block)
+    NotificationService.sendOrderStatusUpdate(orderId, oldStatus, status).catch(err =>
+      console.error('Status update email error:', err)
+    );
+
+    return result;
   },
 
   // Cancel order (user can cancel PENDING orders)
@@ -395,6 +444,12 @@ export const OrdersService = {
         payments: true,
       },
     });
+
+    // Send shipping notification (async, don't block)
+    NotificationService.sendShippingNotification(orderId).catch(err =>
+      console.error('Shipping notification email error:', err)
+    );
+
     return order;
   },
 }

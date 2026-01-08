@@ -19,6 +19,11 @@ export const UserService = {
 
                     }
                 },
+                addresses: {
+                    orderBy: {
+                        isDefault: 'desc'
+                    }
+                }
 
             }
 
@@ -137,5 +142,45 @@ export const UserService = {
     //     const user = await prisma.user.delete({ where: { id } })
     //     return user
     // },
+
+    // Get notification preferences
+    getNotificationPreferences: async (userId: string) => {
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                emailOrderUpdates: true,
+                emailPromotions: true,
+                emailNewsletter: true,
+                pushOrderUpdates: true,
+                pushFlashSales: true,
+            },
+        });
+        return user;
+    },
+
+    // Update notification preferences
+    updateNotificationPreferences: async (
+        userId: string,
+        preferences: Partial<{
+            emailOrderUpdates: boolean;
+            emailPromotions: boolean;
+            emailNewsletter: boolean;
+            pushOrderUpdates: boolean;
+            pushFlashSales: boolean;
+        }>
+    ) => {
+        const user = await prisma.user.update({
+            where: { id: userId },
+            data: preferences,
+            select: {
+                emailOrderUpdates: true,
+                emailPromotions: true,
+                emailNewsletter: true,
+                pushOrderUpdates: true,
+                pushFlashSales: true,
+            },
+        });
+        return user;
+    },
 }
 

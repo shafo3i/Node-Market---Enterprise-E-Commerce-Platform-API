@@ -35,8 +35,12 @@ export const createProductSchema = z.object({
     z.literal(''),
   ]).transform(val => val === '' || val === null ? null : val).optional(),
   price: z.number()
-    .positive('Price must be positive')
-    .max(999999.99, 'Price is too high'),
+    .positive('Price must be positive'),
+
+  salePrice: z.union([
+    z.number().positive('Sale price must be positive'),
+    z.null(),
+  ]).optional(),
   stock: z.number()
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative')
@@ -69,6 +73,9 @@ export const createProductSchema = z.object({
     price: z.number()
       .positive('Variant price must be positive')
       .optional(),
+    salePrice: z.number()
+      .positive('Variant sale price must be positive')
+      .optional(),
     stock: z.number()
       .int('Stock must be an integer')
       .min(0, 'Stock cannot be negative'),
@@ -93,8 +100,11 @@ export const updateProductSchema = z.object({
   ]).transform(val => val === '' || val === null ? null : val).optional(),
   price: z.number()
     .positive('Price must be positive')
-    .max(999999.99, 'Price is too high')
     .optional(),
+  salePrice: z.union([
+    z.number().positive('Sale price must be positive'),
+    z.null(),
+  ]).optional(),
   stock: z.number()
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative')

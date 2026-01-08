@@ -18,7 +18,8 @@ export const EntityType = {
   REVIEW: 'REVIEW',
   BRAND: 'BRAND',
   CATEGORY: 'CATEGORY',
-  CARRIER: 'CARRIER'
+  CARRIER: 'CARRIER',
+  INVOICE: 'INVOICE'
 } as const
 
 export type EntityType = (typeof EntityType)[keyof typeof EntityType]
@@ -75,6 +76,19 @@ export const PaymentStatus = {
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
+export const InvoiceStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  VIEWED: 'VIEWED',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+
 export const UserStatus = {
   DISABLED: 'DISABLED',
   ACTIVE: 'ACTIVE',
@@ -103,3 +117,12 @@ export const UserIdType = {
 } as const
 
 export type UserIdType = (typeof UserIdType)[keyof typeof UserIdType]
+
+
+export const AddressType = {
+  SHIPPING: 'SHIPPING',
+  BILLING: 'BILLING',
+  BOTH: 'BOTH'
+} as const
+
+export type AddressType = (typeof AddressType)[keyof typeof AddressType]

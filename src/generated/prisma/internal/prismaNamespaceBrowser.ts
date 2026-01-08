@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Address: 'Address',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
@@ -60,12 +61,14 @@ export const ModelName = {
   Review: 'Review',
   Brand: 'Brand',
   Category: 'Category',
+  Promotion: 'Promotion',
   Order: 'Order',
   OrderItem: 'OrderItem',
   Cart: 'Cart',
   CartItem: 'CartItem',
   WishlistItem: 'WishlistItem',
   Payment: 'Payment',
+  Invoice: 'Invoice',
   PaymentWebhook: 'PaymentWebhook',
   StripeEvent: 'StripeEvent',
   Dispute: 'Dispute',
@@ -101,18 +104,39 @@ export const UserScalarFieldEnum = {
   idNumber: 'idNumber',
   idType: 'idType',
   idExpiryDate: 'idExpiryDate',
-  country: 'country',
-  city: 'city',
-  address: 'address',
-  postalCode: 'postalCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   status: 'status',
   deletedAt: 'deletedAt',
-  twoFactorEnabled: 'twoFactorEnabled'
+  twoFactorEnabled: 'twoFactorEnabled',
+  emailOrderUpdates: 'emailOrderUpdates',
+  emailPromotions: 'emailPromotions',
+  emailNewsletter: 'emailNewsletter',
+  pushOrderUpdates: 'pushOrderUpdates',
+  pushFlashSales: 'pushFlashSales'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  label: 'label',
+  type: 'type',
+  street: 'street',
+  street2: 'street2',
+  city: 'city',
+  state: 'state',
+  postalCode: 'postalCode',
+  country: 'country',
+  phoneNumber: 'phoneNumber',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {
@@ -167,6 +191,7 @@ export const ProductScalarFieldEnum = {
   sku: 'sku',
   description: 'description',
   price: 'price',
+  salePrice: 'salePrice',
   stock: 'stock',
   lowStockThreshold: 'lowStockThreshold',
   isActive: 'isActive',
@@ -238,12 +263,29 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+export const PromotionScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  description: 'description',
+  discount: 'discount',
+  active: 'active',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
+
+
 export const OrderScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   orderReference: 'orderReference',
   status: 'status',
   total: 'total',
+  shippingAddressId: 'shippingAddressId',
+  billingAddressId: 'billingAddressId',
   trackingNumber: 'trackingNumber',
   shippingCarrier: 'shippingCarrier',
   shippedAt: 'shippedAt',
@@ -314,6 +356,33 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  invoiceNumber: 'invoiceNumber',
+  orderId: 'orderId',
+  subtotal: 'subtotal',
+  taxRate: 'taxRate',
+  taxAmount: 'taxAmount',
+  total: 'total',
+  currency: 'currency',
+  customerName: 'customerName',
+  customerEmail: 'customerEmail',
+  billingAddress: 'billingAddress',
+  pdfPath: 'pdfPath',
+  status: 'status',
+  generatedAt: 'generatedAt',
+  sentAt: 'sentAt',
+  viewedAt: 'viewedAt',
+  paidAt: 'paidAt',
+  notes: 'notes',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
 
 
 export const PaymentWebhookScalarFieldEnum = {
@@ -403,6 +472,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const JsonNullValueInput = {

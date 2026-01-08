@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
-import { updateUserSchema } from "./user.validation";
+import { updateUserSchema, updateNotificationPreferencesSchema } from "./user.validation";
 
 
 export const UserController = {
@@ -116,6 +116,43 @@ export const UserController = {
         } catch (error: any) {
             console.error("Delete User Error:", error);
             return res.status(500).json({ error: "Failed to delete user profile", details: error.message || "Internal Server Error" });
+        }
+    },
+
+    // Get notification preferences
+    async getNotificationPreferences(req: Request, res: Response) {
+        const session = res.locals.session;
+        
+        try {
+            const preferences = await UserService.getNotificationPreferences(session.user.id);
+            return res.status(200).json(preferences);
+        } catch (error: any) {
+            console.error("Get notification preferences error:", error);
+            return res.status(500).json({ error: "Failed to get notification preferences" });
+        }
+    },
+
+    // Update notification preferences
+    async updateNotificationPreferences(req: Request, res: Response) {
+        const session = res.locals.session;
+
+        const validate = updateNotificationPreferencesSchema.safeParse(req.body);
+        if (!validate.success) {
+            return res.status(400).json({ error: validate.error.message });
+        }
+
+        try {
+            // Remove undefined fields to ensure clean update (exactOptionalPropertyTypes compatibility)
+            const updateData = JSON.parse(JSON.stringify(validate.data));
+            
+            const preferences = await UserService.updateNotificationPreferences(
+                session.user.id,
+                updateData
+            );
+            return res.status(200).json(preferences);
+        } catch (error: any) {
+            console.error("Update notification preferences error:", error);
+            return res.status(500).json({ error: "Failed to update notification preferences" });
         }
     },
 };

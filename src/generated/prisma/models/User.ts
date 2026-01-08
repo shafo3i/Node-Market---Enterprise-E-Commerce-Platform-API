@@ -35,15 +35,16 @@ export type UserMinAggregateOutputType = {
   idNumber: string | null
   idType: $Enums.UserIdType | null
   idExpiryDate: string | null
-  country: string | null
-  city: string | null
-  address: string | null
-  postalCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.UserStatus | null
   deletedAt: Date | null
   twoFactorEnabled: boolean | null
+  emailOrderUpdates: boolean | null
+  emailPromotions: boolean | null
+  emailNewsletter: boolean | null
+  pushOrderUpdates: boolean | null
+  pushFlashSales: boolean | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -57,15 +58,16 @@ export type UserMaxAggregateOutputType = {
   idNumber: string | null
   idType: $Enums.UserIdType | null
   idExpiryDate: string | null
-  country: string | null
-  city: string | null
-  address: string | null
-  postalCode: string | null
   createdAt: Date | null
   updatedAt: Date | null
   status: $Enums.UserStatus | null
   deletedAt: Date | null
   twoFactorEnabled: boolean | null
+  emailOrderUpdates: boolean | null
+  emailPromotions: boolean | null
+  emailNewsletter: boolean | null
+  pushOrderUpdates: boolean | null
+  pushFlashSales: boolean | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -79,15 +81,16 @@ export type UserCountAggregateOutputType = {
   idNumber: number
   idType: number
   idExpiryDate: number
-  country: number
-  city: number
-  address: number
-  postalCode: number
   createdAt: number
   updatedAt: number
   status: number
   deletedAt: number
   twoFactorEnabled: number
+  emailOrderUpdates: number
+  emailPromotions: number
+  emailNewsletter: number
+  pushOrderUpdates: number
+  pushFlashSales: number
   _all: number
 }
 
@@ -103,15 +106,16 @@ export type UserMinAggregateInputType = {
   idNumber?: true
   idType?: true
   idExpiryDate?: true
-  country?: true
-  city?: true
-  address?: true
-  postalCode?: true
   createdAt?: true
   updatedAt?: true
   status?: true
   deletedAt?: true
   twoFactorEnabled?: true
+  emailOrderUpdates?: true
+  emailPromotions?: true
+  emailNewsletter?: true
+  pushOrderUpdates?: true
+  pushFlashSales?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -125,15 +129,16 @@ export type UserMaxAggregateInputType = {
   idNumber?: true
   idType?: true
   idExpiryDate?: true
-  country?: true
-  city?: true
-  address?: true
-  postalCode?: true
   createdAt?: true
   updatedAt?: true
   status?: true
   deletedAt?: true
   twoFactorEnabled?: true
+  emailOrderUpdates?: true
+  emailPromotions?: true
+  emailNewsletter?: true
+  pushOrderUpdates?: true
+  pushFlashSales?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -147,15 +152,16 @@ export type UserCountAggregateInputType = {
   idNumber?: true
   idType?: true
   idExpiryDate?: true
-  country?: true
-  city?: true
-  address?: true
-  postalCode?: true
   createdAt?: true
   updatedAt?: true
   status?: true
   deletedAt?: true
   twoFactorEnabled?: true
+  emailOrderUpdates?: true
+  emailPromotions?: true
+  emailNewsletter?: true
+  pushOrderUpdates?: true
+  pushFlashSales?: true
   _all?: true
 }
 
@@ -242,15 +248,16 @@ export type UserGroupByOutputType = {
   idNumber: string | null
   idType: $Enums.UserIdType | null
   idExpiryDate: string | null
-  country: string | null
-  city: string | null
-  address: string | null
-  postalCode: string | null
   createdAt: Date
   updatedAt: Date
   status: $Enums.UserStatus
   deletedAt: Date | null
   twoFactorEnabled: boolean | null
+  emailOrderUpdates: boolean
+  emailPromotions: boolean
+  emailNewsletter: boolean
+  pushOrderUpdates: boolean
+  pushFlashSales: boolean
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -285,17 +292,19 @@ export type UserWhereInput = {
   idNumber?: Prisma.StringNullableFilter<"User"> | string | null
   idType?: Prisma.EnumUserIdTypeNullableFilter<"User"> | $Enums.UserIdType | null
   idExpiryDate?: Prisma.StringNullableFilter<"User"> | string | null
-  country?: Prisma.StringNullableFilter<"User"> | string | null
-  city?: Prisma.StringNullableFilter<"User"> | string | null
-  address?: Prisma.StringNullableFilter<"User"> | string | null
-  postalCode?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   twoFactorEnabled?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  emailOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  emailPromotions?: Prisma.BoolFilter<"User"> | boolean
+  emailNewsletter?: Prisma.BoolFilter<"User"> | boolean
+  pushOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  pushFlashSales?: Prisma.BoolFilter<"User"> | boolean
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  addresses?: Prisma.AddressListRelationFilter
   carts?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -314,17 +323,19 @@ export type UserOrderByWithRelationInput = {
   idNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   idType?: Prisma.SortOrderInput | Prisma.SortOrder
   idExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  country?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   twoFactorEnabled?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailOrderUpdates?: Prisma.SortOrder
+  emailPromotions?: Prisma.SortOrder
+  emailNewsletter?: Prisma.SortOrder
+  pushOrderUpdates?: Prisma.SortOrder
+  pushFlashSales?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  addresses?: Prisma.AddressOrderByRelationAggregateInput
   carts?: Prisma.CartOrderByWithRelationInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -346,17 +357,19 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   idNumber?: Prisma.StringNullableFilter<"User"> | string | null
   idType?: Prisma.EnumUserIdTypeNullableFilter<"User"> | $Enums.UserIdType | null
   idExpiryDate?: Prisma.StringNullableFilter<"User"> | string | null
-  country?: Prisma.StringNullableFilter<"User"> | string | null
-  city?: Prisma.StringNullableFilter<"User"> | string | null
-  address?: Prisma.StringNullableFilter<"User"> | string | null
-  postalCode?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   twoFactorEnabled?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  emailOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  emailPromotions?: Prisma.BoolFilter<"User"> | boolean
+  emailNewsletter?: Prisma.BoolFilter<"User"> | boolean
+  pushOrderUpdates?: Prisma.BoolFilter<"User"> | boolean
+  pushFlashSales?: Prisma.BoolFilter<"User"> | boolean
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  addresses?: Prisma.AddressListRelationFilter
   carts?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -375,15 +388,16 @@ export type UserOrderByWithAggregationInput = {
   idNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   idType?: Prisma.SortOrderInput | Prisma.SortOrder
   idExpiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  country?: Prisma.SortOrderInput | Prisma.SortOrder
-  city?: Prisma.SortOrderInput | Prisma.SortOrder
-  address?: Prisma.SortOrderInput | Prisma.SortOrder
-  postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   twoFactorEnabled?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailOrderUpdates?: Prisma.SortOrder
+  emailPromotions?: Prisma.SortOrder
+  emailNewsletter?: Prisma.SortOrder
+  pushOrderUpdates?: Prisma.SortOrder
+  pushFlashSales?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -403,15 +417,16 @@ export type UserScalarWhereWithAggregatesInput = {
   idNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   idType?: Prisma.EnumUserIdTypeNullableWithAggregatesFilter<"User"> | $Enums.UserIdType | null
   idExpiryDate?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  country?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  city?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  address?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  postalCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   twoFactorEnabled?: Prisma.BoolNullableWithAggregatesFilter<"User"> | boolean | null
+  emailOrderUpdates?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  emailPromotions?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  emailNewsletter?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  pushOrderUpdates?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  pushFlashSales?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
 }
 
 export type UserCreateInput = {
@@ -425,17 +440,19 @@ export type UserCreateInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -454,17 +471,19 @@ export type UserUncheckedCreateInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -483,17 +502,19 @@ export type UserUpdateInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -512,17 +533,19 @@ export type UserUncheckedUpdateInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -541,15 +564,16 @@ export type UserCreateManyInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
 }
 
 export type UserUpdateManyMutationInput = {
@@ -563,15 +587,16 @@ export type UserUpdateManyMutationInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -585,15 +610,16 @@ export type UserUncheckedUpdateManyInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -607,15 +633,16 @@ export type UserCountOrderByAggregateInput = {
   idNumber?: Prisma.SortOrder
   idType?: Prisma.SortOrder
   idExpiryDate?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   twoFactorEnabled?: Prisma.SortOrder
+  emailOrderUpdates?: Prisma.SortOrder
+  emailPromotions?: Prisma.SortOrder
+  emailNewsletter?: Prisma.SortOrder
+  pushOrderUpdates?: Prisma.SortOrder
+  pushFlashSales?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -629,15 +656,16 @@ export type UserMaxOrderByAggregateInput = {
   idNumber?: Prisma.SortOrder
   idType?: Prisma.SortOrder
   idExpiryDate?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   twoFactorEnabled?: Prisma.SortOrder
+  emailOrderUpdates?: Prisma.SortOrder
+  emailPromotions?: Prisma.SortOrder
+  emailNewsletter?: Prisma.SortOrder
+  pushOrderUpdates?: Prisma.SortOrder
+  pushFlashSales?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -651,15 +679,16 @@ export type UserMinOrderByAggregateInput = {
   idNumber?: Prisma.SortOrder
   idType?: Prisma.SortOrder
   idExpiryDate?: Prisma.SortOrder
-  country?: Prisma.SortOrder
-  city?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  postalCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   twoFactorEnabled?: Prisma.SortOrder
+  emailOrderUpdates?: Prisma.SortOrder
+  emailPromotions?: Prisma.SortOrder
+  emailNewsletter?: Prisma.SortOrder
+  pushOrderUpdates?: Prisma.SortOrder
+  pushFlashSales?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -701,6 +730,20 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
+}
+
+export type UserCreateNestedOneWithoutAddressesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAddressesInput, Prisma.UserUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAddressesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAddressesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAddressesInput, Prisma.UserUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAddressesInput
+  upsert?: Prisma.UserUpsertWithoutAddressesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAddressesInput, Prisma.UserUpdateWithoutAddressesInput>, Prisma.UserUncheckedUpdateWithoutAddressesInput>
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -801,6 +844,142 @@ export type UserUpdateOneRequiredWithoutTwofactorsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTwofactorsInput, Prisma.UserUpdateWithoutTwofactorsInput>, Prisma.UserUncheckedUpdateWithoutTwofactorsInput>
 }
 
+export type UserCreateWithoutAddressesInput = {
+  id?: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  idNumber?: string | null
+  idType?: $Enums.UserIdType | null
+  idExpiryDate?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  twofactors?: Prisma.TwoFactorCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAddressesInput = {
+  id?: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  idNumber?: string | null
+  idType?: $Enums.UserIdType | null
+  idExpiryDate?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  twofactors?: Prisma.TwoFactorUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAddressesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAddressesInput, Prisma.UserUncheckedCreateWithoutAddressesInput>
+}
+
+export type UserUpsertWithoutAddressesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAddressesInput, Prisma.UserUncheckedUpdateWithoutAddressesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAddressesInput, Prisma.UserUncheckedCreateWithoutAddressesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAddressesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAddressesInput, Prisma.UserUncheckedUpdateWithoutAddressesInput>
+}
+
+export type UserUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
+  idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  twofactors?: Prisma.TwoFactorUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
+  idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  twofactors?: Prisma.TwoFactorUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutSessionsInput = {
   id?: string
   name: string
@@ -812,16 +991,18 @@ export type UserCreateWithoutSessionsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -840,16 +1021,18 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -884,16 +1067,18 @@ export type UserUpdateWithoutSessionsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -912,16 +1097,18 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -940,16 +1127,18 @@ export type UserCreateWithoutAccountsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -968,16 +1157,18 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -1012,16 +1203,18 @@ export type UserUpdateWithoutAccountsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -1040,16 +1233,18 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -1068,17 +1263,19 @@ export type UserCreateWithoutReviewsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
@@ -1096,17 +1293,19 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
@@ -1140,17 +1339,19 @@ export type UserUpdateWithoutReviewsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
@@ -1168,17 +1369,19 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
@@ -1196,17 +1399,19 @@ export type UserCreateWithoutOrdersInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
@@ -1224,17 +1429,19 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
@@ -1268,17 +1475,19 @@ export type UserUpdateWithoutOrdersInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
@@ -1296,17 +1505,19 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
@@ -1324,17 +1535,19 @@ export type UserCreateWithoutCartsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
@@ -1352,17 +1565,19 @@ export type UserUncheckedCreateWithoutCartsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
@@ -1396,17 +1611,19 @@ export type UserUpdateWithoutCartsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
@@ -1424,17 +1641,19 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
@@ -1452,17 +1671,19 @@ export type UserCreateWithoutWishlistItemsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -1480,17 +1701,19 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -1524,17 +1747,19 @@ export type UserUpdateWithoutWishlistItemsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -1552,17 +1777,19 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -1580,17 +1807,19 @@ export type UserCreateWithoutTwofactorsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   carts?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
@@ -1608,17 +1837,19 @@ export type UserUncheckedCreateWithoutTwofactorsInput = {
   idNumber?: string | null
   idType?: $Enums.UserIdType | null
   idExpiryDate?: string | null
-  country?: string | null
-  city?: string | null
-  address?: string | null
-  postalCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   status?: $Enums.UserStatus
   deletedAt?: Date | string | null
   twoFactorEnabled?: boolean | null
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
@@ -1652,17 +1883,19 @@ export type UserUpdateWithoutTwofactorsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
@@ -1680,17 +1913,19 @@ export type UserUncheckedUpdateWithoutTwofactorsInput = {
   idNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idType?: Prisma.NullableEnumUserIdTypeFieldUpdateOperationsInput | $Enums.UserIdType | null
   idExpiryDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   twoFactorEnabled?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  emailOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailPromotions?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailNewsletter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushOrderUpdates?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pushFlashSales?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
@@ -1705,6 +1940,7 @@ export type UserUncheckedUpdateWithoutTwofactorsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  addresses: number
   orders: number
   reviews: number
   wishlistItems: number
@@ -1714,6 +1950,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  addresses?: boolean | UserCountOutputTypeCountAddressesArgs
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   wishlistItems?: boolean | UserCountOutputTypeCountWishlistItemsArgs
@@ -1742,6 +1979,13 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
  */
 export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AccountWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAddressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AddressWhereInput
 }
 
 /**
@@ -1784,17 +2028,19 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   idNumber?: boolean
   idType?: boolean
   idExpiryDate?: boolean
-  country?: boolean
-  city?: boolean
-  address?: boolean
-  postalCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
   deletedAt?: boolean
   twoFactorEnabled?: boolean
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  addresses?: boolean | Prisma.User$addressesArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
@@ -1814,15 +2060,16 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   idNumber?: boolean
   idType?: boolean
   idExpiryDate?: boolean
-  country?: boolean
-  city?: boolean
-  address?: boolean
-  postalCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
   deletedAt?: boolean
   twoFactorEnabled?: boolean
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1836,15 +2083,16 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   idNumber?: boolean
   idType?: boolean
   idExpiryDate?: boolean
-  country?: boolean
-  city?: boolean
-  address?: boolean
-  postalCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
   deletedAt?: boolean
   twoFactorEnabled?: boolean
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1858,21 +2106,23 @@ export type UserSelectScalar = {
   idNumber?: boolean
   idType?: boolean
   idExpiryDate?: boolean
-  country?: boolean
-  city?: boolean
-  address?: boolean
-  postalCode?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   status?: boolean
   deletedAt?: boolean
   twoFactorEnabled?: boolean
+  emailOrderUpdates?: boolean
+  emailPromotions?: boolean
+  emailNewsletter?: boolean
+  pushOrderUpdates?: boolean
+  pushFlashSales?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "phoneNumber" | "idNumber" | "idType" | "idExpiryDate" | "country" | "city" | "address" | "postalCode" | "createdAt" | "updatedAt" | "status" | "deletedAt" | "twoFactorEnabled", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "role" | "phoneNumber" | "idNumber" | "idType" | "idExpiryDate" | "createdAt" | "updatedAt" | "status" | "deletedAt" | "twoFactorEnabled" | "emailOrderUpdates" | "emailPromotions" | "emailNewsletter" | "pushOrderUpdates" | "pushFlashSales", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  addresses?: boolean | Prisma.User$addressesArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
@@ -1888,6 +2138,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    addresses: Prisma.$AddressPayload<ExtArgs>[]
     carts: Prisma.$CartPayload<ExtArgs> | null
     orders: Prisma.$OrderPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
@@ -1905,15 +2156,16 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     idNumber: string | null
     idType: $Enums.UserIdType | null
     idExpiryDate: string | null
-    country: string | null
-    city: string | null
-    address: string | null
-    postalCode: string | null
     createdAt: Date
     updatedAt: Date
     status: $Enums.UserStatus
     deletedAt: Date | null
     twoFactorEnabled: boolean | null
+    emailOrderUpdates: boolean
+    emailPromotions: boolean
+    emailNewsletter: boolean
+    pushOrderUpdates: boolean
+    pushFlashSales: boolean
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2310,6 +2562,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  addresses<T extends Prisma.User$addressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   carts<T extends Prisma.User$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartsArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2354,15 +2607,16 @@ export interface UserFieldRefs {
   readonly idNumber: Prisma.FieldRef<"User", 'String'>
   readonly idType: Prisma.FieldRef<"User", 'UserIdType'>
   readonly idExpiryDate: Prisma.FieldRef<"User", 'String'>
-  readonly country: Prisma.FieldRef<"User", 'String'>
-  readonly city: Prisma.FieldRef<"User", 'String'>
-  readonly address: Prisma.FieldRef<"User", 'String'>
-  readonly postalCode: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly twoFactorEnabled: Prisma.FieldRef<"User", 'Boolean'>
+  readonly emailOrderUpdates: Prisma.FieldRef<"User", 'Boolean'>
+  readonly emailPromotions: Prisma.FieldRef<"User", 'Boolean'>
+  readonly emailNewsletter: Prisma.FieldRef<"User", 'Boolean'>
+  readonly pushOrderUpdates: Prisma.FieldRef<"User", 'Boolean'>
+  readonly pushFlashSales: Prisma.FieldRef<"User", 'Boolean'>
 }
     
 
@@ -2796,6 +3050,30 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.addresses
+ */
+export type User$addressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Address
+   */
+  select?: Prisma.AddressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Address
+   */
+  omit?: Prisma.AddressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AddressInclude<ExtArgs> | null
+  where?: Prisma.AddressWhereInput
+  orderBy?: Prisma.AddressOrderByWithRelationInput | Prisma.AddressOrderByWithRelationInput[]
+  cursor?: Prisma.AddressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AddressScalarFieldEnum | Prisma.AddressScalarFieldEnum[]
 }
 
 /**

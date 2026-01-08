@@ -43,6 +43,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model Address
+ * 
+ */
+export type Address = Prisma.AddressModel
+/**
  * Model Session
  * 
  */
@@ -83,6 +88,11 @@ export type Brand = Prisma.BrandModel
  */
 export type Category = Prisma.CategoryModel
 /**
+ * Model Promotion
+ * 
+ */
+export type Promotion = Prisma.PromotionModel
+/**
  * Model Order
  * 
  */
@@ -112,6 +122,11 @@ export type WishlistItem = Prisma.WishlistItemModel
  * 
  */
 export type Payment = Prisma.PaymentModel
+/**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
 /**
  * Model PaymentWebhook
  * 

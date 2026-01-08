@@ -9,9 +9,10 @@ export const OrdersController = {
     try {
       const session = res.locals.session;
       const userId = session.user.id;
+      const { shippingAddressId } = req.body;
 
       // Create order from cart
-      const order = await OrdersService.createOrder(userId);
+      const order = await OrdersService.createOrder(userId, shippingAddressId);
 
       // Create payment intent
       const paymentIntent = await OrdersService.createPaymentIntent(order.id);
