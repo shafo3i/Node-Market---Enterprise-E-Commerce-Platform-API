@@ -68,12 +68,12 @@ export const EmailTemplates = {
             ${data.items.map(item => `
               <div class="item">
                 <strong>${item.name}</strong><br>
-                Quantity: ${item.quantity} × $${item.price}
+                Quantity: ${item.quantity} × £${item.price}
               </div>
             `).join('')}
             
             <div class="total">
-              Total: $${data.total}
+              Total: £${data.total}
             </div>
 
             ${data.shippingAddress ? `

@@ -25,3 +25,18 @@ export const updateSmtpSettingsSchema = z.object({
   smtpSecure: z.boolean(),
   smtpFrom: z.string().min(1, 'SMTP from address is required'),
 });
+export const updateStoreInfoSchema = z.object({
+  storeName: z.string().min(1, 'Store name is required'),
+  storeDescription: z.string().optional(),
+  storeLogo: z.string().optional(),
+  storeEmail: z.string().email('Invalid email').optional(),
+  storePhone: z.string().optional(),
+  storeWebsite: z.string().url('Invalid URL').optional().or(z.literal('')),
+  addressStreet: z.string().optional(),
+  addressCity: z.string().optional(),
+  addressState: z.string().optional(),
+  addressPostal: z.string().optional(),
+  addressCountry: z.string().optional(),
+  businessHours: z.string().optional(),
+  timezone: z.string().optional(),
+});

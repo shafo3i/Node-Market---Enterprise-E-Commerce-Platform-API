@@ -28,10 +28,17 @@ export type StoreSettingsMinAggregateOutputType = {
   id: string | null
   storeName: string | null
   storeDescription: string | null
+  storeLogo: string | null
   storeEmail: string | null
   storePhone: string | null
-  storeAddress: string | null
-  currency: string | null
+  storeWebsite: string | null
+  addressStreet: string | null
+  addressCity: string | null
+  addressState: string | null
+  addressPostal: string | null
+  addressCountry: string | null
+  businessHours: string | null
+  timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,10 +47,17 @@ export type StoreSettingsMaxAggregateOutputType = {
   id: string | null
   storeName: string | null
   storeDescription: string | null
+  storeLogo: string | null
   storeEmail: string | null
   storePhone: string | null
-  storeAddress: string | null
-  currency: string | null
+  storeWebsite: string | null
+  addressStreet: string | null
+  addressCity: string | null
+  addressState: string | null
+  addressPostal: string | null
+  addressCountry: string | null
+  businessHours: string | null
+  timezone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,10 +66,17 @@ export type StoreSettingsCountAggregateOutputType = {
   id: number
   storeName: number
   storeDescription: number
+  storeLogo: number
   storeEmail: number
   storePhone: number
-  storeAddress: number
-  currency: number
+  storeWebsite: number
+  addressStreet: number
+  addressCity: number
+  addressState: number
+  addressPostal: number
+  addressCountry: number
+  businessHours: number
+  timezone: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,10 +87,17 @@ export type StoreSettingsMinAggregateInputType = {
   id?: true
   storeName?: true
   storeDescription?: true
+  storeLogo?: true
   storeEmail?: true
   storePhone?: true
-  storeAddress?: true
-  currency?: true
+  storeWebsite?: true
+  addressStreet?: true
+  addressCity?: true
+  addressState?: true
+  addressPostal?: true
+  addressCountry?: true
+  businessHours?: true
+  timezone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -78,10 +106,17 @@ export type StoreSettingsMaxAggregateInputType = {
   id?: true
   storeName?: true
   storeDescription?: true
+  storeLogo?: true
   storeEmail?: true
   storePhone?: true
-  storeAddress?: true
-  currency?: true
+  storeWebsite?: true
+  addressStreet?: true
+  addressCity?: true
+  addressState?: true
+  addressPostal?: true
+  addressCountry?: true
+  businessHours?: true
+  timezone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,10 +125,17 @@ export type StoreSettingsCountAggregateInputType = {
   id?: true
   storeName?: true
   storeDescription?: true
+  storeLogo?: true
   storeEmail?: true
   storePhone?: true
-  storeAddress?: true
-  currency?: true
+  storeWebsite?: true
+  addressStreet?: true
+  addressCity?: true
+  addressState?: true
+  addressPostal?: true
+  addressCountry?: true
+  businessHours?: true
+  timezone?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -175,10 +217,17 @@ export type StoreSettingsGroupByOutputType = {
   id: string
   storeName: string
   storeDescription: string | null
+  storeLogo: string | null
   storeEmail: string | null
   storePhone: string | null
-  storeAddress: string | null
-  currency: string
+  storeWebsite: string | null
+  addressStreet: string | null
+  addressCity: string | null
+  addressState: string | null
+  addressPostal: string | null
+  addressCountry: string | null
+  businessHours: string | null
+  timezone: string | null
   createdAt: Date
   updatedAt: Date
   _count: StoreSettingsCountAggregateOutputType | null
@@ -208,10 +257,17 @@ export type StoreSettingsWhereInput = {
   id?: Prisma.StringFilter<"StoreSettings"> | string
   storeName?: Prisma.StringFilter<"StoreSettings"> | string
   storeDescription?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  storeLogo?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   storeEmail?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   storePhone?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
-  storeAddress?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
-  currency?: Prisma.StringFilter<"StoreSettings"> | string
+  storeWebsite?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressStreet?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressCity?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressState?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressPostal?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressCountry?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  businessHours?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  timezone?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StoreSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreSettings"> | Date | string
 }
@@ -220,10 +276,17 @@ export type StoreSettingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   storeName?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeLogo?: Prisma.SortOrderInput | Prisma.SortOrder
   storeEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
-  storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
+  storeWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressStreet?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressCity?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressState?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressPostal?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressCountry?: Prisma.SortOrderInput | Prisma.SortOrder
+  businessHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -235,10 +298,17 @@ export type StoreSettingsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.StoreSettingsWhereInput | Prisma.StoreSettingsWhereInput[]
   storeName?: Prisma.StringFilter<"StoreSettings"> | string
   storeDescription?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  storeLogo?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   storeEmail?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   storePhone?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
-  storeAddress?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
-  currency?: Prisma.StringFilter<"StoreSettings"> | string
+  storeWebsite?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressStreet?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressCity?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressState?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressPostal?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  addressCountry?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  businessHours?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
+  timezone?: Prisma.StringNullableFilter<"StoreSettings"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StoreSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StoreSettings"> | Date | string
 }, "id">
@@ -247,10 +317,17 @@ export type StoreSettingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   storeName?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeLogo?: Prisma.SortOrderInput | Prisma.SortOrder
   storeEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
-  storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
-  currency?: Prisma.SortOrder
+  storeWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressStreet?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressCity?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressState?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressPostal?: Prisma.SortOrderInput | Prisma.SortOrder
+  addressCountry?: Prisma.SortOrderInput | Prisma.SortOrder
+  businessHours?: Prisma.SortOrderInput | Prisma.SortOrder
+  timezone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StoreSettingsCountOrderByAggregateInput
@@ -265,10 +342,17 @@ export type StoreSettingsScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"StoreSettings"> | string
   storeName?: Prisma.StringWithAggregatesFilter<"StoreSettings"> | string
   storeDescription?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  storeLogo?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
   storeEmail?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
   storePhone?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
-  storeAddress?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
-  currency?: Prisma.StringWithAggregatesFilter<"StoreSettings"> | string
+  storeWebsite?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  addressStreet?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  addressCity?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  addressState?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  addressPostal?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  addressCountry?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  businessHours?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
+  timezone?: Prisma.StringNullableWithAggregatesFilter<"StoreSettings"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StoreSettings"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StoreSettings"> | Date | string
 }
@@ -277,10 +361,17 @@ export type StoreSettingsCreateInput = {
   id?: string
   storeName: string
   storeDescription?: string | null
+  storeLogo?: string | null
   storeEmail?: string | null
   storePhone?: string | null
-  storeAddress?: string | null
-  currency?: string
+  storeWebsite?: string | null
+  addressStreet?: string | null
+  addressCity?: string | null
+  addressState?: string | null
+  addressPostal?: string | null
+  addressCountry?: string | null
+  businessHours?: string | null
+  timezone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -289,10 +380,17 @@ export type StoreSettingsUncheckedCreateInput = {
   id?: string
   storeName: string
   storeDescription?: string | null
+  storeLogo?: string | null
   storeEmail?: string | null
   storePhone?: string | null
-  storeAddress?: string | null
-  currency?: string
+  storeWebsite?: string | null
+  addressStreet?: string | null
+  addressCity?: string | null
+  addressState?: string | null
+  addressPostal?: string | null
+  addressCountry?: string | null
+  businessHours?: string | null
+  timezone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -301,10 +399,17 @@ export type StoreSettingsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storeName?: Prisma.StringFieldUpdateOperationsInput | string
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  storeWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressPostal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCountry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -313,10 +418,17 @@ export type StoreSettingsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storeName?: Prisma.StringFieldUpdateOperationsInput | string
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  storeWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressPostal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCountry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -325,10 +437,17 @@ export type StoreSettingsCreateManyInput = {
   id?: string
   storeName: string
   storeDescription?: string | null
+  storeLogo?: string | null
   storeEmail?: string | null
   storePhone?: string | null
-  storeAddress?: string | null
-  currency?: string
+  storeWebsite?: string | null
+  addressStreet?: string | null
+  addressCity?: string | null
+  addressState?: string | null
+  addressPostal?: string | null
+  addressCountry?: string | null
+  businessHours?: string | null
+  timezone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -337,10 +456,17 @@ export type StoreSettingsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storeName?: Prisma.StringFieldUpdateOperationsInput | string
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  storeWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressPostal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCountry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -349,10 +475,17 @@ export type StoreSettingsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   storeName?: Prisma.StringFieldUpdateOperationsInput | string
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  storeWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressPostal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressCountry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessHours?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,10 +494,17 @@ export type StoreSettingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storeName?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  storeLogo?: Prisma.SortOrder
   storeEmail?: Prisma.SortOrder
   storePhone?: Prisma.SortOrder
-  storeAddress?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
+  storeWebsite?: Prisma.SortOrder
+  addressStreet?: Prisma.SortOrder
+  addressCity?: Prisma.SortOrder
+  addressState?: Prisma.SortOrder
+  addressPostal?: Prisma.SortOrder
+  addressCountry?: Prisma.SortOrder
+  businessHours?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -373,10 +513,17 @@ export type StoreSettingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storeName?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  storeLogo?: Prisma.SortOrder
   storeEmail?: Prisma.SortOrder
   storePhone?: Prisma.SortOrder
-  storeAddress?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
+  storeWebsite?: Prisma.SortOrder
+  addressStreet?: Prisma.SortOrder
+  addressCity?: Prisma.SortOrder
+  addressState?: Prisma.SortOrder
+  addressPostal?: Prisma.SortOrder
+  addressCountry?: Prisma.SortOrder
+  businessHours?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -385,10 +532,17 @@ export type StoreSettingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   storeName?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  storeLogo?: Prisma.SortOrder
   storeEmail?: Prisma.SortOrder
   storePhone?: Prisma.SortOrder
-  storeAddress?: Prisma.SortOrder
-  currency?: Prisma.SortOrder
+  storeWebsite?: Prisma.SortOrder
+  addressStreet?: Prisma.SortOrder
+  addressCity?: Prisma.SortOrder
+  addressState?: Prisma.SortOrder
+  addressPostal?: Prisma.SortOrder
+  addressCountry?: Prisma.SortOrder
+  businessHours?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -399,10 +553,17 @@ export type StoreSettingsSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   storeName?: boolean
   storeDescription?: boolean
+  storeLogo?: boolean
   storeEmail?: boolean
   storePhone?: boolean
-  storeAddress?: boolean
-  currency?: boolean
+  storeWebsite?: boolean
+  addressStreet?: boolean
+  addressCity?: boolean
+  addressState?: boolean
+  addressPostal?: boolean
+  addressCountry?: boolean
+  businessHours?: boolean
+  timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["storeSettings"]>
@@ -411,10 +572,17 @@ export type StoreSettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   storeName?: boolean
   storeDescription?: boolean
+  storeLogo?: boolean
   storeEmail?: boolean
   storePhone?: boolean
-  storeAddress?: boolean
-  currency?: boolean
+  storeWebsite?: boolean
+  addressStreet?: boolean
+  addressCity?: boolean
+  addressState?: boolean
+  addressPostal?: boolean
+  addressCountry?: boolean
+  businessHours?: boolean
+  timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["storeSettings"]>
@@ -423,10 +591,17 @@ export type StoreSettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   storeName?: boolean
   storeDescription?: boolean
+  storeLogo?: boolean
   storeEmail?: boolean
   storePhone?: boolean
-  storeAddress?: boolean
-  currency?: boolean
+  storeWebsite?: boolean
+  addressStreet?: boolean
+  addressCity?: boolean
+  addressState?: boolean
+  addressPostal?: boolean
+  addressCountry?: boolean
+  businessHours?: boolean
+  timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["storeSettings"]>
@@ -435,15 +610,22 @@ export type StoreSettingsSelectScalar = {
   id?: boolean
   storeName?: boolean
   storeDescription?: boolean
+  storeLogo?: boolean
   storeEmail?: boolean
   storePhone?: boolean
-  storeAddress?: boolean
-  currency?: boolean
+  storeWebsite?: boolean
+  addressStreet?: boolean
+  addressCity?: boolean
+  addressState?: boolean
+  addressPostal?: boolean
+  addressCountry?: boolean
+  businessHours?: boolean
+  timezone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StoreSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeName" | "storeDescription" | "storeEmail" | "storePhone" | "storeAddress" | "currency" | "createdAt" | "updatedAt", ExtArgs["result"]["storeSettings"]>
+export type StoreSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeName" | "storeDescription" | "storeLogo" | "storeEmail" | "storePhone" | "storeWebsite" | "addressStreet" | "addressCity" | "addressState" | "addressPostal" | "addressCountry" | "businessHours" | "timezone" | "createdAt" | "updatedAt", ExtArgs["result"]["storeSettings"]>
 
 export type $StoreSettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StoreSettings"
@@ -452,10 +634,17 @@ export type $StoreSettingsPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: string
     storeName: string
     storeDescription: string | null
+    storeLogo: string | null
     storeEmail: string | null
     storePhone: string | null
-    storeAddress: string | null
-    currency: string
+    storeWebsite: string | null
+    addressStreet: string | null
+    addressCity: string | null
+    addressState: string | null
+    addressPostal: string | null
+    addressCountry: string | null
+    businessHours: string | null
+    timezone: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["storeSettings"]>
@@ -884,10 +1073,17 @@ export interface StoreSettingsFieldRefs {
   readonly id: Prisma.FieldRef<"StoreSettings", 'String'>
   readonly storeName: Prisma.FieldRef<"StoreSettings", 'String'>
   readonly storeDescription: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly storeLogo: Prisma.FieldRef<"StoreSettings", 'String'>
   readonly storeEmail: Prisma.FieldRef<"StoreSettings", 'String'>
   readonly storePhone: Prisma.FieldRef<"StoreSettings", 'String'>
-  readonly storeAddress: Prisma.FieldRef<"StoreSettings", 'String'>
-  readonly currency: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly storeWebsite: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly addressStreet: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly addressCity: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly addressState: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly addressPostal: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly addressCountry: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly businessHours: Prisma.FieldRef<"StoreSettings", 'String'>
+  readonly timezone: Prisma.FieldRef<"StoreSettings", 'String'>
   readonly createdAt: Prisma.FieldRef<"StoreSettings", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StoreSettings", 'DateTime'>
 }

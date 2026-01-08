@@ -30,4 +30,7 @@ router.put('/stripe-keys', isAdmin, SettingsController.updateStripeKeys);
 // Update SMTP settings (HIGHLY SENSITIVE)
 router.put('/smtp', isAdmin, SettingsController.updateSmtpSettings);
 
+// Update store information
+router.put('/store-info', isAdmin, SettingsController.updateStoreInfo);
+
 export default router;

@@ -34,7 +34,7 @@ coverage/
 .temp/
 
 # Invoices (contain sensitive customer data)
-invoices/
+# invoices/
 *.pdf
 
 # Snyk Security Extension - AI Rules (auto-generated)

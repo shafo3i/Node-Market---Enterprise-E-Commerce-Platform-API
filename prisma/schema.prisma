@@ -467,11 +467,27 @@ model Carrier {
 model StoreSettings {
   id                String   @id @default(cuid())
   storeName         String
-  storeDescription  String?
+  storeDescription  String?  @db.Text
+  storeLogo         String?  // Logo URL or path
+  
+  // Contact Information
   storeEmail        String?
   storePhone        String?
-  storeAddress      String?
-  currency          String   @default("GBP")
+  storeWebsite      String?
+  
+  // Address (structured for better queries)
+  addressStreet     String?
+  addressCity       String?
+  addressState      String?
+  addressPostal     String?
+  addressCountry    String?
+  
+  // Business Information
+  businessHours     String?  // e.g., "Mon-Fri: 9AM-5PM"
+  timezone          String?  @default("UTC")
+  
+  
+  // Timestamps
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 

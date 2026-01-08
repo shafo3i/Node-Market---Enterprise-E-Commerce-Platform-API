@@ -98,7 +98,58 @@ export const SettingsService = {
     const smtpFrom = process.env.SMTP_FROM || '';
     return { host, port, smtpUser, password, smtpSecure, smtpFrom };
   },
+  async getStoreInfo() {
+    const storeInfo = await prisma.storeSettings.findFirst();
+    
+    if (!storeInfo) {
+      return {
+        storeName: '',
+        storeDescription: '',
+        storeLogo: '',
+        storeEmail: '',
+        storePhone: '',
+        storeWebsite: '',
+        addressStreet: '',
+        addressCity: '',
+        addressState: '',
+        addressPostal: '',
+        addressCountry: '',
+        businessHours: '',
+        timezone: 'UTC',
+      };
+    }
 
+    return {
+      storeName: storeInfo.storeName || '',
+      storeDescription: storeInfo.storeDescription || '',
+      storeLogo: storeInfo.storeLogo || '',
+      storeEmail: storeInfo.storeEmail || '',
+      storePhone: storeInfo.storePhone || '',
+      storeWebsite: storeInfo.storeWebsite || '',
+      addressStreet: storeInfo.addressStreet || '',
+      addressCity: storeInfo.addressCity || '',
+      addressState: storeInfo.addressState || '',
+      addressPostal: storeInfo.addressPostal || '',
+      addressCountry: storeInfo.addressCountry || '',
+      businessHours: storeInfo.businessHours || '',
+      timezone: storeInfo.timezone || 'UTC',
+    };
+  },
+
+  async updateStoreInfo(data: any) {
+    const existing = await prisma.storeSettings.findFirst();
+
+    if (existing) {
+      await prisma.storeSettings.update({
+        where: { id: existing.id },
+        data,
+      });
+    } else {
+      await prisma.storeSettings.create({
+        data,
+      });
+    }
+  },
   updateSmtpSettings: async (settings: {
     host: string;
     port: number;

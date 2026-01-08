@@ -5,6 +5,7 @@ import {
   updatePaymentMethodsSchema,
   updateStripeKeysSchema,
   updateSmtpSettingsSchema,
+  updateStoreInfoSchema,
 } from './settings.validation';
 import fs from 'fs/promises';
 import path from 'path';
@@ -36,11 +37,13 @@ export const SettingsController = {
       const settings = await SettingsService.getAllSettings();
       const stripeKeys = SettingsService.getStripeKeys();
       const smtpSettings = await SettingsService.getSmtpSettings();
+      const storeInfo = await SettingsService.getStoreInfo();
 
       res.json({
         ...settings,
         stripe: stripeKeys,
         smtp: smtpSettings,
+        storeInfo,
       });
     } catch (error: any) {
       console.error('Get settings error:', error);
@@ -195,6 +198,29 @@ export const SettingsController = {
     } catch (error: any) {
       console.error('Update SMTP settings error:', error);
       res.status(500).json({ error: 'Failed to update SMTP settings' });
+    }
+  },
+
+  /**
+   * Update store information
+   * SECURITY: Admin only
+   */
+  async updateStoreInfo(req: Request, res: Response) {
+    const validate = updateStoreInfoSchema.safeParse(req.body);
+
+    if (!validate.success) {
+      return res.status(400).json({ error: validate.error.message });
+    }
+
+    try {
+      await SettingsService.updateStoreInfo(validate.data);
+
+      res.json({
+        message: 'Store information updated successfully',
+      });
+    } catch (error: any) {
+      console.error('Update store info error:', error);
+      res.status(500).json({ error: 'Failed to update store information' });
     }
   },
 };
