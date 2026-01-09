@@ -215,6 +215,11 @@ export const OrdersService = {
       console.error('Order confirmation email error:', err)
     );
 
+    // ✅ Send new order alert to admins
+    NotificationService.sendNewOrderAlertToAdmins(payment.orderId).catch(err =>
+      console.error('New order alert email error:', err)
+    );
+
     // SECURITY: Auto-generate invoice after successful payment (async, don't block)
     generateInvoice(payment.orderId).catch(err =>
       console.error('Invoice generation error:', err)

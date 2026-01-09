@@ -76,7 +76,9 @@ export const ModelName = {
   Carrier: 'Carrier',
   StoreSettings: 'StoreSettings',
   TwoFactor: 'TwoFactor',
-  Settings: 'Settings'
+  Settings: 'Settings',
+  BackupSettings: 'BackupSettings',
+  BackupHistory: 'BackupHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -499,6 +501,44 @@ export const SettingsScalarFieldEnum = {
 } as const
 
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
+
+
+export const BackupSettingsScalarFieldEnum = {
+  id: 'id',
+  enabled: 'enabled',
+  frequency: 'frequency',
+  time: 'time',
+  retentionDays: 'retentionDays',
+  backupLocation: 'backupLocation',
+  lastBackupAt: 'lastBackupAt',
+  nextBackupAt: 'nextBackupAt',
+  emailNotification: 'emailNotification',
+  s3Provider: 's3Provider',
+  s3AccessKey: 's3AccessKey',
+  s3SecretKey: 's3SecretKey',
+  s3Bucket: 's3Bucket',
+  s3Region: 's3Region',
+  s3Endpoint: 's3Endpoint',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BackupSettingsScalarFieldEnum = (typeof BackupSettingsScalarFieldEnum)[keyof typeof BackupSettingsScalarFieldEnum]
+
+
+export const BackupHistoryScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  size: 'size',
+  status: 'status',
+  error: 'error',
+  duration: 'duration',
+  location: 'location',
+  s3Key: 's3Key',
+  createdAt: 'createdAt'
+} as const
+
+export type BackupHistoryScalarFieldEnum = (typeof BackupHistoryScalarFieldEnum)[keyof typeof BackupHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

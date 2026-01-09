@@ -4,6 +4,7 @@ import { prisma } from '../../config/prisma';
 import path from 'path';
 
 export const NotificationService = {
+  
   /**
    * Send order confirmation email to customer
    */
@@ -265,6 +266,76 @@ export const NotificationService = {
       console.log(`✅ Low stock alert sent to ${admins.length} admin(s)`);
     } catch (error) {
       console.error('Error sending low stock alert:', error);
+    }
+  },
+
+  /**
+   * Send new order alert to admins
+   */
+  sendNewOrderAlertToAdmins: async (orderId: string) => {
+    try {
+      const order = await prisma.order.findUnique({
+        where: { id: orderId },
+        include: {
+          user: {
+            select: {
+              name: true,
+              email: true,
+            },
+          },
+          items: {
+            include: {
+              product: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        throw new Error('Order not found');
+      }
+
+      // Get all admin emails
+      const admins = await prisma.user.findMany({
+        where: { role: 'ADMIN' },
+        select: { email: true },
+      });
+
+      if (admins.length === 0) {
+        console.log('No admin users found to send new order alert');
+        return;
+      }
+
+      const emailData = {
+        orderReference: order.orderReference || order.id.slice(0, 8),
+        customerName: order.user.name,
+        customerEmail: order.user.email,
+        total: order.total.toString(),
+        itemCount: order.items.length,
+        items: order.items.map(item => ({
+          name: item.product.name,
+          quantity: item.quantity,
+          price: item.price.toString(),
+        })),
+      };
+
+      // Send to all admins
+      for (const admin of admins) {
+        await sendEmail(
+          admin.email,
+          `🎉 New Order - ${emailData.orderReference}`,
+          EmailTemplates.newOrderAlert(emailData)
+        );
+      }
+
+      console.log(`✅ New order alert sent to ${admins.length} admin(s)`);
+    } catch (error) {
+      console.error('Error sending new order alert:', error);
+      // Don't throw - we don't want to fail the order if email fails
     }
   },
 

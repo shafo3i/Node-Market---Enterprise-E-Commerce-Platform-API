@@ -603,3 +603,44 @@ model Settings {
 
   @@map("settings")
 }
+
+model BackupSettings {
+  id                String    @id @default(cuid())
+  enabled           Boolean   @default(false)
+  frequency         String    @default("daily") // hourly, daily, weekly, monthly
+  time              String    @default("02:00") // HH:MM format
+  retentionDays     Int       @default(30)
+  backupLocation    String    @default("local") // local, wasabi, amazon_s3, uploadthing
+  lastBackupAt      DateTime?
+  nextBackupAt      DateTime?
+  emailNotification Boolean   @default(true)
+  
+  // S3 Storage Providers (S3-compatible only)
+  s3Provider        String?   // wasabi, amazon_s3
+  s3AccessKey       String?
+  s3SecretKey       String?
+  s3Bucket          String?
+  s3Region          String?
+  s3Endpoint        String?   // For Wasabi custom endpoint
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("backup_settings")
+}
+
+model BackupHistory {
+  id        String   @id @default(cuid())
+  filename  String
+  size      Int // bytes
+  status    String // SUCCESS, FAILED
+  error     String?
+  duration  Int? // milliseconds
+  location  String   @default("local") // local, wasabi, amazon_s3, uploadthing
+  s3Key     String?  // S3 object key if uploaded to cloud
+  createdAt DateTime @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("backup_history")
+}

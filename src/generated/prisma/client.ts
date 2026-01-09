@@ -167,3 +167,13 @@ export type TwoFactor = Prisma.TwoFactorModel
  * 
  */
 export type Settings = Prisma.SettingsModel
+/**
+ * Model BackupSettings
+ * 
+ */
+export type BackupSettings = Prisma.BackupSettingsModel
+/**
+ * Model BackupHistory
+ * 
+ */
+export type BackupHistory = Prisma.BackupHistoryModel

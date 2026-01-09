@@ -26,6 +26,8 @@ import carrierRoute from './modules/carrier/carrier.route';
 import addressRoutes from './modules/addresses/address.route';
 import invoiceRoutes from './modules/invoices/invoice.route';
 import settingsRoutes from './modules/settings/settings.route';
+import backupRoutes from './modules/backup/backup.route';
+import uploadRoutes from './modules/upload/upload.route';
 // import morgan from 'morgan';
 
 
@@ -159,6 +161,12 @@ app.use("/api/invoices", invoiceRoutes);
 
 // Settings routes (Admin only)
 app.use("/api/settings", settingsRoutes);
+
+// Backup routes (Admin only)
+app.use("/api/admin/backup", backupRoutes);
+
+// Upload routes (Admin only)
+app.use("/api/upload", uploadRoutes);
 
 // dispute routes
 app.use("/api/disputes", disputeRoute);

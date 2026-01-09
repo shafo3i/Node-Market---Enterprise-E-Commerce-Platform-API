@@ -409,7 +409,9 @@ export const ModelName = {
   Carrier: 'Carrier',
   StoreSettings: 'StoreSettings',
   TwoFactor: 'TwoFactor',
-  Settings: 'Settings'
+  Settings: 'Settings',
+  BackupSettings: 'BackupSettings',
+  BackupHistory: 'BackupHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "storeSettings" | "twoFactor" | "settings"
+    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "storeSettings" | "twoFactor" | "settings" | "backupSettings" | "backupHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2353,6 +2355,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    BackupSettings: {
+      payload: Prisma.$BackupSettingsPayload<ExtArgs>
+      fields: Prisma.BackupSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BackupSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BackupSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.BackupSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BackupSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.BackupSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.BackupSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.BackupSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BackupSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.BackupSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        update: {
+          args: Prisma.BackupSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.BackupSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BackupSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BackupSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.BackupSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.BackupSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBackupSettings>
+        }
+        groupBy: {
+          args: Prisma.BackupSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BackupSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BackupSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BackupSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
+    BackupHistory: {
+      payload: Prisma.$BackupHistoryPayload<ExtArgs>
+      fields: Prisma.BackupHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BackupHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BackupHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.BackupHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BackupHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.BackupHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.BackupHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.BackupHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BackupHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.BackupHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        update: {
+          args: Prisma.BackupHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.BackupHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BackupHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BackupHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.BackupHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BackupHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.BackupHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBackupHistory>
+        }
+        groupBy: {
+          args: Prisma.BackupHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BackupHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BackupHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BackupHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2798,6 +2948,44 @@ export const SettingsScalarFieldEnum = {
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
 
 
+export const BackupSettingsScalarFieldEnum = {
+  id: 'id',
+  enabled: 'enabled',
+  frequency: 'frequency',
+  time: 'time',
+  retentionDays: 'retentionDays',
+  backupLocation: 'backupLocation',
+  lastBackupAt: 'lastBackupAt',
+  nextBackupAt: 'nextBackupAt',
+  emailNotification: 'emailNotification',
+  s3Provider: 's3Provider',
+  s3AccessKey: 's3AccessKey',
+  s3SecretKey: 's3SecretKey',
+  s3Bucket: 's3Bucket',
+  s3Region: 's3Region',
+  s3Endpoint: 's3Endpoint',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BackupSettingsScalarFieldEnum = (typeof BackupSettingsScalarFieldEnum)[keyof typeof BackupSettingsScalarFieldEnum]
+
+
+export const BackupHistoryScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  size: 'size',
+  status: 'status',
+  error: 'error',
+  duration: 'duration',
+  location: 'location',
+  s3Key: 's3Key',
+  createdAt: 'createdAt'
+} as const
+
+export type BackupHistoryScalarFieldEnum = (typeof BackupHistoryScalarFieldEnum)[keyof typeof BackupHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3217,6 +3405,8 @@ export type GlobalOmitConfig = {
   storeSettings?: Prisma.StoreSettingsOmit
   twoFactor?: Prisma.TwoFactorOmit
   settings?: Prisma.SettingsOmit
+  backupSettings?: Prisma.BackupSettingsOmit
+  backupHistory?: Prisma.BackupHistoryOmit
 }
 
 /* Types for Logging */

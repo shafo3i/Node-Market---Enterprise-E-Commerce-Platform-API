@@ -32,6 +32,19 @@ interface LowStockEmailData {
   lowStockThreshold: number;
 }
 
+interface NewOrderAlertData {
+  orderReference: string;
+  customerName: string;
+  customerEmail: string;
+  total: string;
+  itemCount: number;
+  items: Array<{
+    name: string;
+    quantity: number;
+    price: string;
+  }>;
+}
+
 export const EmailTemplates = {
   // Order Confirmation Email
   orderConfirmation: (data: OrderEmailData) => `
@@ -222,6 +235,73 @@ export const EmailTemplates = {
           <p>Please consider restocking this product to avoid running out.</p>
           
           <a href="${process.env.FRONTEND_URL}/admincp/inventory" class="button">Manage Inventory</a>
+        </div>
+        <div class="footer">
+          <p>Node Market Admin Panel © ${new Date().getFullYear()}</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `,
+
+  // New Order Alert Email (for admins)
+  newOrderAlert: (data: NewOrderAlertData) => `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+        .alert-box { background: #d1fae5; border-left: 4px solid #10b981; padding: 20px; margin: 20px 0; }
+        .order-info { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; }
+        .item:last-child { border-bottom: none; }
+        .total { font-size: 24px; font-weight: bold; color: #10b981; margin-top: 20px; text-align: right; }
+        .button { background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🎉 New Order Received!</h1>
+        </div>
+        <div class="content">
+          <div class="alert-box">
+            <strong>Great news!</strong> A new order has been placed.
+          </div>
+          
+          <div class="order-info">
+            <p><strong>Order Reference:</strong> ${data.orderReference}</p>
+            <p><strong>Customer:</strong> ${data.customerName}</p>
+            <p><strong>Email:</strong> ${data.customerEmail}</p>
+            <p><strong>Items:</strong> ${data.itemCount} item${data.itemCount > 1 ? 's' : ''}</p>
+            
+            <div style="margin-top: 20px;">
+              <h3 style="margin-bottom: 10px;">Order Details:</h3>
+              ${data.items.map((item: { name: string; quantity: number; price: string }) => `
+                <div class="item">
+                  <div>
+                    <strong>${item.name}</strong><br>
+                    <span style="color: #666;">Qty: ${item.quantity}</span>
+                  </div>
+                  <div style="text-align: right;">
+                    $${item.price}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            
+            <div class="total">
+              Total: $${data.total}
+            </div>
+          </div>
+
+          <p>Please process this order as soon as possible.</p>
+          
+          <a href="${process.env.FRONTEND_URL}/admincp/orders" class="button">View Order</a>
         </div>
         <div class="footer">
           <p>Node Market Admin Panel © ${new Date().getFullYear()}</p>
