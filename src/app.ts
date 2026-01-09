@@ -23,6 +23,7 @@ import logsRoute from './modules/audit-logs/logs.route';
 import disputeRoute from './modules/dispute/dispute.route';
 import refundsRoute from './modules/refunds/refunds.route';
 import carrierRoute from './modules/carrier/carrier.route';
+import shippingRoute from './modules/shipping/shipping.route';
 import addressRoutes from './modules/addresses/address.route';
 import invoiceRoutes from './modules/invoices/invoice.route';
 import settingsRoutes from './modules/settings/settings.route';
@@ -89,6 +90,13 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   }
 }) as any;
 
+// CSRF exempt paths - endpoints that don't need CSRF protection
+const csrfExemptPaths = [
+  '/api/webhooks',           // Webhooks use signature verification (Stripe, etc.)
+  '/api/auth',               // Auth routes handled by better-auth
+  '/api/csrf-token',         // Token generation endpoint
+];
+
 // CSRF token endpoint - Ensure session exists first
 app.get("/api/csrf-token", (req, res) => {
   // Ensure session is initialized
@@ -110,13 +118,22 @@ app.use('/api/webhooks', stripeWebhookRoutes);
 // app.use(express.json()); // to support JSON-encoded bodies not secure against DOS
 app.use(express.json({ limit: '10kb' })); // to support JSON-encoded bodies secure against DOS
 
-// Apply CSRF only for web
+// Apply CSRF protection with exemptions
 app.use((req, res, next) => {
-  if (isMobileRequest(req) || req.path === '/api/track') {
-    return next(); // skip CSRF for mobile and track endpoint
+  // Skip CSRF for exempt paths
+  if (csrfExemptPaths.some(path => req.path.startsWith(path))) {
+    return next();
   }
-  return doubleCsrfProtection(req, res, next); // apply CSRF for web
+  
+  // Skip CSRF for mobile and track endpoint
+  if (isMobileRequest(req) || req.path === '/api/track') {
+    return next();
+  }
+  
+  // Apply CSRF for web requests
+  return doubleCsrfProtection(req, res, next);
 });
+
 app.use(helmet());
 
 
@@ -147,6 +164,9 @@ app.use("/api/refunds", refundsRoute);
 
 // Carrier routes
 app.use("/api/carriers", carrierRoute);
+
+// Shipping routes
+app.use("/api/shipping", shippingRoute);
 
 // Category routes
 app.use('/api/categories', categoryRoutes);

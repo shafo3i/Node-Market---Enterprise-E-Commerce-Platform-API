@@ -28,10 +28,14 @@ export type AggregateCarrier = {
 
 export type CarrierAvgAggregateOutputType = {
   estimatedDays: number | null
+  flatRate: runtime.Decimal | null
+  freeThreshold: runtime.Decimal | null
 }
 
 export type CarrierSumAggregateOutputType = {
   estimatedDays: number | null
+  flatRate: runtime.Decimal | null
+  freeThreshold: runtime.Decimal | null
 }
 
 export type CarrierMinAggregateOutputType = {
@@ -44,6 +48,13 @@ export type CarrierMinAggregateOutputType = {
   contactPhone: string | null
   isActive: boolean | null
   estimatedDays: number | null
+  rateType: $Enums.ShippingRateType | null
+  flatRate: runtime.Decimal | null
+  freeThreshold: runtime.Decimal | null
+  apiProvider: string | null
+  apiKey: string | null
+  apiAccountId: string | null
+  apiEnabled: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +69,13 @@ export type CarrierMaxAggregateOutputType = {
   contactPhone: string | null
   isActive: boolean | null
   estimatedDays: number | null
+  rateType: $Enums.ShippingRateType | null
+  flatRate: runtime.Decimal | null
+  freeThreshold: runtime.Decimal | null
+  apiProvider: string | null
+  apiKey: string | null
+  apiAccountId: string | null
+  apiEnabled: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +90,13 @@ export type CarrierCountAggregateOutputType = {
   contactPhone: number
   isActive: number
   estimatedDays: number
+  rateType: number
+  flatRate: number
+  freeThreshold: number
+  apiProvider: number
+  apiKey: number
+  apiAccountId: number
+  apiEnabled: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -80,10 +105,14 @@ export type CarrierCountAggregateOutputType = {
 
 export type CarrierAvgAggregateInputType = {
   estimatedDays?: true
+  flatRate?: true
+  freeThreshold?: true
 }
 
 export type CarrierSumAggregateInputType = {
   estimatedDays?: true
+  flatRate?: true
+  freeThreshold?: true
 }
 
 export type CarrierMinAggregateInputType = {
@@ -96,6 +125,13 @@ export type CarrierMinAggregateInputType = {
   contactPhone?: true
   isActive?: true
   estimatedDays?: true
+  rateType?: true
+  flatRate?: true
+  freeThreshold?: true
+  apiProvider?: true
+  apiKey?: true
+  apiAccountId?: true
+  apiEnabled?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +146,13 @@ export type CarrierMaxAggregateInputType = {
   contactPhone?: true
   isActive?: true
   estimatedDays?: true
+  rateType?: true
+  flatRate?: true
+  freeThreshold?: true
+  apiProvider?: true
+  apiKey?: true
+  apiAccountId?: true
+  apiEnabled?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,6 +167,13 @@ export type CarrierCountAggregateInputType = {
   contactPhone?: true
   isActive?: true
   estimatedDays?: true
+  rateType?: true
+  flatRate?: true
+  freeThreshold?: true
+  apiProvider?: true
+  apiKey?: true
+  apiAccountId?: true
+  apiEnabled?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -225,6 +275,13 @@ export type CarrierGroupByOutputType = {
   contactPhone: string | null
   isActive: boolean
   estimatedDays: number | null
+  rateType: $Enums.ShippingRateType
+  flatRate: runtime.Decimal | null
+  freeThreshold: runtime.Decimal | null
+  apiProvider: string | null
+  apiKey: string | null
+  apiAccountId: string | null
+  apiEnabled: boolean
   createdAt: Date
   updatedAt: Date
   _count: CarrierCountAggregateOutputType | null
@@ -262,8 +319,16 @@ export type CarrierWhereInput = {
   contactPhone?: Prisma.StringNullableFilter<"Carrier"> | string | null
   isActive?: Prisma.BoolFilter<"Carrier"> | boolean
   estimatedDays?: Prisma.IntNullableFilter<"Carrier"> | number | null
+  rateType?: Prisma.EnumShippingRateTypeFilter<"Carrier"> | $Enums.ShippingRateType
+  flatRate?: Prisma.DecimalNullableFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.DecimalNullableFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiKey?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiAccountId?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiEnabled?: Prisma.BoolFilter<"Carrier"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Carrier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Carrier"> | Date | string
+  orders?: Prisma.OrderListRelationFilter
 }
 
 export type CarrierOrderByWithRelationInput = {
@@ -276,8 +341,16 @@ export type CarrierOrderByWithRelationInput = {
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   estimatedDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  rateType?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiProvider?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiEnabled?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  orders?: Prisma.OrderOrderByRelationAggregateInput
 }
 
 export type CarrierWhereUniqueInput = Prisma.AtLeast<{
@@ -293,8 +366,16 @@ export type CarrierWhereUniqueInput = Prisma.AtLeast<{
   contactPhone?: Prisma.StringNullableFilter<"Carrier"> | string | null
   isActive?: Prisma.BoolFilter<"Carrier"> | boolean
   estimatedDays?: Prisma.IntNullableFilter<"Carrier"> | number | null
+  rateType?: Prisma.EnumShippingRateTypeFilter<"Carrier"> | $Enums.ShippingRateType
+  flatRate?: Prisma.DecimalNullableFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.DecimalNullableFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiKey?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiAccountId?: Prisma.StringNullableFilter<"Carrier"> | string | null
+  apiEnabled?: Prisma.BoolFilter<"Carrier"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Carrier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Carrier"> | Date | string
+  orders?: Prisma.OrderListRelationFilter
 }, "id" | "name" | "code">
 
 export type CarrierOrderByWithAggregationInput = {
@@ -307,6 +388,13 @@ export type CarrierOrderByWithAggregationInput = {
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   estimatedDays?: Prisma.SortOrderInput | Prisma.SortOrder
+  rateType?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrderInput | Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiProvider?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  apiEnabled?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CarrierCountOrderByAggregateInput
@@ -329,6 +417,13 @@ export type CarrierScalarWhereWithAggregatesInput = {
   contactPhone?: Prisma.StringNullableWithAggregatesFilter<"Carrier"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Carrier"> | boolean
   estimatedDays?: Prisma.IntNullableWithAggregatesFilter<"Carrier"> | number | null
+  rateType?: Prisma.EnumShippingRateTypeWithAggregatesFilter<"Carrier"> | $Enums.ShippingRateType
+  flatRate?: Prisma.DecimalNullableWithAggregatesFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.DecimalNullableWithAggregatesFilter<"Carrier"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.StringNullableWithAggregatesFilter<"Carrier"> | string | null
+  apiKey?: Prisma.StringNullableWithAggregatesFilter<"Carrier"> | string | null
+  apiAccountId?: Prisma.StringNullableWithAggregatesFilter<"Carrier"> | string | null
+  apiEnabled?: Prisma.BoolWithAggregatesFilter<"Carrier"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Carrier"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Carrier"> | Date | string
 }
@@ -343,8 +438,16 @@ export type CarrierCreateInput = {
   contactPhone?: string | null
   isActive?: boolean
   estimatedDays?: number | null
+  rateType?: $Enums.ShippingRateType
+  flatRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: string | null
+  apiKey?: string | null
+  apiAccountId?: string | null
+  apiEnabled?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutCarrierInput
 }
 
 export type CarrierUncheckedCreateInput = {
@@ -357,8 +460,16 @@ export type CarrierUncheckedCreateInput = {
   contactPhone?: string | null
   isActive?: boolean
   estimatedDays?: number | null
+  rateType?: $Enums.ShippingRateType
+  flatRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: string | null
+  apiKey?: string | null
+  apiAccountId?: string | null
+  apiEnabled?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutCarrierInput
 }
 
 export type CarrierUpdateInput = {
@@ -371,8 +482,16 @@ export type CarrierUpdateInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutCarrierNestedInput
 }
 
 export type CarrierUncheckedUpdateInput = {
@@ -385,8 +504,16 @@ export type CarrierUncheckedUpdateInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutCarrierNestedInput
 }
 
 export type CarrierCreateManyInput = {
@@ -399,6 +526,13 @@ export type CarrierCreateManyInput = {
   contactPhone?: string | null
   isActive?: boolean
   estimatedDays?: number | null
+  rateType?: $Enums.ShippingRateType
+  flatRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: string | null
+  apiKey?: string | null
+  apiAccountId?: string | null
+  apiEnabled?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -413,6 +547,13 @@ export type CarrierUpdateManyMutationInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -427,8 +568,20 @@ export type CarrierUncheckedUpdateManyInput = {
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CarrierNullableScalarRelationFilter = {
+  is?: Prisma.CarrierWhereInput | null
+  isNot?: Prisma.CarrierWhereInput | null
 }
 
 export type CarrierCountOrderByAggregateInput = {
@@ -441,12 +594,21 @@ export type CarrierCountOrderByAggregateInput = {
   contactPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   estimatedDays?: Prisma.SortOrder
+  rateType?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrder
+  apiProvider?: Prisma.SortOrder
+  apiKey?: Prisma.SortOrder
+  apiAccountId?: Prisma.SortOrder
+  apiEnabled?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CarrierAvgOrderByAggregateInput = {
   estimatedDays?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrder
 }
 
 export type CarrierMaxOrderByAggregateInput = {
@@ -459,6 +621,13 @@ export type CarrierMaxOrderByAggregateInput = {
   contactPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   estimatedDays?: Prisma.SortOrder
+  rateType?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrder
+  apiProvider?: Prisma.SortOrder
+  apiKey?: Prisma.SortOrder
+  apiAccountId?: Prisma.SortOrder
+  apiEnabled?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -473,12 +642,37 @@ export type CarrierMinOrderByAggregateInput = {
   contactPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   estimatedDays?: Prisma.SortOrder
+  rateType?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrder
+  apiProvider?: Prisma.SortOrder
+  apiKey?: Prisma.SortOrder
+  apiAccountId?: Prisma.SortOrder
+  apiEnabled?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CarrierSumOrderByAggregateInput = {
   estimatedDays?: Prisma.SortOrder
+  flatRate?: Prisma.SortOrder
+  freeThreshold?: Prisma.SortOrder
+}
+
+export type CarrierCreateNestedOneWithoutOrdersInput = {
+  create?: Prisma.XOR<Prisma.CarrierCreateWithoutOrdersInput, Prisma.CarrierUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.CarrierCreateOrConnectWithoutOrdersInput
+  connect?: Prisma.CarrierWhereUniqueInput
+}
+
+export type CarrierUpdateOneWithoutOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.CarrierCreateWithoutOrdersInput, Prisma.CarrierUncheckedCreateWithoutOrdersInput>
+  connectOrCreate?: Prisma.CarrierCreateOrConnectWithoutOrdersInput
+  upsert?: Prisma.CarrierUpsertWithoutOrdersInput
+  disconnect?: Prisma.CarrierWhereInput | boolean
+  delete?: Prisma.CarrierWhereInput | boolean
+  connect?: Prisma.CarrierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CarrierUpdateToOneWithWhereWithoutOrdersInput, Prisma.CarrierUpdateWithoutOrdersInput>, Prisma.CarrierUncheckedUpdateWithoutOrdersInput>
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -489,6 +683,139 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumShippingRateTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ShippingRateType
+}
+
+export type CarrierCreateWithoutOrdersInput = {
+  id?: string
+  name: string
+  code: string
+  description?: string | null
+  trackingUrl?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  isActive?: boolean
+  estimatedDays?: number | null
+  rateType?: $Enums.ShippingRateType
+  flatRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: string | null
+  apiKey?: string | null
+  apiAccountId?: string | null
+  apiEnabled?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CarrierUncheckedCreateWithoutOrdersInput = {
+  id?: string
+  name: string
+  code: string
+  description?: string | null
+  trackingUrl?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  isActive?: boolean
+  estimatedDays?: number | null
+  rateType?: $Enums.ShippingRateType
+  flatRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: string | null
+  apiKey?: string | null
+  apiAccountId?: string | null
+  apiEnabled?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CarrierCreateOrConnectWithoutOrdersInput = {
+  where: Prisma.CarrierWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarrierCreateWithoutOrdersInput, Prisma.CarrierUncheckedCreateWithoutOrdersInput>
+}
+
+export type CarrierUpsertWithoutOrdersInput = {
+  update: Prisma.XOR<Prisma.CarrierUpdateWithoutOrdersInput, Prisma.CarrierUncheckedUpdateWithoutOrdersInput>
+  create: Prisma.XOR<Prisma.CarrierCreateWithoutOrdersInput, Prisma.CarrierUncheckedCreateWithoutOrdersInput>
+  where?: Prisma.CarrierWhereInput
+}
+
+export type CarrierUpdateToOneWithWhereWithoutOrdersInput = {
+  where?: Prisma.CarrierWhereInput
+  data: Prisma.XOR<Prisma.CarrierUpdateWithoutOrdersInput, Prisma.CarrierUncheckedUpdateWithoutOrdersInput>
+}
+
+export type CarrierUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CarrierUncheckedUpdateWithoutOrdersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  estimatedDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rateType?: Prisma.EnumShippingRateTypeFieldUpdateOperationsInput | $Enums.ShippingRateType
+  flatRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  freeThreshold?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  apiProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  apiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type CarrierCountOutputType
+ */
+
+export type CarrierCountOutputType = {
+  orders: number
+}
+
+export type CarrierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orders?: boolean | CarrierCountOutputTypeCountOrdersArgs
+}
+
+/**
+ * CarrierCountOutputType without action
+ */
+export type CarrierCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CarrierCountOutputType
+   */
+  select?: Prisma.CarrierCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CarrierCountOutputType without action
+ */
+export type CarrierCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
 
 
 export type CarrierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -501,8 +828,17 @@ export type CarrierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contactPhone?: boolean
   isActive?: boolean
   estimatedDays?: boolean
+  rateType?: boolean
+  flatRate?: boolean
+  freeThreshold?: boolean
+  apiProvider?: boolean
+  apiKey?: boolean
+  apiAccountId?: boolean
+  apiEnabled?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  orders?: boolean | Prisma.Carrier$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.CarrierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["carrier"]>
 
 export type CarrierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -515,6 +851,13 @@ export type CarrierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactPhone?: boolean
   isActive?: boolean
   estimatedDays?: boolean
+  rateType?: boolean
+  flatRate?: boolean
+  freeThreshold?: boolean
+  apiProvider?: boolean
+  apiKey?: boolean
+  apiAccountId?: boolean
+  apiEnabled?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["carrier"]>
@@ -529,6 +872,13 @@ export type CarrierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactPhone?: boolean
   isActive?: boolean
   estimatedDays?: boolean
+  rateType?: boolean
+  flatRate?: boolean
+  freeThreshold?: boolean
+  apiProvider?: boolean
+  apiKey?: boolean
+  apiAccountId?: boolean
+  apiEnabled?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["carrier"]>
@@ -543,15 +893,30 @@ export type CarrierSelectScalar = {
   contactPhone?: boolean
   isActive?: boolean
   estimatedDays?: boolean
+  rateType?: boolean
+  flatRate?: boolean
+  freeThreshold?: boolean
+  apiProvider?: boolean
+  apiKey?: boolean
+  apiAccountId?: boolean
+  apiEnabled?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CarrierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "description" | "trackingUrl" | "contactEmail" | "contactPhone" | "isActive" | "estimatedDays" | "createdAt" | "updatedAt", ExtArgs["result"]["carrier"]>
+export type CarrierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "description" | "trackingUrl" | "contactEmail" | "contactPhone" | "isActive" | "estimatedDays" | "rateType" | "flatRate" | "freeThreshold" | "apiProvider" | "apiKey" | "apiAccountId" | "apiEnabled" | "createdAt" | "updatedAt", ExtArgs["result"]["carrier"]>
+export type CarrierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  orders?: boolean | Prisma.Carrier$ordersArgs<ExtArgs>
+  _count?: boolean | Prisma.CarrierCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type CarrierIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CarrierIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $CarrierPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Carrier"
-  objects: {}
+  objects: {
+    orders: Prisma.$OrderPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
@@ -562,6 +927,13 @@ export type $CarrierPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     contactPhone: string | null
     isActive: boolean
     estimatedDays: number | null
+    rateType: $Enums.ShippingRateType
+    flatRate: runtime.Decimal | null
+    freeThreshold: runtime.Decimal | null
+    apiProvider: string | null
+    apiKey: string | null
+    apiAccountId: string | null
+    apiEnabled: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["carrier"]>
@@ -958,6 +1330,7 @@ readonly fields: CarrierFieldRefs;
  */
 export interface Prisma__CarrierClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  orders<T extends Prisma.Carrier$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Carrier$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -996,6 +1369,13 @@ export interface CarrierFieldRefs {
   readonly contactPhone: Prisma.FieldRef<"Carrier", 'String'>
   readonly isActive: Prisma.FieldRef<"Carrier", 'Boolean'>
   readonly estimatedDays: Prisma.FieldRef<"Carrier", 'Int'>
+  readonly rateType: Prisma.FieldRef<"Carrier", 'ShippingRateType'>
+  readonly flatRate: Prisma.FieldRef<"Carrier", 'Decimal'>
+  readonly freeThreshold: Prisma.FieldRef<"Carrier", 'Decimal'>
+  readonly apiProvider: Prisma.FieldRef<"Carrier", 'String'>
+  readonly apiKey: Prisma.FieldRef<"Carrier", 'String'>
+  readonly apiAccountId: Prisma.FieldRef<"Carrier", 'String'>
+  readonly apiEnabled: Prisma.FieldRef<"Carrier", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Carrier", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Carrier", 'DateTime'>
 }
@@ -1015,6 +1395,10 @@ export type CarrierFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * Filter, which Carrier to fetch.
    */
   where: Prisma.CarrierWhereUniqueInput
@@ -1033,6 +1417,10 @@ export type CarrierFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * Filter, which Carrier to fetch.
    */
   where: Prisma.CarrierWhereUniqueInput
@@ -1050,6 +1438,10 @@ export type CarrierFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Carrier
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
   /**
    * Filter, which Carrier to fetch.
    */
@@ -1099,6 +1491,10 @@ export type CarrierFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * Filter, which Carrier to fetch.
    */
   where?: Prisma.CarrierWhereInput
@@ -1147,6 +1543,10 @@ export type CarrierFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * Filter, which Carriers to fetch.
    */
   where?: Prisma.CarrierWhereInput
@@ -1189,6 +1589,10 @@ export type CarrierCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Carrier
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
   /**
    * The data needed to create a Carrier.
    */
@@ -1237,6 +1641,10 @@ export type CarrierUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Carrier
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
   /**
    * The data needed to update a Carrier.
    */
@@ -1304,6 +1712,10 @@ export type CarrierUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * The filter to search for the Carrier to update in case it exists.
    */
   where: Prisma.CarrierWhereUniqueInput
@@ -1330,6 +1742,10 @@ export type CarrierDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
+  /**
    * Filter which Carrier to delete.
    */
   where: Prisma.CarrierWhereUniqueInput
@@ -1350,6 +1766,30 @@ export type CarrierDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Carrier.orders
+ */
+export type Carrier$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
  * Carrier without action
  */
 export type CarrierDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1361,4 +1801,8 @@ export type CarrierDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Carrier
    */
   omit?: Prisma.CarrierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarrierInclude<ExtArgs> | null
 }

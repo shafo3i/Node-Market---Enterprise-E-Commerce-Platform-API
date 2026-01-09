@@ -62,6 +62,14 @@ export const CarrierService = {
         contactPhone: data.contactPhone || null,
         estimatedDays: data.estimatedDays || null,
         isActive: data.isActive,
+        // Shipping rate fields
+        rateType: data.rateType || 'FLAT',
+        flatRate: data.flatRate || null,
+        freeThreshold: data.freeThreshold || null,
+        apiProvider: data.apiProvider || null,
+        apiKey: data.apiKey || null,
+        apiAccountId: data.apiAccountId || null,
+        apiEnabled: data.apiEnabled || false,
       },
     });
 
@@ -123,6 +131,14 @@ export const CarrierService = {
         ...(data.contactPhone !== undefined && { contactPhone: data.contactPhone || null }),
         ...(data.estimatedDays !== undefined && { estimatedDays: data.estimatedDays || null }),
         ...(data.isActive !== undefined && { isActive: data.isActive }),
+        // Shipping rate fields
+        ...(data.rateType && { rateType: data.rateType }),
+        ...(data.flatRate !== undefined && { flatRate: data.flatRate || null }),
+        ...(data.freeThreshold !== undefined && { freeThreshold: data.freeThreshold || null }),
+        ...(data.apiProvider !== undefined && { apiProvider: data.apiProvider || null }),
+        ...(data.apiKey !== undefined && { apiKey: data.apiKey || null }),
+        ...(data.apiAccountId !== undefined && { apiAccountId: data.apiAccountId || null }),
+        ...(data.apiEnabled !== undefined && { apiEnabled: data.apiEnabled }),
       },
     });
 

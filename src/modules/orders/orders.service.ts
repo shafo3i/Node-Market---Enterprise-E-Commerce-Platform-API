@@ -7,7 +7,7 @@ import { generateInvoice } from '../invoices/invoice.service';
 
 export const OrdersService = {
 
-  createOrder: async (userId: string, shippingAddressId?: string) => {
+  createOrder: async (userId: string, shippingAddressId?: string, carrierId?: string, shippingCost?: number) => {
     // Validate shipping address if provided
     if (shippingAddressId) {
       const address = await prisma.address.findFirst({
@@ -20,6 +20,19 @@ export const OrdersService = {
       if (!address) {
         throw new Error("Invalid shipping address or address does not belong to user");
       }
+    }
+
+    // Validate carrier if provided
+    let carrierCode: string | undefined;
+    if (carrierId) {
+      const carrier = await prisma.carrier.findUnique({
+        where: { id: carrierId, isActive: true },
+      });
+
+      if (!carrier) {
+        throw new Error("Invalid or inactive carrier");
+      }
+      carrierCode = carrier.code;
     }
 
     // Fetch user's cart with items
@@ -50,11 +63,13 @@ export const OrdersService = {
       }
     }
 
-    // Calculate total
-    const total = cart.items.reduce((sum: number, item) => {
+    // Calculate total (including shipping)
+    const subtotal = cart.items.reduce((sum: number, item) => {
       const effectivePrice = item.product.salePrice || item.product.price;
       return sum + Number(effectivePrice) * item.quantity;
     }, 0);
+    
+    const total = subtotal + (shippingCost || 0);
 
     // Generate unique order reference
     const generateOrderReference = () => {
@@ -77,6 +92,10 @@ export const OrdersService = {
           status: "PENDING",
           shippingAddressId: shippingAddressId || null,
           billingAddressId: shippingAddressId || null, // Default billing to shipping
+          // Shipping information
+          shippingCarrier: carrierCode || null,
+          carrierId: carrierId || null,
+          shippingCost: shippingCost || null,
           items: {
             create: cart.items.map(item => ({
               productId: item.productId,

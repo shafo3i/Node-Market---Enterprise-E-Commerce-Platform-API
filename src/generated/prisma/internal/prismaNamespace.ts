@@ -2889,6 +2889,8 @@ export const OrderScalarFieldEnum = {
   shippingCarrier: 'shippingCarrier',
   shippedAt: 'shippedAt',
   deliveredAt: 'deliveredAt',
+  carrierId: 'carrierId',
+  shippingCost: 'shippingCost',
   refundAt: 'refundAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3048,6 +3050,13 @@ export const CarrierScalarFieldEnum = {
   contactPhone: 'contactPhone',
   isActive: 'isActive',
   estimatedDays: 'estimatedDays',
+  rateType: 'rateType',
+  flatRate: 'flatRate',
+  freeThreshold: 'freeThreshold',
+  apiProvider: 'apiProvider',
+  apiKey: 'apiKey',
+  apiAccountId: 'apiAccountId',
+  apiEnabled: 'apiEnabled',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3467,6 +3476,20 @@ export type EnumActorTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'ActorType[]'
  */
 export type ListEnumActorTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActorType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ShippingRateType'
+ */
+export type EnumShippingRateTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShippingRateType'>
+    
+
+
+/**
+ * Reference to a field of type 'ShippingRateType[]'
+ */
+export type ListEnumShippingRateTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShippingRateType[]'>
     
 
 

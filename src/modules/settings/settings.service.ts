@@ -14,7 +14,7 @@ export const SettingsService = {
     const setting = await prisma.settings.findUnique({
       where: { key: 'store_currency' },
     });
-    return setting?.value as string || 'USD';
+    return setting?.value as string || 'GBP';
   },
 
   /**

@@ -542,6 +542,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumShippingRateTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShippingRateType | Prisma.EnumShippingRateTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel> | $Enums.ShippingRateType
+}
+
 export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -556,6 +563,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumShippingRateTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShippingRateType | Prisma.EnumShippingRateTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShippingRateTypeWithAggregatesFilter<$PrismaModel> | $Enums.ShippingRateType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel>
 }
 
 export type EnumReturnExchangeTypeFilter<$PrismaModel = never> = {
@@ -1068,6 +1085,13 @@ export type NestedEnumActorTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumActorTypeFilter<$PrismaModel>
 }
 
+export type NestedEnumShippingRateTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShippingRateType | Prisma.EnumShippingRateTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel> | $Enums.ShippingRateType
+}
+
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -1093,6 +1117,16 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumShippingRateTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShippingRateType | Prisma.EnumShippingRateTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShippingRateType[] | Prisma.ListEnumShippingRateTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShippingRateTypeWithAggregatesFilter<$PrismaModel> | $Enums.ShippingRateType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShippingRateTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumReturnExchangeTypeFilter<$PrismaModel = never> = {

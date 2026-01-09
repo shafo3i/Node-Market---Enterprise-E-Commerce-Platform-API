@@ -261,6 +261,11 @@ model Order {
   shippingCarrier String?
   shippedAt       DateTime?
   deliveredAt     DateTime?
+  
+  // Carrier relationship
+  carrierId       String?
+  carrier         Carrier? @relation("CarrierOrders", fields: [carrierId], references: [id])
+  shippingCost    Decimal? @db.Decimal(10, 2)
 
   //refunds
   refundAt DateTime?
@@ -457,12 +462,31 @@ model Carrier {
   contactPhone  String?
   isActive      Boolean  @default(true)
   estimatedDays Int? // Estimated delivery days
+  
+  // Shipping Rate Configuration
+  rateType      ShippingRateType @default(FLAT) // FLAT or API
+  flatRate      Decimal?         @db.Decimal(10, 2) // Used when rateType = FLAT
+  freeThreshold Decimal?         @db.Decimal(10, 2) // Free shipping above this amount
+  
+  // API Integration (for rateType = API)
+  apiProvider   String? // "royal_mail", "ups", "fedex", "dhl"
+  apiKey        String? // Encrypted API credentials
+  apiAccountId  String? // Account number or customer ID
+  apiEnabled    Boolean @default(false)
+  
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  orders        Order[]  @relation("CarrierOrders")
 
   @@index([code])
   @@index([isActive])
+  @@index([rateType])
   @@map("carriers")
+}
+
+enum ShippingRateType {
+  FLAT // Manual flat rate pricing
+  API  // Real-time API calculation
 }
 
 model StoreSettings {

@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const ShippingRateType = {
+  FLAT: 'FLAT',
+  API: 'API'
+} as const
+
+export type ShippingRateType = (typeof ShippingRateType)[keyof typeof ShippingRateType]
+
+
 export const EntityType = {
   USER: 'USER',
   PRODUCT: 'PRODUCT',

@@ -67,6 +67,49 @@ export const createCarrierSchema = z.object({
   isActive: z
     .boolean()
     .default(true),
+  
+  // Shipping rate configuration
+  rateType: z
+    .enum(['FLAT', 'API'])
+    .default('FLAT'),
+  
+  flatRate: z
+    .number()
+    .min(0, "Flat rate must be 0 or greater")
+    .optional()
+    .nullable(),
+  
+  freeThreshold: z
+    .number()
+    .min(0, "Free threshold must be 0 or greater")
+    .optional()
+    .nullable(),
+  
+  // API integration
+  apiProvider: z
+    .enum(['royal_mail', 'ups', 'fedex', 'dhl'])
+    .optional()
+    .nullable(),
+  
+  apiKey: z
+    .string()
+    .trim()
+    .max(500, "API key must not exceed 500 characters")
+    .optional()
+    .nullable()
+    .transform(val => val === "" ? null : val),
+  
+  apiAccountId: z
+    .string()
+    .trim()
+    .max(100, "API account ID must not exceed 100 characters")
+    .optional()
+    .nullable()
+    .transform(val => val === "" ? null : val),
+  
+  apiEnabled: z
+    .boolean()
+    .default(false),
 });
 
 export const updateCarrierSchema = z.object({
@@ -130,6 +173,51 @@ export const updateCarrierSchema = z.object({
     .nullable(),
   
   isActive: z
+    .boolean()
+    .optional(),
+  
+  // Shipping rate configuration
+  rateType: z
+    .enum(['FLAT', 'API'])
+    .optional(),
+  
+  flatRate: z
+    .number()
+    .min(0, "Flat rate must be 0 or greater")
+    .optional()
+    .nullable()
+    .transform(val => val === 0 ? null : val),
+  
+  freeThreshold: z
+    .number()
+    .min(0, "Free threshold must be 0 or greater")
+    .optional()
+    .nullable()
+    .transform(val => val === 0 ? null : val),
+  
+  // API integration
+  apiProvider: z
+    .enum(['royal_mail', 'ups', 'fedex', 'dhl'])
+    .optional()
+    .nullable(),
+  
+  apiKey: z
+    .string()
+    .trim()
+    .max(500, "API key must not exceed 500 characters")
+    .optional()
+    .nullable()
+    .transform(val => val === "" ? null : val),
+  
+  apiAccountId: z
+    .string()
+    .trim()
+    .max(100, "API account ID must not exceed 100 characters")
+    .optional()
+    .nullable()
+    .transform(val => val === "" ? null : val),
+  
+  apiEnabled: z
     .boolean()
     .optional(),
 }).strict();

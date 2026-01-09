@@ -296,6 +296,8 @@ export const OrderScalarFieldEnum = {
   shippingCarrier: 'shippingCarrier',
   shippedAt: 'shippedAt',
   deliveredAt: 'deliveredAt',
+  carrierId: 'carrierId',
+  shippingCost: 'shippingCost',
   refundAt: 'refundAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -455,6 +457,13 @@ export const CarrierScalarFieldEnum = {
   contactPhone: 'contactPhone',
   isActive: 'isActive',
   estimatedDays: 'estimatedDays',
+  rateType: 'rateType',
+  flatRate: 'flatRate',
+  freeThreshold: 'freeThreshold',
+  apiProvider: 'apiProvider',
+  apiKey: 'apiKey',
+  apiAccountId: 'apiAccountId',
+  apiEnabled: 'apiEnabled',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
