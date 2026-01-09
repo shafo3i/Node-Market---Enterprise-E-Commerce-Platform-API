@@ -78,7 +78,9 @@ export const ModelName = {
   TwoFactor: 'TwoFactor',
   Settings: 'Settings',
   BackupSettings: 'BackupSettings',
-  BackupHistory: 'BackupHistory'
+  BackupHistory: 'BackupHistory',
+  ReturnExchange: 'ReturnExchange',
+  ReturnExchangeItem: 'ReturnExchangeItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -539,6 +541,55 @@ export const BackupHistoryScalarFieldEnum = {
 } as const
 
 export type BackupHistoryScalarFieldEnum = (typeof BackupHistoryScalarFieldEnum)[keyof typeof BackupHistoryScalarFieldEnum]
+
+
+export const ReturnExchangeScalarFieldEnum = {
+  id: 'id',
+  returnNumber: 'returnNumber',
+  orderId: 'orderId',
+  type: 'type',
+  status: 'status',
+  reason: 'reason',
+  customerComments: 'customerComments',
+  adminNotes: 'adminNotes',
+  images: 'images',
+  refundAmount: 'refundAmount',
+  refundMethod: 'refundMethod',
+  refundedAt: 'refundedAt',
+  exchangeOrderId: 'exchangeOrderId',
+  requestedAt: 'requestedAt',
+  approvedAt: 'approvedAt',
+  rejectedAt: 'rejectedAt',
+  processedAt: 'processedAt',
+  completedAt: 'completedAt',
+  returnTrackingNumber: 'returnTrackingNumber',
+  returnCarrier: 'returnCarrier',
+  receivedAt: 'receivedAt',
+  processedBy: 'processedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReturnExchangeScalarFieldEnum = (typeof ReturnExchangeScalarFieldEnum)[keyof typeof ReturnExchangeScalarFieldEnum]
+
+
+export const ReturnExchangeItemScalarFieldEnum = {
+  id: 'id',
+  returnExchangeId: 'returnExchangeId',
+  productId: 'productId',
+  productName: 'productName',
+  sku: 'sku',
+  quantity: 'quantity',
+  price: 'price',
+  reason: 'reason',
+  condition: 'condition',
+  exchangeProductId: 'exchangeProductId',
+  exchangeProductName: 'exchangeProductName',
+  exchangeProductSku: 'exchangeProductSku',
+  createdAt: 'createdAt'
+} as const
+
+export type ReturnExchangeItemScalarFieldEnum = (typeof ReturnExchangeItemScalarFieldEnum)[keyof typeof ReturnExchangeItemScalarFieldEnum]
 
 
 export const SortOrder = {

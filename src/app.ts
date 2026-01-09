@@ -28,6 +28,10 @@ import invoiceRoutes from './modules/invoices/invoice.route';
 import settingsRoutes from './modules/settings/settings.route';
 import backupRoutes from './modules/backup/backup.route';
 import uploadRoutes from './modules/upload/upload.route';
+import cachingRoutes from './modules/caching/caching.route';
+import securityRoutes from './modules/security/security.route';
+import returnsRoutes from './modules/returns/returns.route';
+import { SecurityService } from './modules/security/security.service';
 // import morgan from 'morgan';
 
 
@@ -168,6 +172,15 @@ app.use("/api/admin/backup", backupRoutes);
 // Upload routes (Admin only)
 app.use("/api/upload", uploadRoutes);
 
+// Caching routes (Admin only)
+app.use("/api/caching", cachingRoutes);
+
+// Security routes (Admin only)
+app.use("/api/security", securityRoutes);
+
+// Returns/Exchange routes (Admin only)
+app.use("/api/returns", returnsRoutes);
+
 // dispute routes
 app.use("/api/disputes", disputeRoute);
 
@@ -202,20 +215,21 @@ app.use((req, res, next) => {
   res.status(404).json({ error: "Not Found" });
 });
 
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use(async (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error("Global Error Handler:", err);
+  
   if (err.code === 'EBADCSRFTOKEN') {
     return res.status(403).json({ error: 'Invalid CSRF token' });
   }
-  // res.status(500).json({
-  //   error: err.message || "Internal Server Error",
-  //   // stack: process.env.NODE_ENV === "development" ? err.stack : undefined
-  // });
 
+  // Check debug mode setting
+  const debugMode = await SecurityService.getDebugMode();
+  
   res.status(500).json({
-  error: process.env.NODE_ENV === "production" 
-    ? "Internal Server Error" 
-    : err.message || "Internal Server Error",
+    error: debugMode.enabled 
+      ? err.message || "Internal Server Error"
+      : "Internal Server Error",
+    ...(debugMode.enabled && { stack: err.stack })
   });
 });
 

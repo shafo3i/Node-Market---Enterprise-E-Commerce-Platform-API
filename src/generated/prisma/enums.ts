@@ -99,6 +99,32 @@ export const UserStatus = {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 
+export const ReturnExchangeType = {
+  RETURN: 'RETURN',
+  EXCHANGE: 'EXCHANGE'
+} as const
+
+export type ReturnExchangeType = (typeof ReturnExchangeType)[keyof typeof ReturnExchangeType]
+
+
+export const ReturnExchangeStatus = {
+  REQUESTED: 'REQUESTED',
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  RETURN_SHIPPED: 'RETURN_SHIPPED',
+  RECEIVED: 'RECEIVED',
+  INSPECTING: 'INSPECTING',
+  REFUND_PENDING: 'REFUND_PENDING',
+  REFUNDED: 'REFUNDED',
+  EXCHANGE_PROCESSING: 'EXCHANGE_PROCESSING',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ReturnExchangeStatus = (typeof ReturnExchangeStatus)[keyof typeof ReturnExchangeStatus]
+
+
 export const DisputeStatus = {
   OPEN: 'OPEN',
   UNDER_REVIEW: 'UNDER_REVIEW',

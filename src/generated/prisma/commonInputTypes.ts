@@ -558,6 +558,40 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
 }
 
+export type EnumReturnExchangeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeType | Prisma.EnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel> | $Enums.ReturnExchangeType
+}
+
+export type EnumReturnExchangeStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeStatus | Prisma.EnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel> | $Enums.ReturnExchangeStatus
+}
+
+export type EnumReturnExchangeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeType | Prisma.EnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ReturnExchangeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel>
+}
+
+export type EnumReturnExchangeStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeStatus | Prisma.EnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReturnExchangeStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1059,6 +1093,40 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumReturnExchangeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeType | Prisma.EnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel> | $Enums.ReturnExchangeType
+}
+
+export type NestedEnumReturnExchangeStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeStatus | Prisma.EnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel> | $Enums.ReturnExchangeStatus
+}
+
+export type NestedEnumReturnExchangeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeType | Prisma.EnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeType[] | Prisma.ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ReturnExchangeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReturnExchangeTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumReturnExchangeStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReturnExchangeStatus | Prisma.EnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReturnExchangeStatus[] | Prisma.ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReturnExchangeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReturnExchangeStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReturnExchangeStatusFilter<$PrismaModel>
 }
 
 

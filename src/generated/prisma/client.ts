@@ -177,3 +177,13 @@ export type BackupSettings = Prisma.BackupSettingsModel
  * 
  */
 export type BackupHistory = Prisma.BackupHistoryModel
+/**
+ * Model ReturnExchange
+ * 
+ */
+export type ReturnExchange = Prisma.ReturnExchangeModel
+/**
+ * Model ReturnExchangeItem
+ * 
+ */
+export type ReturnExchangeItem = Prisma.ReturnExchangeItemModel

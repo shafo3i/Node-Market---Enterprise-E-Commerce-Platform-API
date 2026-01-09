@@ -268,6 +268,7 @@ model Order {
   items     OrderItem[]
   payments  Payment[]
   invoices  Invoice[]
+  returns   ReturnExchange[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -562,6 +563,26 @@ enum UserStatus {
   BANNED // permanent block
 }
 
+enum ReturnExchangeType {
+  RETURN
+  EXCHANGE
+}
+
+enum ReturnExchangeStatus {
+  REQUESTED       // Customer submitted request
+  PENDING_APPROVAL // Under review
+  APPROVED        // Admin approved
+  REJECTED        // Admin rejected
+  RETURN_SHIPPED  // Customer shipped item back
+  RECEIVED        // Item received by warehouse
+  INSPECTING      // Quality check in progress
+  REFUND_PENDING  // Refund being processed
+  REFUNDED        // Refund completed
+  EXCHANGE_PROCESSING // Exchange order being created
+  COMPLETED       // Process completed
+  CANCELLED       // Cancelled by customer or admin
+}
+
 enum DisputeStatus {
   OPEN
   UNDER_REVIEW
@@ -596,7 +617,7 @@ model TwoFactor {
 
 model Settings {
   id        String   @id @default(cuid())
-  key       String   @unique // e.g., "store_currency", "payment_methods"
+  key       String   @unique // e.g., "store_currency", "payment_methods", "cache_settings", "debug_mode"
   value     Json // Flexible JSON storage for different setting types
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -643,4 +664,79 @@ model BackupHistory {
   @@index([status])
   @@index([createdAt])
   @@map("backup_history")
+}
+
+model ReturnExchange {
+  id              String              @id @default(cuid())
+  returnNumber    String              @unique // REX-YYYYMMDD-XXXXX
+  orderId         String
+  order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type            ReturnExchangeType  // RETURN or EXCHANGE
+  status          ReturnExchangeStatus @default(REQUESTED)
+  
+  // Items being returned/exchanged
+  items           ReturnExchangeItem[]
+  
+  // Reason and details
+  reason          String              @db.Text
+  customerComments String?            @db.Text
+  adminNotes      String?            @db.Text
+  
+  // Images/proof
+  images          String[]           // Array of image URLs
+  
+  // Refund information (for returns)
+  refundAmount    Decimal?
+  refundMethod    String?            // original_payment, store_credit, etc.
+  refundedAt      DateTime?
+  
+  // Exchange information (for exchanges)
+  exchangeOrderId String?            // New order created for exchange
+  
+  // Processing details
+  requestedAt     DateTime           @default(now())
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+  processedAt     DateTime?
+  completedAt     DateTime?
+  
+  // Shipping details for return
+  returnTrackingNumber String?
+  returnCarrier        String?
+  receivedAt           DateTime?
+  
+  // Processed by
+  processedBy     String?            // Admin user ID
+  
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([orderId])
+  @@index([returnNumber])
+  @@index([status])
+  @@index([type])
+  @@map("return_exchange")
+}
+
+model ReturnExchangeItem {
+  id                String         @id @default(cuid())
+  returnExchangeId  String
+  returnExchange    ReturnExchange @relation(fields: [returnExchangeId], references: [id], onDelete: Cascade)
+  productId         String
+  productName       String         // Snapshot
+  sku               String?
+  quantity          Int
+  price             Decimal        // Original price
+  reason            String         @db.Text
+  condition         String?        // unopened, opened, damaged, defective
+  
+  // For exchanges - replacement product
+  exchangeProductId   String?
+  exchangeProductName String?
+  exchangeProductSku  String?
+  
+  createdAt         DateTime       @default(now())
+
+  @@index([returnExchangeId])
+  @@map("return_exchange_items")
 }

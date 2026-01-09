@@ -35,9 +35,21 @@ export const RefundsController = {
                 return res.status(400).json({ success: false, message: "Status is required" });
             }
 
+            // If status is REFUNDED, process through Stripe
+            if (status === 'REFUNDED') {
+                const result = await RefundsService.processStripeRefund(id, `admin:${session.user.id}`);
+                return res.status(200).json({ 
+                    success: true, 
+                    refundId: result.refundId,
+                    message: "Refund processed successfully through Stripe" 
+                });
+            }
+
+            // For other status updates (like REFUND_PENDING, CANCELLED)
             const refund = await RefundsService.updateRefundStatus(id, status as OrderStatus, `admin:${session.user.id}`);
             return res.status(200).json({ success: true, refund, message: "Refund status updated" });
         } catch (error) {
+            console.error('Refund error:', error);
             return res.status(500).json({ success: false, error: (error as Error).message });
         }
     },

@@ -411,7 +411,9 @@ export const ModelName = {
   TwoFactor: 'TwoFactor',
   Settings: 'Settings',
   BackupSettings: 'BackupSettings',
-  BackupHistory: 'BackupHistory'
+  BackupHistory: 'BackupHistory',
+  ReturnExchange: 'ReturnExchange',
+  ReturnExchangeItem: 'ReturnExchangeItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -427,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "storeSettings" | "twoFactor" | "settings" | "backupSettings" | "backupHistory"
+    modelProps: "user" | "address" | "session" | "account" | "verification" | "product" | "productVariant" | "review" | "brand" | "category" | "promotion" | "order" | "orderItem" | "cart" | "cartItem" | "wishlistItem" | "payment" | "invoice" | "paymentWebhook" | "stripeEvent" | "dispute" | "auditLog" | "carrier" | "storeSettings" | "twoFactor" | "settings" | "backupSettings" | "backupHistory" | "returnExchange" | "returnExchangeItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2503,6 +2505,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReturnExchange: {
+      payload: Prisma.$ReturnExchangePayload<ExtArgs>
+      fields: Prisma.ReturnExchangeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReturnExchangeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReturnExchangeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        findFirst: {
+          args: Prisma.ReturnExchangeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReturnExchangeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        findMany: {
+          args: Prisma.ReturnExchangeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>[]
+        }
+        create: {
+          args: Prisma.ReturnExchangeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        createMany: {
+          args: Prisma.ReturnExchangeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReturnExchangeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>[]
+        }
+        delete: {
+          args: Prisma.ReturnExchangeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        update: {
+          args: Prisma.ReturnExchangeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        deleteMany: {
+          args: Prisma.ReturnExchangeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReturnExchangeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReturnExchangeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>[]
+        }
+        upsert: {
+          args: Prisma.ReturnExchangeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangePayload>
+        }
+        aggregate: {
+          args: Prisma.ReturnExchangeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReturnExchange>
+        }
+        groupBy: {
+          args: Prisma.ReturnExchangeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReturnExchangeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReturnExchangeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReturnExchangeCountAggregateOutputType> | number
+        }
+      }
+    }
+    ReturnExchangeItem: {
+      payload: Prisma.$ReturnExchangeItemPayload<ExtArgs>
+      fields: Prisma.ReturnExchangeItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReturnExchangeItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReturnExchangeItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        findFirst: {
+          args: Prisma.ReturnExchangeItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReturnExchangeItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        findMany: {
+          args: Prisma.ReturnExchangeItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>[]
+        }
+        create: {
+          args: Prisma.ReturnExchangeItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        createMany: {
+          args: Prisma.ReturnExchangeItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReturnExchangeItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>[]
+        }
+        delete: {
+          args: Prisma.ReturnExchangeItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        update: {
+          args: Prisma.ReturnExchangeItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReturnExchangeItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReturnExchangeItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReturnExchangeItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReturnExchangeItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReturnExchangeItemPayload>
+        }
+        aggregate: {
+          args: Prisma.ReturnExchangeItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReturnExchangeItem>
+        }
+        groupBy: {
+          args: Prisma.ReturnExchangeItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReturnExchangeItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReturnExchangeItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReturnExchangeItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2986,6 +3136,55 @@ export const BackupHistoryScalarFieldEnum = {
 export type BackupHistoryScalarFieldEnum = (typeof BackupHistoryScalarFieldEnum)[keyof typeof BackupHistoryScalarFieldEnum]
 
 
+export const ReturnExchangeScalarFieldEnum = {
+  id: 'id',
+  returnNumber: 'returnNumber',
+  orderId: 'orderId',
+  type: 'type',
+  status: 'status',
+  reason: 'reason',
+  customerComments: 'customerComments',
+  adminNotes: 'adminNotes',
+  images: 'images',
+  refundAmount: 'refundAmount',
+  refundMethod: 'refundMethod',
+  refundedAt: 'refundedAt',
+  exchangeOrderId: 'exchangeOrderId',
+  requestedAt: 'requestedAt',
+  approvedAt: 'approvedAt',
+  rejectedAt: 'rejectedAt',
+  processedAt: 'processedAt',
+  completedAt: 'completedAt',
+  returnTrackingNumber: 'returnTrackingNumber',
+  returnCarrier: 'returnCarrier',
+  receivedAt: 'receivedAt',
+  processedBy: 'processedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReturnExchangeScalarFieldEnum = (typeof ReturnExchangeScalarFieldEnum)[keyof typeof ReturnExchangeScalarFieldEnum]
+
+
+export const ReturnExchangeItemScalarFieldEnum = {
+  id: 'id',
+  returnExchangeId: 'returnExchangeId',
+  productId: 'productId',
+  productName: 'productName',
+  sku: 'sku',
+  quantity: 'quantity',
+  price: 'price',
+  reason: 'reason',
+  condition: 'condition',
+  exchangeProductId: 'exchangeProductId',
+  exchangeProductName: 'exchangeProductName',
+  exchangeProductSku: 'exchangeProductSku',
+  createdAt: 'createdAt'
+} as const
+
+export type ReturnExchangeItemScalarFieldEnum = (typeof ReturnExchangeItemScalarFieldEnum)[keyof typeof ReturnExchangeItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3272,6 +3471,34 @@ export type ListEnumActorTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'ReturnExchangeType'
+ */
+export type EnumReturnExchangeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnExchangeType'>
+    
+
+
+/**
+ * Reference to a field of type 'ReturnExchangeType[]'
+ */
+export type ListEnumReturnExchangeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnExchangeType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReturnExchangeStatus'
+ */
+export type EnumReturnExchangeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnExchangeStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReturnExchangeStatus[]'
+ */
+export type ListEnumReturnExchangeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReturnExchangeStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3407,6 +3634,8 @@ export type GlobalOmitConfig = {
   settings?: Prisma.SettingsOmit
   backupSettings?: Prisma.BackupSettingsOmit
   backupHistory?: Prisma.BackupHistoryOmit
+  returnExchange?: Prisma.ReturnExchangeOmit
+  returnExchangeItem?: Prisma.ReturnExchangeItemOmit
 }
 
 /* Types for Logging */
