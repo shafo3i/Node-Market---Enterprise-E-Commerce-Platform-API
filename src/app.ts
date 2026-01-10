@@ -15,7 +15,6 @@ import { doubleCsrf } from "csrf-csrf";
 import session from "express-session";
 import { isMobileRequest } from "./lib/mobile-helper";
 import rateLimit from 'express-rate-limit'
-// import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from "helmet";
 import userRoute from './modules/users/user.route';
@@ -33,7 +32,6 @@ import cachingRoutes from './modules/caching/caching.route';
 import securityRoutes from './modules/security/security.route';
 import returnsRoutes from './modules/returns/returns.route';
 import { SecurityService } from './modules/security/security.service';
-// import morgan from 'morgan';
 
 
 const app = express();
@@ -57,11 +55,14 @@ app.use(
   session({
     secret: process.env.CSRF_SECRET!, // Validated in index.ts
     resave: false,
-    saveUninitialized: true, // Must be true for CSRF to work (creates session for token generation)
+    saveUninitialized: true, // Required for CSRF (session must exist before token generation)
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // strict in production, lax for dev (different ports)
+      domain: process.env.NODE_ENV === "production" ? '.yourdomain.com' : 'localhost', // Set for subdomain sharing in production
+
     },
   })
 );
@@ -71,7 +72,7 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET!, // Validated in index.ts
   cookieName: process.env.NODE_ENV === "production" ? "__Host-psifi.x-csrf-token" : "psifi.x-csrf-token",
   cookieOptions: {
-    sameSite: "lax",
+    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // Must match session cookie
     path: "/",
     secure: process.env.NODE_ENV === "production",
   },
@@ -134,7 +135,29 @@ app.use((req, res, next) => {
   return doubleCsrfProtection(req, res, next);
 });
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"], // For inline styles
+      scriptSrc: ["'self'", "https://js.stripe.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", "https://api.stripe.com"],
+      frameSrc: ["https://js.stripe.com", "https://hooks.stripe.com"],
+      fontSrc: ["'self'", "data:"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+    },
+  },
+  hsts: {
+    maxAge: 31536000, // 1 year
+    includeSubDomains: true,
+    preload: true,
+  },
+  noSniff: true,
+  xssFilter: true,
+  referrerPolicy: { policy: 'same-origin' },
+}));
 
 
 // rate limit
@@ -154,6 +177,19 @@ app.get('/api/me', async (req, res) => {
   });
   return res.json(session)
 });
+
+if (process.env.NODE_ENV === 'development') {
+  // app.use(morgan('dev'));
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      return res.redirect(`https://${req.header('host')}${req.url}`);
+    }
+    next();
+  });
+}
 
 
 // Order routes

@@ -3,11 +3,12 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./config/prisma";
 import { sendEmail } from "./modules/email/email.service";
 import { bearer, captcha, lastLoginMethod, twoFactor  } from "better-auth/plugins";
-
+import { SecurityMonitor } from "./lib/security-monitor";
 
 // If your Prisma file is located elsewhere, you can change the path
 
 
+const securityMonitor = new SecurityMonitor();
 
 export const auth = betterAuth({
     basePath: "/api/auth",
@@ -48,6 +49,7 @@ export const auth = betterAuth({
     //     windowMs: 15 * 60 * 1000, // 15 minutes
     //     max: 20, // limit each IP to 20 requests per windowMs
     // },
+    
 
      emailVerification: {
         sendOnSignUp: true,

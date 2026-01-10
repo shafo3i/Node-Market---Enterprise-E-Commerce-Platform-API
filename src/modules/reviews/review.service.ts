@@ -1,6 +1,8 @@
 import {prisma} from '../../config/prisma';
+import { sanitizeHTML } from '../../lib/sanitize';
 
 export const ReviewService = {
+
   // Create a new review
   createReview: async (data: {
     productId: string;
@@ -22,6 +24,11 @@ export const ReviewService = {
       throw new Error('Product not found');
     }
 
+    const sanitizedComment = data.comment ? sanitizeHTML(data.comment) : null;
+
+    // Update comment with sanitized version
+    
+
     // Check if user has already reviewed this product
     const existingReview = await prisma.review.findUnique({
       where: {
@@ -42,7 +49,7 @@ export const ReviewService = {
         productId: data.productId,
         userId: data.userId,
         rating: data.rating,
-        comment: data.comment || null,
+        comment: sanitizedComment || null,
       },
       include: {
         user: {
@@ -192,6 +199,8 @@ export const ReviewService = {
     if (existingReview.userId !== userId) {
       throw new Error('You can only update your own reviews');
     }
+    
+
 
     // Update the review
     const updatedReview = await prisma.review.update({

@@ -43,6 +43,7 @@
     "sharp": "^0.34.5",
     "stripe": "^20.1.0",
     "uploadthing": "^7.7.4",
+    "xss": "^1.0.15",
     "zod": "^4.3.4"
   },
   "devDependencies": {

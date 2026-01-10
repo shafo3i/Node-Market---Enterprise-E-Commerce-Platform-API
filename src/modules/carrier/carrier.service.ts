@@ -1,5 +1,6 @@
 import { prisma } from "../../config/prisma";
 import type { CreateCarrierInput, UpdateCarrierInput } from "./carrier.validation";
+import { encrypt, decrypt } from '../../lib/encryption';
 
 export const CarrierService = {
   async getAllCarriers() {
@@ -67,7 +68,7 @@ export const CarrierService = {
         flatRate: data.flatRate || null,
         freeThreshold: data.freeThreshold || null,
         apiProvider: data.apiProvider || null,
-        apiKey: data.apiKey || null,
+        apiKey: data.apiKey ? encrypt(data.apiKey) : null,
         apiAccountId: data.apiAccountId || null,
         apiEnabled: data.apiEnabled || false,
       },
@@ -136,7 +137,7 @@ export const CarrierService = {
         ...(data.flatRate !== undefined && { flatRate: data.flatRate || null }),
         ...(data.freeThreshold !== undefined && { freeThreshold: data.freeThreshold || null }),
         ...(data.apiProvider !== undefined && { apiProvider: data.apiProvider || null }),
-        ...(data.apiKey !== undefined && { apiKey: data.apiKey || null }),
+        ...(data.apiKey !== undefined && { apiKey: data.apiKey ? encrypt(data.apiKey) : null }),
         ...(data.apiAccountId !== undefined && { apiAccountId: data.apiAccountId || null }),
         ...(data.apiEnabled !== undefined && { apiEnabled: data.apiEnabled }),
       },
