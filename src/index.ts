@@ -12,7 +12,7 @@ if (missing.length > 0) {
 }
 
 const PORT =  3003;
-const HOST = 'http://localhost';
+const HOST = process.env.BACKEND_URL_HOST || 'http://localhost';
 
 app.listen(PORT, async () => {
   console.log(`Server is running on ${HOST}:${PORT}`);
