@@ -58,10 +58,8 @@ app.use(
     saveUninitialized: true, // Required for CSRF (session must exist before token generation)
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      httpOnly: true, // Prevents client-side JS access
+      httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // none in production for cross-origin, lax for dev
-      // domain: undefined, // Let browser handle domain automatically
 
     },
   })
