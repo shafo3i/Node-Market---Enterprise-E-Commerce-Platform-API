@@ -112,21 +112,13 @@ const csrfExemptPaths = [
 
 // CSRF token endpoint - Ensure session exists first
 app.get("/api/csrf-token", (req, res) => {
-  console.log('🔑 CSRF Token Request:', {
-    env: process.env.NODE_ENV,
-    origin: req.headers.origin,
-    hasSession: !!req.session,
-    sessionID: req.sessionID,
-    cookies: req.cookies,
-  });
-  
+
   // Ensure session is initialized
   if (!req.session) {
     return res.status(500).json({ error: "Session not initialized" });
   }
   
   const csrfToken = generateCsrfToken(req, res);
-  console.log('✅ CSRF Token Generated:', csrfToken.substring(0, 20) + '...');
   return res.json({ csrfToken });
 });
 
@@ -151,20 +143,7 @@ app.use((req, res, next) => {
   if (isMobileRequest(req) || req.path === '/api/track') {
     return next();
   }
-  
-  // Debug CSRF validation
-  if (req.method !== 'GET' && req.method !== 'HEAD' && req.method !== 'OPTIONS') {
-    console.log('🛡️ CSRF Validation:', {
-      env: process.env.NODE_ENV,
-      path: req.path,
-      method: req.method,
-      hasToken: !!req.headers['x-csrf-token'],
-      tokenPreview: req.headers['x-csrf-token'] ? String(req.headers['x-csrf-token']).substring(0, 20) + '...' : 'MISSING',
-      hasSession: !!req.session,
-      sessionID: req.sessionID,
-      cookies: req.cookies,
-    });
-  }
+
   
   // Apply CSRF for web requests
   return doubleCsrfProtection(req, res, next);
@@ -198,7 +177,7 @@ app.use(helmet({
 // rate limit
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 500 // limit each IP to 500 requests per windowMs (increased for admin dashboard)
+  max: 100 // limit each IP to 100 requests per windowMs
 })
 app.use(limiter)
 

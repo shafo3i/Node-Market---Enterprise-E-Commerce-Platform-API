@@ -19,7 +19,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: false,
-        autoSignIn: false,
+        autoSignIn: false, // Auto sign-in after sign-up
+        disableSignUp: true, // Disable user sign-up
         async sendResetPassword({ user, url }) {
             const frontendUrl = "http://localhost:3000";
             const urlObj = new URL(url);
@@ -45,6 +46,8 @@ export const auth = betterAuth({
         
         
     },
+
+    
     // rateLimit: {
     //     windowMs: 15 * 60 * 1000, // 15 minutes
     //     max: 20, // limit each IP to 20 requests per windowMs

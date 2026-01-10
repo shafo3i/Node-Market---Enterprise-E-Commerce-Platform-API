@@ -13,7 +13,7 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
         });
 
         if (!session) {
-            return res.status(401).json({ error: "Unauthenticated" });
+            return res.status(401).json({ error: "Please log in to continue" });
         }
 
         // Attach session to locals for efficient access in controllers/middlewares
@@ -59,7 +59,7 @@ export const isMerchant = async (req: Request, res: Response, next: NextFunction
             headers: fromNodeHeaders(req.headers),
         });
         if (!session) {
-            return res.status(401).json({ error: "Unauthenticated" });
+            return res.status(401).json({ error: "Please log in to continue" });
         }
         if (session.user?.role !== 'MERCHANT') {
             return res.status(403).json({ error: "Forbidden: Merchants only" });
@@ -82,7 +82,7 @@ export const isCustomer = async (req: Request, res: Response, next: NextFunction
             headers: fromNodeHeaders(req.headers),
         });
         if (!session) {
-            return res.status(401).json({ error: "Unauthenticated" });
+            return res.status(401).json({ error: "Please log in to continue" });
         }
         if (session.user?.role !== 'CUSTOMER') {
             return res.status(403).json({ error: "Forbidden: Customers only" });
