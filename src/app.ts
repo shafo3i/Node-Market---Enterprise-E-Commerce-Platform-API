@@ -69,8 +69,8 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
-      // domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
+      domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
     },
   })
 );
@@ -80,12 +80,12 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET!, // Validated in index.ts
   cookieName: "psifi.x-csrf-token", // Remove __Host- prefix for cross-subdomain support
   cookieOptions: {
-    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
     path: "/",
-    // secure: process.env.NODE_ENV === "production",
-    // domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
+    secure: process.env.NODE_ENV === "production",
+    domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    // httpOnly: false, // Must be accessible from client-side JS
+    httpOnly: false, // Must be accessible from client-side JS
   },
   size: 64,
   ignoredMethods: ["GET", "HEAD", "OPTIONS"],
