@@ -60,8 +60,8 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true, // Prevents client-side JS access
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // strict in production, lax for dev (different ports)
-      domain: process.env.NODE_ENV === "production" ? '.yourdomain.com' : 'localhost', // Set for subdomain sharing in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // none in production for cross-origin, lax for dev
+      // domain: undefined, // Let browser handle domain automatically
 
     },
   })
