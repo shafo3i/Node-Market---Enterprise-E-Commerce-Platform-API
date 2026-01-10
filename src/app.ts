@@ -37,7 +37,7 @@ import { SecurityService } from './modules/security/security.service';
 
 const app = express();
 
-// app.set('trust proxy', 1); // trust first proxy
+// CORS middleware
 
 const allowedOrigins = ['https://i8488wsc0go0k48c4848ssk4.dijango.com', 'https://ywkocw0408owow804c44ow4g.dijango.com', 'http://localhost:3000', 'http://localhost:3003'];
 app.use(
@@ -69,8 +69,8 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
-      domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
+      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
+      // domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
     },
   })
 );
@@ -80,12 +80,12 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET!, // Validated in index.ts
   cookieName: "psifi.x-csrf-token", // Remove __Host- prefix for cross-subdomain support
   cookieOptions: {
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
+    // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' for cross-subdomain
     path: "/",
-    secure: process.env.NODE_ENV === "production",
-    domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
+    // secure: process.env.NODE_ENV === "production",
+    // domain: process.env.NODE_ENV === "production" ? '.dijango.com' : undefined,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    httpOnly: false, // Must be accessible from client-side JS
+    // httpOnly: false, // Must be accessible from client-side JS
   },
   size: 64,
   ignoredMethods: ["GET", "HEAD", "OPTIONS"],
@@ -107,16 +107,26 @@ const csrfExemptPaths = [
   '/api/webhooks',           // Webhooks use signature verification (Stripe, etc.)
   '/api/auth',               // Auth routes handled by better-auth
   '/api/csrf-token',         // Token generation endpoint
+
 ];
 
 // CSRF token endpoint - Ensure session exists first
 app.get("/api/csrf-token", (req, res) => {
+  console.log('🔑 CSRF Token Request:', {
+    env: process.env.NODE_ENV,
+    origin: req.headers.origin,
+    hasSession: !!req.session,
+    sessionID: req.sessionID,
+    cookies: req.cookies,
+  });
+  
   // Ensure session is initialized
   if (!req.session) {
     return res.status(500).json({ error: "Session not initialized" });
   }
   
   const csrfToken = generateCsrfToken(req, res);
+  console.log('✅ CSRF Token Generated:', csrfToken.substring(0, 20) + '...');
   return res.json({ csrfToken });
 });
 
@@ -140,6 +150,20 @@ app.use((req, res, next) => {
   // Skip CSRF for mobile and track endpoint
   if (isMobileRequest(req) || req.path === '/api/track') {
     return next();
+  }
+  
+  // Debug CSRF validation
+  if (req.method !== 'GET' && req.method !== 'HEAD' && req.method !== 'OPTIONS') {
+    console.log('🛡️ CSRF Validation:', {
+      env: process.env.NODE_ENV,
+      path: req.path,
+      method: req.method,
+      hasToken: !!req.headers['x-csrf-token'],
+      tokenPreview: req.headers['x-csrf-token'] ? String(req.headers['x-csrf-token']).substring(0, 20) + '...' : 'MISSING',
+      hasSession: !!req.session,
+      sessionID: req.sessionID,
+      cookies: req.cookies,
+    });
   }
   
   // Apply CSRF for web requests
