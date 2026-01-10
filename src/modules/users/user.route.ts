@@ -7,7 +7,7 @@ import rateLimit from "express-rate-limit";
 const router = Router();
 const profilerLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    max: 500, // limit each IP to 100 requests per windowMs
     handler: (req, res) => {
         res.status(429).json({ error: "Too many requests from this IP, please try again after a minute" });
     }
