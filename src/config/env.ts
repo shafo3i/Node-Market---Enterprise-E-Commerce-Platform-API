@@ -3,6 +3,13 @@ import { z } from 'zod';
 const envSchema = z.object({
   // Database
   DATABASE_URL: z.string().url(),
+  FRONTEND_URL: z.string().url(),
+  BACKEND_URL_HOST: z.string().url(),
+
+
+  // Cloudflare API - Optional
+  CF_TURNSTILE_SECRET_KEY: z.string().optional(),
+  CF_TURNSTILE_SITE_KEY: z.string().optional(),
   
   // Stripe - Publishable key optional for backend-only development
   STRIPE_SECRET_KEY: z.string().startsWith('sk_'),

@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import orderRoutes from './modules/orders/orders.route';
 import categoryRoutes from './modules/categories/cat.route';
 import productRoutes from './modules/products/product.route';
@@ -38,7 +39,7 @@ const app = express();
 
 // app.set('trust proxy', 1); // trust first proxy
 
-// const allowedOrigins = ['http://localhost:3000'];
+// const allowedOrigins = ['https://i8488wsc0go0k48c4848ssk4.dijango.com'];
 app.use(
   cors({
     origin: true,// Replace with your frontend's origin
@@ -260,8 +261,12 @@ app.use('/api/reviews', reviewRoutes);
 
 
 
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Main entry point - API Documentation
 app.get('/', (req, res) => {
-  res.send('Welcome to the Node Market API');
+  res.sendFile(path.join(__dirname, 'public', 'api-docs.html'));
 });
 
 

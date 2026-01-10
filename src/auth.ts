@@ -116,7 +116,9 @@ export const auth = betterAuth({
     ],
 
      trustedOrigins: [
-        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3003",
+        // process.env.FRONTEND_URL || "http://localhost:3000",
+        // process.env.NBACKEND_URL_HOST || "http://localhost:3003",
+                process.env.FRONTEND_URL || "https://i8488wsc0go0k48c4848ssk4.dijango.com",
+        process.env.NBACKEND_URL_HOST || "https://ywkocw0408owow804c44ow4g.dijango.com",
     ],
 });
