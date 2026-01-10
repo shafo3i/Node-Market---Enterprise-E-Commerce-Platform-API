@@ -39,10 +39,18 @@ const app = express();
 
 // app.set('trust proxy', 1); // trust first proxy
 
-// const allowedOrigins = ['https://i8488wsc0go0k48c4848ssk4.dijango.com'];
+const allowedOrigins = ['https://i8488wsc0go0k48c4848ssk4.dijango.com', 'https://ywkocw0408owow804c44ow4g.dijango.com', 'http://localhost:3000', 'http://localhost:3003'];
 app.use(
   cors({
-    origin: true,// Replace with your frontend's origin
+    origin: function (origin, callback) {
+      // allow requests with no origin 
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
