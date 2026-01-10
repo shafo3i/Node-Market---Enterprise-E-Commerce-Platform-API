@@ -58,7 +58,7 @@ app.use(
     saveUninitialized: true, // Required for CSRF (session must exist before token generation)
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
+      httpOnly: true, // Prevents client-side JS access
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // strict in production, lax for dev (different ports)
       domain: process.env.NODE_ENV === "production" ? '.yourdomain.com' : 'localhost', // Set for subdomain sharing in production
