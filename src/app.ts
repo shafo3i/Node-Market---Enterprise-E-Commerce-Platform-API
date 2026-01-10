@@ -70,7 +70,7 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => process.env.CSRF_SECRET!, // Validated in index.ts
   cookieName: process.env.NODE_ENV === "production" ? "__Host-psifi.x-csrf-token" : "psifi.x-csrf-token",
   cookieOptions: {
-    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", // Must match session cookie
+    sameSite: "lax",
     path: "/",
     secure: process.env.NODE_ENV === "production",
   },
@@ -133,29 +133,31 @@ app.use((req, res, next) => {
   return doubleCsrfProtection(req, res, next);
 });
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"], // For inline styles
-      scriptSrc: ["'self'", "https://js.stripe.com"],
-      imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "https://api.stripe.com"],
-      frameSrc: ["https://js.stripe.com", "https://hooks.stripe.com"],
-      fontSrc: ["'self'", "data:"],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
-    },
-  },
-  hsts: {
-    maxAge: 31536000, // 1 year
-    includeSubDomains: true,
-    preload: true,
-  },
-  noSniff: true,
-  xssFilter: true,
-  referrerPolicy: { policy: 'same-origin' },
-}));
+// app.use(helmet({
+//   contentSecurityPolicy: {
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       styleSrc: ["'self'", "'unsafe-inline'"], // For inline styles
+//       scriptSrc: ["'self'", "https://js.stripe.com"],
+//       imgSrc: ["'self'", "data:", "https:", "blob:"],
+//       connectSrc: ["'self'", "https://api.stripe.com"],
+//       frameSrc: ["https://js.stripe.com", "https://hooks.stripe.com"],
+//       fontSrc: ["'self'", "data:"],
+//       objectSrc: ["'none'"],
+//       upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+//     },
+//   },
+//   hsts: {
+//     maxAge: 31536000, // 1 year
+//     includeSubDomains: true,
+//     preload: true,
+//   },
+//   noSniff: true,
+//   xssFilter: true,
+//   referrerPolicy: { policy: 'same-origin' },
+// }));
+
+app.use(helmet());
 
 
 // rate limit
