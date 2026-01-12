@@ -1,0 +1,925 @@
+openapi: 3.1.0
+info:
+  title: Node Market API
+  summary: Node Market backend API documentation
+  description: |
+    This is the official API documentation for the Node Market backend.
+    It is generated in OpenAPI 3.1.0 format and supports all major features including models, tags, and webhooks.
+    For more information, contact the API team or visit our documentation site.
+  version: 1.0.0
+  termsOfService: 'https://node-market.example.com/terms'
+  contact:
+    name: Node Market API Support
+    email: support@node-market.example.com
+    url: https://node-market.example.com
+  x-logo:
+    url: 'https://redocly.github.io/redoc/petstore-logo.png'
+    altText: Node Market logo
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+externalDocs:
+  description: Find out more about Node Market API.
+  url: 'https://node-market.example.com/docs'
+servers:
+  - url: http://localhost:3003
+    description: Local development server
+  - url: https://ywkocw0408owow804c44ow4g.dijango.com
+    description: Production server
+tags:
+  - name: auth
+    description: Authentication and user management
+  - name: products
+    description: Product management
+  - name: orders
+    description: Order management
+  - name: cart
+    description: Shopping cart operations
+  - name: analytics
+    description: Analytics and statistics
+  - name: admin
+    description: Admin-only endpoints
+  - name: webhooks
+    description: Webhook handlers
+  - name: settings
+    description: Store and system settings
+  - name: reviews
+    description: Product reviews
+  - name: wishlist
+    description: Wishlist operations
+  - name: returns
+    description: Returns and exchanges
+  - name: invoices
+    description: Invoice management
+  - name: backup
+    description: Backup and restore
+  - name: brands
+    description: Brand management
+  - name: categories
+    description: Category management
+  - name: addresses
+    description: Address management
+  - name: refunds
+    description: Refund management
+  - name: shipping
+    description: Shipping operations
+  - name: carrier
+    description: Carrier management
+  - name: caching
+    description: Caching operations
+  - name: security
+    description: Security and debug
+  - name: audit-logs
+    description: Audit logs
+  - name: dispute
+    description: Dispute management
+  - name: user
+    description: User profile and notifications
+  - name: upload
+    description: File upload
+  - name: store
+    description: Store operations
+  - name: settings
+    description: Store settings
+  - name: analytics
+    description: Analytics
+  - name: returns
+    description: Returns
+  - name: reviews
+    description: Reviews
+  - name: wishlist
+    description: Wishlist
+  - name: invoices
+    description: Invoices
+  - name: backup
+    description: Backup
+  - name: brands
+    description: Brands
+  - name: categories
+    description: Categories
+  - name: addresses
+    description: Addresses
+  - name: refunds
+    description: Refunds
+  - name: shipping
+    description: Shipping
+  - name: carrier
+    description: Carrier
+  - name: caching
+    description: Caching
+  - name: security
+    description: Security
+  - name: audit-logs
+    description: Audit logs
+  - name: dispute
+    description: Dispute
+  - name: user
+    description: User
+  - name: upload
+    description: Upload
+paths:
+  # All endpoints from your backend, with /api/ prefix
+  # Example:
+  /api/auth/login:
+    post:
+      tags: [auth]
+      summary: User login
+      responses:
+        '200':
+          description: Successful login
+        '401':
+          description: Unauthorized
+  /api/auth/register:
+    post:
+      tags: [auth]
+      summary: User registration
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Bad request
+  # ... (all other /api/ endpoints as previously listed)
+components:
+  schemas:
+    # Example user schema
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        stock:
+          type: integer
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        productIds:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    # Add more schemas as needed for your models
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  # Add requestBodies, examples, etc. as needed
+webhooks:
+  # Example webhook
+  newOrder:
+    post:
+      summary: New order webhook
+      description: Information about a new order in the system
+      tags: [webhooks]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Data received successfully
+  /api/auth/login:
+    post:
+      summary: User login
+      responses:
+        '200':
+          description: Successful login
+        '401':
+          description: Unauthorized
+  /api/auth/register:
+    post:
+      summary: User registration
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Bad request
+  /api/addresses:
+    get:
+      summary: Get all addresses (user)
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create address (user)
+      responses:
+        '201':
+          description: Created
+  /api/addresses/{id}:
+    get:
+      summary: Get address by ID (user)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update address (user)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete address (user)
+      responses:
+        '204':
+          description: Deleted
+  /api/addresses/{id}/set-default:
+    put:
+      summary: Set default address (user)
+      responses:
+        '200':
+          description: Default set
+  /api/addresses/admin/all:
+    get:
+      summary: Get all addresses (admin)
+      responses:
+        '200':
+          description: Success
+  /api/analytics:
+    get:
+      summary: Get analytics data (admin)
+      responses:
+        '200':
+          description: Success
+  /api/analytics/stats:
+    get:
+      summary: Get overview stats (admin)
+      responses:
+        '200':
+          description: Success
+  /api/logs:
+    get:
+      summary: Get all logs (admin)
+      responses:
+        '200':
+          description: Success
+  /api/logs/{id}:
+    get:
+      summary: Get log by ID (admin)
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Delete log (admin)
+      responses:
+        '204':
+          description: Deleted
+  /api/backup/settings:
+    get:
+      summary: Get backup settings (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update backup settings (admin)
+      responses:
+        '200':
+          description: Updated
+  /api/backup/trigger:
+    post:
+      summary: Trigger manual backup (admin)
+      responses:
+        '200':
+          description: Backup triggered
+  /backup/history:
+    get:
+      summary: Get backup history (admin)
+      responses:
+        '200':
+          description: Success
+  /api/backup/statistics:
+    get:
+      summary: Get backup statistics (admin)
+      responses:
+        '200':
+          description: Success
+  /api/backup/test-s3:
+    post:
+      summary: Test S3 connection (admin)
+      responses:
+        '200':
+          description: S3 connection tested
+  /api/backup/{filename}:
+    delete:
+      summary: Delete specific backup (admin)
+      responses:
+        '204':
+          description: Deleted
+  /api/brands:
+    get:
+      summary: Get all brands
+      responses:
+        '200':
+          description: Success
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                includeProducts:
+                  type: boolean
+                  description: Whether to include products in the response
+    post:
+      summary: Create brand (admin)
+      responses:
+        '201':
+          description: Created
+  /api/brands/{id}:
+    get:
+      summary: Get brand by ID
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update brand (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete brand (admin)
+      responses:
+        '204':
+          description: Deleted
+  /api/brands/slug/{slug}:
+    get:
+      summary: Get brand by slug
+      responses:
+        '200':
+          description: Success
+  /caching/settings:
+    get:
+      summary: Get cache settings (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update cache settings (admin)
+      responses:
+        '200':
+          description: Updated
+  /caching/stats:
+    get:
+      summary: Get cache stats (admin)
+      responses:
+        '200':
+          description: Success
+  /caching/clear-all:
+    delete:
+      summary: Clear all cache (admin)
+      responses:
+        '204':
+          description: Cleared
+  /carrier/active:
+    get:
+      summary: Get active carriers
+      responses:
+        '200':
+          description: Success
+  /carrier:
+    get:
+      summary: Get all carriers (admin)
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create carrier (admin)
+      responses:
+        '201':
+          description: Created
+  /carrier/{id}:
+    get:
+      summary: Get carrier by ID (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update carrier (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete carrier (admin)
+      responses:
+        '204':
+          description: Deleted
+    patch:
+      summary: Toggle carrier status (admin)
+      responses:
+        '200':
+          description: Status toggled
+  /cart:
+    get:
+      summary: Get user's cart
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Clear entire cart
+      responses:
+        '204':
+          description: Cleared
+  /cart/items:
+    post:
+      summary: Add item to cart
+      responses:
+        '201':
+          description: Item added
+    put:
+      summary: Update item quantity
+      responses:
+        '200':
+          description: Quantity updated
+  /cart/items/{productId}:
+    delete:
+      summary: Remove item from cart
+      responses:
+        '204':
+          description: Removed
+  /categories:
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create category (admin)
+      responses:
+        '201':
+          description: Created
+  /categories/{id}:
+    get:
+      summary: Get category by ID
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update category (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete category (admin)
+      responses:
+        '204':
+          description: Deleted
+  /categories/slug/{slug}:
+    get:
+      summary: Get category by slug
+      responses:
+        '200':
+          description: Success
+  /dispute:
+    get:
+      summary: Get all disputes (admin)
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create dispute (user)
+      responses:
+        '201':
+          description: Created
+  /dispute/{id}:
+    get:
+      summary: Get dispute by ID (user/admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update dispute (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete dispute (admin)
+      responses:
+        '204':
+          description: Deleted
+  /dispute/user/{id}:
+    get:
+      summary: Get disputes by user ID (user/admin)
+      responses:
+        '200':
+          description: Success
+  /invoices/my-invoices:
+    get:
+      summary: Get all invoices for user
+      responses:
+        '200':
+          description: Success
+  /invoices/{id}:
+    get:
+      summary: Get invoice by ID
+      responses:
+        '200':
+          description: Success
+  /invoices/order/{orderId}:
+    get:
+      summary: Get invoice by order ID
+      responses:
+        '200':
+          description: Success
+  /invoices/{id}/download:
+    get:
+      summary: Download invoice PDF
+      responses:
+        '200':
+          description: PDF downloaded
+  /invoices/generate:
+    post:
+      summary: Generate invoice for order
+      responses:
+        '201':
+          description: Invoice generated
+  /orders/checkout:
+    post:
+      summary: Checkout (user)
+      responses:
+        '201':
+          description: Checked out
+  /orders/payment:
+    post:
+      summary: Create payment (user)
+      responses:
+        '201':
+          description: Payment created
+  /orders/{id}/cancel:
+    post:
+      summary: Cancel order (user)
+      responses:
+        '200':
+          description: Order cancelled
+  /orders/my-orders:
+    get:
+      summary: Get user's orders
+      responses:
+        '200':
+          description: Success
+  /api/orders/{id}:
+    get:
+      summary: Get order by ID
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update order status (admin)
+      responses:
+        '200':
+          description: Status updated
+  /api/products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Create product (admin)
+      responses:
+        '201':
+          description: Created
+  /products/{id}:
+    get:
+      summary: Get product by ID
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update product (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete product (admin)
+      responses:
+        '204':
+          description: Deleted
+  /products/slug/{slug}:
+    get:
+      summary: Get product by slug
+      responses:
+        '200':
+          description: Success
+  /products/{id}/variants:
+    post:
+      summary: Add variant (admin)
+      responses:
+        '201':
+          description: Variant added
+  /products/variants/{variantId}:
+    put:
+      summary: Update variant (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Remove variant (admin)
+      responses:
+        '204':
+          description: Removed
+  /products/inventory/low-stock:
+    get:
+      summary: Get low stock products (admin)
+      responses:
+        '200':
+          description: Success
+  /products/inventory/statistics:
+    get:
+      summary: Get stock statistics (admin)
+      responses:
+        '200':
+          description: Success
+  /products/{id}/stock-history:
+    get:
+      summary: Get product stock history (admin)
+      responses:
+        '200':
+          description: Success
+  /products/inventory/bulk-update:
+    post:
+      summary: Bulk update stock (admin)
+      responses:
+        '200':
+          description: Stock updated
+  /refunds:
+    get:
+      summary: Get all refunds (admin)
+      responses:
+        '200':
+          description: Success
+  /refunds/{id}:
+    get:
+      summary: Get refund by ID (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update refund status (admin)
+      responses:
+        '200':
+          description: Status updated
+  /returns:
+    post:
+      summary: Create return (user)
+      responses:
+        '201':
+          description: Created
+    get:
+      summary: Get all returns (admin)
+      responses:
+        '200':
+          description: Success
+  /returns/my-returns:
+    get:
+      summary: Get user's returns
+      responses:
+        '200':
+          description: Success
+  /returns/order/{orderId}:
+    get:
+      summary: Get return by order ID
+      responses:
+        '200':
+          description: Success
+  /returns/statistics:
+    get:
+      summary: Get return statistics (admin)
+      responses:
+        '200':
+          description: Success
+  /returns/status:
+    get:
+      summary: Get returns by status (admin)
+      responses:
+        '200':
+          description: Success
+  /returns/{id}:
+    get:
+      summary: Get return by ID (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update return (admin)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete return (admin)
+      responses:
+        '204':
+          description: Deleted
+  /returns/number/{returnNumber}:
+    get:
+      summary: Get return by number (admin)
+      responses:
+        '200':
+          description: Success
+  /reviews/products/{productId}/reviews:
+    get:
+      summary: Get product reviews
+      responses:
+        '200':
+          description: Success
+  /reviews/products/{productId}/rating-stats:
+    get:
+      summary: Get product rating stats
+      responses:
+        '200':
+          description: Success
+  /reviews/{reviewId}:
+    get:
+      summary: Get review by ID
+      responses:
+        '200':
+          description: Success
+    patch:
+      summary: Update review (user)
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete review (user)
+      responses:
+        '204':
+          description: Deleted
+  /reviews:
+    post:
+      summary: Create review (user)
+      responses:
+        '201':
+          description: Created
+  /reviews/user/my-reviews:
+    get:
+      summary: Get user's reviews
+      responses:
+        '200':
+          description: Success
+  /reviews/products/{productId}/check:
+    get:
+      summary: Check if user reviewed product
+      responses:
+        '200':
+          description: Success
+  /security/debug-mode:
+    get:
+      summary: Get debug mode (admin)
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update debug mode (admin)
+      responses:
+        '200':
+          description: Updated
+  /settings/currency:
+    get:
+      summary: Get store currency
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update currency (admin)
+      responses:
+        '200':
+          description: Updated
+  /settings:
+    get:
+      summary: Get all settings (admin)
+      responses:
+        '200':
+          description: Success
+  /settings/payment-methods:
+    put:
+      summary: Update payment methods (admin)
+      responses:
+        '200':
+          description: Updated
+  /settings/stripe-keys:
+    put:
+      summary: Update Stripe keys (admin)
+      responses:
+        '200':
+          description: Updated
+  /settings/smtp:
+    put:
+      summary: Update SMTP settings (admin)
+      responses:
+        '200':
+          description: Updated
+  /shipping/calculate:
+    post:
+      summary: Calculate shipping rates
+      responses:
+        '200':
+          description: Rates calculated
+  /upload:
+    post:
+      summary: Upload file (admin)
+      responses:
+        '201':
+          description: File uploaded
+    delete:
+      summary: Delete file (admin)
+      responses:
+        '204':
+          description: File deleted
+  /users/profile:
+    get:
+      summary: Get user profile
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update user profile
+      responses:
+        '200':
+          description: Updated
+  /users/notifications/preferences:
+    get:
+      summary: Get notification preferences
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update notification preferences
+      responses:
+        '200':
+          description: Updated
+  /users/all:
+    get:
+      summary: Get all users (admin)
+      responses:
+        '200':
+          description: Success
+  /users/{id}:
+    get:
+      summary: Get user by ID (admin)
+      responses:
+        '200':
+          description: Success
+  /users/update/{id}:
+    put:
+      summary: Update user by admin
+      responses:
+        '200':
+          description: Updated
+  /users/delete/{id}:
+    delete:
+      summary: Delete user by admin
+      responses:
+        '204':
+          description: Deleted
+  /webhooks/stripe:
+    post:
+      summary: Stripe webhook handler
+      responses:
+        '200':
+          description: Webhook received
+  /wishlist:
+    get:
+      summary: Get wishlist (user)
+      responses:
+        '200':
+          description: Success
+    post:
+      summary: Add to wishlist (user)
+      responses:
+        '201':
+          description: Added
+    delete:
+      summary: Clear wishlist (user)
+      responses:
+        '204':
+          description: Cleared
+  /wishlist/{productId}:
+    delete:
+      summary: Remove from wishlist (user)
+      responses:
+        '204':
+          description: Removed
+  /wishlist/check/{productId}:
+    get:
+      summary: Check if product is in wishlist (user)
+      responses:
+        '200':
+          description: Success

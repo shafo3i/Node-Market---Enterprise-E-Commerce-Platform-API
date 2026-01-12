@@ -34,6 +34,7 @@ const PORT = env.PORT;
 const HOST = env.NODE_ENV === 'production' 
   ? 'https://ywkocw0408owow804c44ow4g.dijango.com' 
   : 'http://localhost';
+  
 
 app.listen(PORT, async () => {
   console.log(`Server is running on ${HOST}:${PORT}`);

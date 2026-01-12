@@ -34,12 +34,31 @@ import securityRoutes from './modules/security/security.route';
 import returnsRoutes from './modules/returns/returns.route';
 import { SecurityService } from './modules/security/security.service';
 
-
+const localIP = "localhost"; // Replace with actual local IP detection if needed
 const app = express();
 
 // CORS middleware
 
-const allowedOrigins = ['https://i8488wsc0go0k48c4848ssk4.dijango.com', 'https://ywkocw0408owow804c44ow4g.dijango.com', 'http://localhost:3000', 'http://localhost:3003'];
+
+const mobilePaths = [
+  '/api/products',
+  '/api/categories',
+  '/api/cart',
+  '/api/wishlist',
+  '/api/profile',
+];
+
+const allowedOrigins = [
+  'https://i8488wsc0go0k48c4848ssk4.dijango.com', 
+  'https://ywkocw0408owow804c44ow4g.dijango.com', 
+  'http://localhost:3000', 
+  'http://localhost:3003',
+  `exp://${localIP}:8081`,
+  `http://${localIP}:8081`,
+  `http://10.2.2.2:8081`,
+  `http://10.0.2.2:8081`,
+  
+];
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -139,8 +158,8 @@ app.use((req, res, next) => {
     return next();
   }
   
-  // Skip CSRF for mobile and track endpoint
-  if (isMobileRequest(req) || req.path === '/api/track') {
+  // Skip CSRF for mobile requests
+  if (mobilePaths.includes(req.path) && isMobileRequest(req)) {
     return next();
   }
 
@@ -176,11 +195,19 @@ app.use(helmet({
 
 
 
+const ipExcludes: Number[] = [
+
+]; // Add any IPs to exclude from rate limiting here
+
 // rate limit
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 500, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again after a minute"
+  message: "Too many requests from this IP, please try again after a minute",
+  keyGenerator: (req) => {
+    const ip = req.ip || req.connection.remoteAddress || '';
+    return ip;
+  }
 })
 app.use(limiter)
 
@@ -277,13 +304,13 @@ app.use('/api/reviews', reviewRoutes);
 
 
 
-// Serve static files from public directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from the correct public directory at the project root
 
-// Main entry point - API Documentation
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'api-docs.html'));
-});
+const rootDir = path.resolve(__dirname, '..');
+const publicPath = path.join(rootDir, 'public');
+app.use(express.static(publicPath));
+
+
 
 
 
